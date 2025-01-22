@@ -1,0 +1,38 @@
+{
+    "name": "@crossmint/agent-launchpad-starter",
+    "version": "0.0.1",
+    "private": true,
+    "scripts": {
+        "build": "next build",
+        "dev": "next dev",
+        "lint": "next lint",
+        "lint:fix": "biome check --write",
+        "start": "next start"
+    },
+    "dependencies": {
+        "@biomejs/biome": "^1.9.4",
+        "@crossmint/client-sdk-react-ui": "1.13.1",
+        "@radix-ui/react-avatar": "1.1.0",
+        "@radix-ui/react-dropdown-menu": "2.1.1",
+        "@radix-ui/react-slot": "1.1.0",
+        "@radix-ui/react-tabs": "1.1.0",
+        "@radix-ui/react-toast": "1.2.1",
+        "@tanstack/react-query": "5.51.18",
+        "class-variance-authority": "0.7.0",
+        "clsx": "2.1.1",
+        "lucide-react": "0.473.0",
+        "next": "15.1.6",
+        "react": "^19",
+        "react-dom": "^19",
+        "tailwind-merge": "2.6.0",
+        "viem": "2.22.11"
+    },
+    "devDependencies": {
+        "@types/node": "^20",
+        "@types/react": "^19",
+        "@types/react-dom": "^19",
+        "postcss": "^8",
+        "tailwindcss": "^3.4.17",
+        "typescript": "^5"
+    }
+}

@@ -1,0 +1,68 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+    :root {
+        /* Define color variables */
+        --color-background: 104 52% 95%; /* #eff9ec */
+        --color-foreground: 210 14.3% 4.1%; /* #2d2d2d */
+        --color-card: 0 0% 100%; /* #ffffff */
+        --color-card-foreground: 210 14.3% 4.1%; /* #2d2d2d */
+        --color-popover: 0 0% 100%; /* #ffffff */
+        --color-popover-foreground: 210 14.3% 4.1%; /* #2d2d2d */
+        --color-primary: 210 95% 53.1%; /* #0066ff */
+        --color-primary-foreground: 210 30% 62%; /* #82A6BC */
+        --color-secondary: 210 4.8% 95.9%; /* #f2f2f2 */
+        --color-secondary-foreground: 210 56% 24%; /* #1B3960 */
+        --color-muted: 210 18% 74%; /* #B1BCC9 */
+        --color-muted-foreground: 210 77% 29%; /* #114983 */
+        --color-accent: 210 4.8% 95.9%; /* #f2f2f2 */
+        --color-accent-foreground: 210 9.8% 10%; /* #3d3d3d */
+        --color-destructive: 0 84.2% 60.2%; /* #ff3333 */
+        --color-destructive-foreground: 210 9.1% 97.8%; /* #f5f5f5 */
+        --color-border: 210 26% 80%; /* #C0CBD9 */
+        --color-input: 210 5.9% 90%; /* #e6e6e6 */
+        --color-ring: 210 95% 53.1%; /* #0066ff */
+        --color-chart-1: 210 76% 61%; /* #47A2FF */
+        --color-skeleton: 210 33% 88%; /* #D7E2EB */
+
+        /* Use color variables */
+        --background: var(--color-background);
+        --foreground: var(--color-foreground);
+        --card: var(--color-card);
+        --card-foreground: var(--color-card-foreground);
+        --popover: var(--color-popover);
+        --popover-foreground: var(--color-popover-foreground);
+        --primary: var(--color-primary);
+        --primary-foreground: var(--color-primary-foreground);
+        --secondary: var(--color-secondary);
+        --secondary-foreground: var(--color-secondary-foreground);
+        --muted: var(--color-muted);
+        --muted-foreground: var(--color-muted-foreground);
+        --accent: var(--color-accent);
+        --accent-foreground: var(--color-accent-foreground);
+        --destructive: var(--color-destructive);
+        --destructive-foreground: var(--color-destructive-foreground);
+        --border: var(--color-border);
+        --input: var(--color-input);
+        --ring: var(--color-ring);
+        --shadow-light: 0 1px 2px 0 rgba(193, 208, 234, 0.6);
+        --shadow-heavy: 0 4px 8px 0 rgba(193, 208, 234, 0.6);
+        --shadow-dropdown: 0 2px 12px 0 rgba(193, 208, 234, 0.6);
+        --chart-1: var(--color-chart-1);
+        --radius: 0.5rem;
+    }
+}
+@layer base {
+    body {
+        @apply bg-background text-foreground;
+        font-feature-settings: "rlig" 1, "calt" 1;
+    }
+}
+
+@layer utilities {
+    .text-balance {
+        text-wrap: balance;
+    }
+}

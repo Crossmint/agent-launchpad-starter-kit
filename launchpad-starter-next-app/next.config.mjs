@@ -6,6 +6,7 @@ const nextConfig = {
         return config;
     },
     reactStrictMode: false,
+    output: "standalone",
 };
 
 export default nextConfig;

@@ -17,8 +17,6 @@ export const DeployAgentButton = ({
     const [isLoadingDeploy, setIsLoadingDeploy] = useState(false);
     const { toast } = useToast();
 
-    console.log({ isLoadingDeploy });
-
     if (isLoadingDeploy) {
         return (
             <div className="flex gap-2 items-center self-center min-h-[52px]" role="status">
@@ -38,12 +36,16 @@ export const DeployAgentButton = ({
                 return;
             }
 
-            await new Promise((resolve) => {
-                setTimeout(() => {
-                    setAgentSuccessfullyDeployed(true);
-                    resolve(true);
-                }, 3500);
+            const response = await fetch(`${process.env.NEXT_PUBLIC_TEE_SERVER_URL}/api/deploy`, {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                },
             });
+            const data = await response.json();
+            console.log({ data });
+
+            setAgentSuccessfullyDeployed(true);
         } catch (error) {
             console.error("Error deploying Rufus:", error);
             toast({ title: "Error occurred during deployment" });

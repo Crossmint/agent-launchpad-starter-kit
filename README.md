@@ -66,7 +66,7 @@
 
 ## About The Project
 
-[![Agent Launchpad Screenshot][product-screenshot]](https://example.com)
+![Agent Launchpad Starter Kit](https://github.com/user-attachments/assets/364ad94a-cea1-42e5-928c-a75bc7b9709a)
 
 Agent Launchpad Starter Kit is an open-source platform that enables secure deployment of AI agents through an intuitive user interface. The platform creates a seamless experience for agent creators while maintaining robust security and regulatory compliance through non-custodial wallet architecture.
 

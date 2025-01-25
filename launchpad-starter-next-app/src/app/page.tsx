@@ -3,19 +3,28 @@
 import { Fireworks } from "@/components/fireworks";
 import { DeployAgentButton } from "@/components/deploy-agent-button";
 import { PoweredByCrossmint } from "@/components/powered-by-crossmint";
-import { SignInAuthButton } from "@/components/signin-auth-button";
 import { Typography } from "@/components/typography";
 import Link from "next/link";
 import { useState } from "react";
-
-import { useWallet } from "@crossmint/client-sdk-react-ui";
+import { useWallet } from "./contexts/WalletContext";
 
 function HomePrimaryAction() {
-    const { status: walletStatus } = useWallet();
     const [agentSuccessfullyDeployed, setAgentSuccessfullyDeployed] = useState(false);
 
-    if (walletStatus !== "loaded") {
-        return <SignInAuthButton />;
+    const { wallet, isLoading, createNewWallet } = useWallet();
+
+    if (!wallet?.address) {
+        return (
+            <button
+                onClick={createNewWallet}
+                disabled={isLoading}
+                className="bg-card gap-[10px] shadow-light rounded-xl py-3 px-6"
+            >
+                <Typography className="text-[#00150D] font-semibold text-[17px]">
+                    {isLoading ? "Creating Passkey Wallet..." : "Create Passkey Wallet"}
+                </Typography>
+            </button>
+        );
     }
 
     if (agentSuccessfullyDeployed) {

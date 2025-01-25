@@ -6,6 +6,12 @@ import { promisify } from "util";
 
 const execAsync = promisify(exec);
 
+const CHAIN = "base-sepolia";
+
+const serverApiKey = process.env.NEXT_PUBLIC_CROSSMINT_SERVER_API_KEY as string;
+
+const crossmintUrl = process.env.crossmintUrl || "http://localhost:3000";
+
 export class ContainerManager {
     public containerId: string | null = null;
 
@@ -29,7 +35,7 @@ export class ContainerManager {
         }
     }
 
-    async generateKeys(): Promise<{ account: string; privateKey: string }> {
+    async generateAgentKeys(): Promise<{ keyAddress: string; privateKeyAddress: string }> {
         const client = new TappdClient("http://localhost:8090");
 
         // Derive keys
@@ -46,7 +52,63 @@ export class ContainerManager {
         console.log("account:", account.address);
         console.log("privateKey:", keccakPrivateKey);
 
-        return { account: account.address, privateKey: keccakPrivateKey };
+        return { keyAddress: account.address, privateKeyAddress: keccakPrivateKey };
+    }
+
+    async createDelegatedSigner(
+        smartWalletAddress: string,
+        agentKeyAddress: string
+    ): Promise<{ message: string; id: string }> {
+        const client = new TappdClient("http://localhost:8090");
+
+        await client.tdxQuote("inside the container and creating a delegated signer");
+
+        // in TEE simulator, we need to now call signer endpoint and pass the admin account address
+        const response = await fetch(`${crossmintUrl}/api/2022-06-09/wallets/${smartWalletAddress}/signers`, {
+            method: "POST",
+            headers: {
+                "X-API-KEY": serverApiKey,
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+                signer: `evm-keypair:${agentKeyAddress}`,
+                chain: CHAIN,
+                expiresAt: 1835845180080, // expires in 2028
+            }),
+        });
+
+        const data = await response.json();
+        console.log({ data });
+
+        // Extract the message to sign from the first chain's pending approval
+        const firstChain = Object.values(data.chains)[0] as any;
+        console.log({ firstChain });
+        const pendingApproval = firstChain.approvals.pending[0];
+        console.log({ pendingApproval });
+        return { message: pendingApproval.message, id: firstChain.id };
+    }
+
+    async createAgentSmartWallet(adminAccount: string): Promise<{ address: string }> {
+        const response = await fetch(`${crossmintUrl}/api/2022-06-09/wallets`, {
+            method: "POST",
+            headers: {
+                "X-API-KEY": serverApiKey,
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+                type: "evm-smart-wallet",
+                config: {
+                    adminSigner: {
+                        type: "evm-keypair",
+                        address: adminAccount,
+                    },
+                },
+            }),
+        });
+
+        const data = await response.json();
+
+        return { address: data.address };
     }
 
     async stopContainer(): Promise<void> {

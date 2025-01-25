@@ -6,25 +6,22 @@ import { Copy, Image as ImageIcon, User, WalletMinimal } from "lucide-react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 
-import { type EVMSmartWallet, useAuth, useWallet } from "@crossmint/client-sdk-react-ui";
-
 import { Avatar, AvatarFallback, AvatarImage } from "./avatar";
 import { DropdownMenu, DropdownMenuContent, DropdownMenuTrigger } from "./dropdown-menu";
 import { Typography } from "./typography";
 import { useToast } from "./use-toast";
+import { useWallet } from "@/app/contexts/WalletContext";
 
 function formatWalletAddress(address: string, startLength: number, endLength: number): string {
     return `${address.substring(0, startLength)}...${address.substring(address.length - endLength)}`;
 }
 
 export const Header: React.FC = () => {
-    const { logout } = useAuth();
-    const { wallet, status: walletStatus } = useWallet();
+    const { wallet, isLoading } = useWallet();
     const router = useRouter();
     const { toast } = useToast();
 
     const handleLogout = () => {
-        logout();
         router.push("/");
     };
 
@@ -38,10 +35,10 @@ export const Header: React.FC = () => {
     return (
         <div className="flex justify-between p-4 items-center">
             <HeaderLogo />
-            {(walletStatus === "loaded" || walletStatus === "in-progress") && (
+            {wallet != null && wallet.address != null && wallet.address !== "" && (
                 <UserMenu
-                    wallet={wallet}
-                    walletStatus={walletStatus}
+                    wallet={wallet?.address as any}
+                    walletStatus={isLoading ? "in-progress" : "loaded"}
                     onLogout={handleLogout}
                     onCopyAddress={handleCopyAddress}
                 />
@@ -57,7 +54,7 @@ const HeaderLogo: React.FC = () => (
 );
 
 const UserMenu: React.FC<{
-    wallet: EVMSmartWallet | undefined;
+    wallet: string | undefined;
     walletStatus: string;
     onLogout: () => void;
     onCopyAddress: () => void;
@@ -65,7 +62,7 @@ const UserMenu: React.FC<{
     <DropdownMenu>
         <DropdownMenuTrigger asChild disabled={walletStatus !== "loaded"}>
             <div className="flex items-center gap-5 cursor-pointer">
-                <WalletDisplay address={wallet?.address} isLoading={walletStatus !== "loaded"} />
+                <WalletDisplay address={wallet} isLoading={walletStatus !== "loaded"} />
                 <Avatar className="h-9 w-9">
                     <AvatarImage alt="User Avatar" src="" />
                     <AvatarFallback className="bg-skeleton">
@@ -77,7 +74,7 @@ const UserMenu: React.FC<{
         <DropdownMenuContent align="end" className="w-56 overflow-y-auto max-h-[80vh]">
             <div className="flex flex-col gap-2">
                 <div className="flex gap-3 text-muted items-center cursor-pointer py-2" onClick={onCopyAddress}>
-                    <Typography>{wallet ? formatWalletAddress(wallet.address, 14, 6) : ""}</Typography>
+                    <Typography>{wallet ? formatWalletAddress(wallet, 14, 6) : ""}</Typography>
                     <Copy className="h-5 w-5" />
                 </div>
                 <Link href="/agents" prefetch={false} className="text-secondary-foreground flex gap-3 py-2">

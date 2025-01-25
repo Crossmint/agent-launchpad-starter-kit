@@ -7,18 +7,27 @@ const containerManager = new ContainerManager();
 
 router.post("/", async (req, res) => {
     try {
+        const adminSmartWalletAddress = req.query.smartWalletAddress as string;
         // 1. Spin up TEE simulator container if not already running
         if (!containerManager.isRunning()) {
             console.log("Starting TEE simulator container...");
             await containerManager.startContainer();
         }
 
-        // 2. Generate keys in TEE
-        await containerManager.generateKeys();
+        // 2. Generate agent keys in TEE
+        const agentKeys = await containerManager.generateAgentKeys();
+
+        // 3. Create a signer from the admin wallet address
+        const { message, id } = await containerManager.createDelegatedSigner(
+            adminSmartWalletAddress,
+            agentKeys.keyAddress
+        );
 
         res.json({
             success: true,
             containerId: containerManager.containerId,
+            message,
+            id,
         });
     } catch (error) {
         console.error("Deployment error:", error);

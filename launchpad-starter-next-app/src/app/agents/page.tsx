@@ -6,10 +6,10 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/tabs";
 import { Typography } from "@/components/typography";
 import { useQuery } from "@tanstack/react-query";
 
-import { useWallet } from "@crossmint/client-sdk-react-ui";
 import { MockAgent } from "../service/MockAgent";
 import { useEffect, useState } from "react";
 import { Button } from "@/components/button";
+import { useWallet } from "../contexts/WalletContext";
 
 function getMockAgents() {
     return [
@@ -73,7 +73,7 @@ const ElapsedTime = ({ num }: { num: string }) => {
 };
 
 export default function Index() {
-    const { wallet, status: walletStatus } = useWallet();
+    const { wallet, isLoading } = useWallet();
 
     const { data, isLoading: isLoadingAgents } = useQuery({
         queryKey: ["agents"],
@@ -84,7 +84,7 @@ export default function Index() {
         enabled: wallet != null,
     });
 
-    if (walletStatus === "in-progress" || isLoadingAgents) {
+    if (isLoading || isLoadingAgents) {
         return <SkeletonLoader />;
     }
 

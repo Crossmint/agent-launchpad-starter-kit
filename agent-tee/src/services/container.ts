@@ -4,13 +4,11 @@ import { keccak256 } from "viem";
 import { exec } from "child_process";
 import { promisify } from "util";
 
+require("dotenv").config();
 const execAsync = promisify(exec);
 
-const CHAIN = "base-sepolia";
-
-const serverApiKey = process.env.NEXT_PUBLIC_CROSSMINT_SERVER_API_KEY as string;
-
-const crossmintUrl = process.env.crossmintUrl || "http://localhost:3000";
+const TEE_SERVER_PORT = process.env.TEE_SERVER_PORT || 8090;
+const TEE_SERVER_URL = process.env.TEE_SERVER_URL || "http://localhost:8090";
 
 export class ContainerManager {
     public containerId: string | null = null;
@@ -18,7 +16,9 @@ export class ContainerManager {
     async startContainer(): Promise<void> {
         try {
             // Start the TEE simulator container
-            const { stdout } = await execAsync("docker run -d --rm -p 8090:8090 phalanetwork/tappd-simulator:latest");
+            const { stdout } = await execAsync(
+                `docker run -d --rm -p ${TEE_SERVER_PORT}:${TEE_SERVER_PORT} phalanetwork/tappd-simulator:latest`
+            );
             this.containerId = stdout.trim();
 
             console.log("TEE simulator container started:", this.containerId);
@@ -36,7 +36,7 @@ export class ContainerManager {
     }
 
     async generateAgentKeys(): Promise<{ keyAddress: string; privateKeyAddress: string }> {
-        const client = new TappdClient("http://localhost:8090");
+        const client = new TappdClient(TEE_SERVER_URL);
 
         // Derive keys
         console.log("Generating key in TEE simulator...");
@@ -48,67 +48,11 @@ export class ContainerManager {
         // Get the private key account from the derived key hash
         const account = privateKeyToAccount(keccakPrivateKey);
 
-        console.log("keys generated in container ", this.containerId);
+        console.log("keys generated in docker container ", this.containerId);
         console.log("account:", account.address);
-        console.log("privateKey:", keccakPrivateKey);
+        // console.log("privateKey:", keccakPrivateKey);
 
         return { keyAddress: account.address, privateKeyAddress: keccakPrivateKey };
-    }
-
-    async createDelegatedSigner(
-        smartWalletAddress: string,
-        agentKeyAddress: string
-    ): Promise<{ message: string; id: string }> {
-        const client = new TappdClient("http://localhost:8090");
-
-        await client.tdxQuote("inside the container and creating a delegated signer");
-
-        // in TEE simulator, we need to now call signer endpoint and pass the admin account address
-        const response = await fetch(`${crossmintUrl}/api/2022-06-09/wallets/${smartWalletAddress}/signers`, {
-            method: "POST",
-            headers: {
-                "X-API-KEY": serverApiKey,
-                "Content-Type": "application/json",
-            },
-            body: JSON.stringify({
-                signer: `evm-keypair:${agentKeyAddress}`,
-                chain: CHAIN,
-                expiresAt: 1835845180080, // expires in 2028
-            }),
-        });
-
-        const data = await response.json();
-        console.log({ data });
-
-        // Extract the message to sign from the first chain's pending approval
-        const firstChain = Object.values(data.chains)[0] as any;
-        console.log({ firstChain });
-        const pendingApproval = firstChain.approvals.pending[0];
-        console.log({ pendingApproval });
-        return { message: pendingApproval.message, id: firstChain.id };
-    }
-
-    async createAgentSmartWallet(adminAccount: string): Promise<{ address: string }> {
-        const response = await fetch(`${crossmintUrl}/api/2022-06-09/wallets`, {
-            method: "POST",
-            headers: {
-                "X-API-KEY": serverApiKey,
-                "Content-Type": "application/json",
-            },
-            body: JSON.stringify({
-                type: "evm-smart-wallet",
-                config: {
-                    adminSigner: {
-                        type: "evm-keypair",
-                        address: adminAccount,
-                    },
-                },
-            }),
-        });
-
-        const data = await response.json();
-
-        return { address: data.address };
     }
 
     async stopContainer(): Promise<void> {
@@ -123,10 +67,10 @@ export class ContainerManager {
             }
         }
         // check if running port 8090
-        const { stdout } = await execAsync(`lsof -t -i:8090`);
+        const { stdout } = await execAsync(`lsof -t -i:${TEE_SERVER_PORT}`);
         if (stdout) {
-            await execAsync(`kill -9 $(lsof -ti:8090)`);
-            console.log("Process running on port 8090 killed");
+            await execAsync(`kill -9 $(lsof -ti:${TEE_SERVER_PORT})`);
+            console.log(`Process running on port ${TEE_SERVER_PORT} killed`);
             this.containerId = null;
         }
     }

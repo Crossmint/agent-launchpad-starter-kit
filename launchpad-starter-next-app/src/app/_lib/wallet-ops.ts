@@ -1,32 +1,9 @@
 "use client";
 
 import { WebAuthnP256 } from "ox";
-import { type Address, createPublicClient, http } from "viem";
-import { baseSepolia } from "viem/chains";
-
 const API_KEY = process.env.NEXT_PUBLIC_CROSSMINT_SERVER_API_KEY as string;
-const MESSAGE = "Passkey signing!";
 const BASE_URL = "http://localhost:3000/api/2022-06-09";
 const CHAIN = "base-sepolia";
-
-async function createSignature(walletAddress: string) {
-    const response = await fetch(`${BASE_URL}/wallets/${walletAddress}/signatures`, {
-        method: "POST",
-        headers: {
-            "X-API-KEY": API_KEY,
-            "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-            type: "evm-message",
-            params: {
-                message: MESSAGE,
-                chain: CHAIN,
-            },
-        }),
-    });
-
-    return await response.json();
-}
 
 export async function submitSignatureApproval(
     metadata: any,
@@ -52,49 +29,34 @@ export async function submitSignatureApproval(
         }),
     });
 
-    const data = await response.json();
-    console.log({ signatureApprovalResponse: data });
-
-    return data;
+    return await response.json();
 }
 
-export const handleSignMessage = async (walletAddress: string, credentialId: string) => {
-    try {
-        const creationResponse = await createSignature(walletAddress);
-        const { metadata, signature } = await WebAuthnP256.sign({
-            credentialId,
-            challenge: creationResponse.approvals.pending[0].message,
-        });
+export async function createDelegatedSigner(
+    smartWalletAddress: string,
+    agentKeyAddress: string
+): Promise<{ message: string; id: string }> {
+    const response = await fetch(`${BASE_URL}/wallets/${smartWalletAddress}/signers`, {
+        method: "POST",
+        headers: {
+            "X-API-KEY": API_KEY,
+            "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+            signer: `evm-keypair:${agentKeyAddress}`,
+            chain: CHAIN,
+            expiresAt: 1835845180080, // expires in 2028
+        }),
+    });
 
-        const approvalResponse = await submitSignatureApproval(
-            metadata,
-            { r: signature.r.toString(), s: signature.s.toString() },
-            `evm-passkey:${credentialId}`,
-            walletAddress,
-            creationResponse.id
-        );
+    const data = await response.json();
 
-        // Add verification check
-        const valid = await createPublicClient({
-            transport: http("https://base-sepolia.g.alchemy.com/v2/4IBaeesGpVoEPGjbI0_lbVf-ja4woVlm"),
-            chain: baseSepolia,
-        }).verifyMessage({
-            address: walletAddress as Address,
-            message: MESSAGE,
-            signature: approvalResponse.outputSignature,
-        });
+    // Extract the message to sign from the first chain's pending approval
+    const firstChain = Object.values(data.chains)[0] as any;
+    const pendingApproval = firstChain.approvals.pending[0];
 
-        if (!valid) {
-            throw new Error("Signature verification failed");
-        }
-
-        console.log(approvalResponse);
-
-        return approvalResponse.id;
-    } catch (error) {
-        throw error;
-    }
-};
+    return { message: pendingApproval.message, id: firstChain.id };
+}
 
 export const handleRegisterAndApproveDelegate = async (
     walletAddress: string,

@@ -3,7 +3,7 @@
 import { createContext, useContext, useState, type ReactNode } from "react";
 import { WebAuthnP256 } from "ox";
 
-const API_KEY = process.env.NEXT_PUBLIC_CROSSMINT_SERVER_API_KEY as string;
+const SERVER_API_KEY = process.env.NEXT_PUBLIC_CROSSMINT_SERVER_API_KEY as string;
 const BASE_URL = "http://localhost:3000/api/2022-06-09";
 
 interface Wallet {
@@ -19,6 +19,7 @@ interface WalletContextType {
 const WalletContext = createContext<WalletContextType | undefined>(undefined);
 
 async function createWallet(credential: WebAuthnP256.P256Credential, name: string) {
+    const randomNumString = Math.floor(Math.random() * 1000000).toString();
     const response = await fetch(`${BASE_URL}/wallets`, {
         method: "POST",
         body: JSON.stringify({
@@ -36,10 +37,10 @@ async function createWallet(credential: WebAuthnP256.P256Credential, name: strin
                 creationSeed: "0",
             },
             // TODO: update this to a actual user input value
-            linkedUser: "email:jonathan.temp+tt97@paella.dev",
+            linkedUser: `email:admin-launchpad.key+${randomNumString}@paella.dev`,
         }),
         headers: {
-            "X-API-KEY": API_KEY,
+            "X-API-KEY": SERVER_API_KEY,
             "Content-Type": "application/json",
         },
     });

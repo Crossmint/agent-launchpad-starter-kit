@@ -16,5 +16,5 @@ app.get("/health", (req, res) => {
 app.use("/api/deploy", deployRouter);
 
 app.listen(port, () => {
-    console.log(`TEE server running on port ${port}`);
+    console.log(`Express server running on port ${port}`);
 });

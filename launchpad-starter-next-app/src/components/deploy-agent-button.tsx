@@ -8,7 +8,7 @@ import { Button } from "./button";
 import { Typography } from "./typography";
 import { useToast } from "./use-toast";
 import { useWallet } from "@/app/contexts/WalletContext";
-import { handleRegisterAndApproveDelegate, handleSignMessage } from "@/app/_lib/wallet-ops";
+import { createDelegatedSigner, handleRegisterAndApproveDelegate } from "@/app/_lib/wallet-ops";
 
 export const DeployAgentButton = ({
     setAgentSuccessfullyDeployed,
@@ -47,14 +47,17 @@ export const DeployAgentButton = ({
                 }
             );
             const data = await response.json();
-            console.log({ data });
 
-            // // 2. Sign the signature
-            const signedSignature = await handleSignMessage(wallet.address, wallet.credentialId);
-            console.log({ signedSignature });
+            // 2. Create a delegated signer request
+            const delegatedSigner = await createDelegatedSigner(wallet.address, data.agentPublicKey);
 
-            // 3. Register and approve the delegate
-            await handleRegisterAndApproveDelegate(wallet.address, wallet.credentialId, data.message, data.id);
+            // 3. Register and approve the delegate signer
+            await handleRegisterAndApproveDelegate(
+                wallet.address,
+                wallet.credentialId,
+                delegatedSigner.message,
+                delegatedSigner.id
+            );
 
             setAgentSuccessfullyDeployed(true);
         } catch (error) {

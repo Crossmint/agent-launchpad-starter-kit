@@ -77,14 +77,14 @@ In jurisdictions like the United States, platforms that have the ability to cont
    cp .env.example .env
    
    # For Express server
-   cd ../agent-tee
+   cd ../agent-tee-phala
    cp .env.example .env
    ```
    To run the staging db, make sure to use a staging API key from the Crossmint Console, otherwise, it will default to local.
 
 2. Install dependencies for both applications:
    ```bash
-   # In each directory (launchpad-starter-next-app and agent-tee)
+   # In each directory (launchpad-starter-next-app and agent-tee-phala)
    pnpm install
    ```
 
@@ -93,7 +93,7 @@ In jurisdictions like the United States, platforms that have the ability to cont
    # In launchpad-starter-next-app
    pnpm dev
 
-   # In agent-tee (separate terminal)
+   # In agent-tee-phala (separate terminal)
    pnpm dev
    ```
 

@@ -1,5 +1,5 @@
 {
-  "name": "agent-tee",
+  "name": "agent-tee-phala",
   "version": "1.0.0",
   "scripts": {
     "build": "tsc",

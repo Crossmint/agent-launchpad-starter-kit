@@ -1,14 +1,15 @@
 "use client";
 
+import { useState } from "react";
 import { Passkey } from "@/icons/passkey";
 import { Spinner } from "@/icons/spinner";
-import { useState } from "react";
+import { WebAuthnP256 } from "ox";
 
 import { Button } from "./button";
 import { Typography } from "./typography";
 import { useToast } from "./use-toast";
 import { useWallet } from "@/app/contexts/WalletContext";
-import { createDelegatedSigner, handleRegisterAndApproveDelegate } from "@/app/_lib/wallet-ops";
+import { submitSignatureApproval } from "@/app/_actions/submit-signature-approval";
 
 export const DeployAgentButton = ({
     setAgentSuccessfullyDeployed,
@@ -46,17 +47,34 @@ export const DeployAgentButton = ({
                     },
                 }
             );
-            const data = await response.json();
 
-            // 2. Create a delegated signer request
-            const delegatedSigner = await createDelegatedSigner(wallet.address, data.agentPublicKey);
+            const data = (await response.json()) as {
+                success: true;
+                containerId: string;
+                delegatedSignerMessage: string;
+                delegatedSignerId: string;
+                delegatedSignerAlreadyActive?: boolean;
+            };
 
-            // 3. Register and approve the delegate signer
-            await handleRegisterAndApproveDelegate(
+            // If the delegated signer is already active, we can skip the signature approval step
+            if (data?.delegatedSignerAlreadyActive) {
+                setAgentSuccessfullyDeployed(true);
+                return;
+            }
+
+            // 2. Sign the delegated signer message that was returned from the server
+            const { metadata, signature } = await WebAuthnP256.sign({
+                credentialId: wallet.credentialId,
+                challenge: data.delegatedSignerMessage as `0x${string}`,
+            });
+
+            // 3. call the server-side action to submit the signature approval
+            await submitSignatureApproval(
+                metadata,
+                { r: signature.r.toString(), s: signature.s.toString() },
+                `evm-passkey:${wallet.credentialId}`,
                 wallet.address,
-                wallet.credentialId,
-                delegatedSigner.message,
-                delegatedSigner.id
+                data.delegatedSignerId
             );
 
             setAgentSuccessfullyDeployed(true);

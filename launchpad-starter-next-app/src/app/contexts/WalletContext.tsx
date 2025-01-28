@@ -2,9 +2,13 @@
 
 import { createContext, useContext, useState, type ReactNode } from "react";
 import { WebAuthnP256 } from "ox";
+import { useAuth } from "@crossmint/client-sdk-react-ui";
 
-const SERVER_API_KEY = process.env.NEXT_PUBLIC_CROSSMINT_SERVER_API_KEY as string;
-const BASE_URL = "http://localhost:3000/api/2022-06-09";
+const BASE_URL =
+    process.env.USE_STAGING_DB === "1"
+        ? "https://staging.crossmint.com/api/2022-06-09"
+        : "http://localhost:3000/api/2022-06-09";
+const CLIENT_API_KEY = process.env.NEXT_PUBLIC_CROSSMINT_API_KEY as string;
 
 interface Wallet {
     address: string;
@@ -14,56 +18,84 @@ interface Wallet {
 interface WalletContextType {
     wallet: Wallet | null;
     isLoading: boolean;
-    createNewWallet: () => Promise<void>;
+    getOrCreateWallet: () => Promise<void>;
 }
+
 const WalletContext = createContext<WalletContextType | undefined>(undefined);
 
-async function createWallet(credential: WebAuthnP256.P256Credential, name: string) {
-    const randomNumString = Math.floor(Math.random() * 1000000).toString();
-    const response = await fetch(`${BASE_URL}/wallets`, {
-        method: "POST",
-        body: JSON.stringify({
-            type: "evm-smart-wallet",
-            config: {
-                adminSigner: {
-                    type: "evm-passkey",
-                    id: credential.id,
-                    publicKey: {
-                        x: credential.publicKey.x.toString(),
-                        y: credential.publicKey.y.toString(),
-                    },
-                    name,
-                },
-                creationSeed: "0",
-            },
-            // TODO: update this to a actual user input value
-            linkedUser: `email:admin-launchpad.key+${randomNumString}@paella.dev`,
-        }),
-        headers: {
-            "X-API-KEY": SERVER_API_KEY,
-            "Content-Type": "application/json",
-        },
-    });
-
-    return await response.json();
-}
-
 export function WalletProvider({ children }: { children: ReactNode }) {
+    const { jwt, logout } = useAuth();
     const [wallet, setWallet] = useState<Wallet | null>(null);
     const [isLoading, setIsLoading] = useState(false);
 
-    const createNewWallet = async () => {
+    const getOrCreateWallet = async () => {
+        if (!jwt) {
+            console.error("No JWT available");
+            return;
+        }
+
         setIsLoading(true);
         try {
-            const name = `test passkey ${new Date().toISOString()}`;
+            // First, try to get existing wallet
+            const getResponse = await fetch(`${BASE_URL}/wallets/me:evm-smart-wallet`, {
+                method: "GET",
+                headers: {
+                    "X-API-KEY": CLIENT_API_KEY,
+                    authorization: `Bearer ${jwt}`,
+                    "Content-Type": "application/json",
+                },
+            });
+
+            const existingWallet = await getResponse.json();
+
+            if (existingWallet != null && existingWallet.address != null) {
+                console.log("Existing wallet found:", existingWallet);
+                // Use the first wallet found
+                setWallet({
+                    address: existingWallet?.address,
+                    credentialId: existingWallet?.config.adminSigner.id,
+                });
+                return;
+            }
+
+            // If no wallet exists, create a new one
+            const name = `Agent launchpad starter ${new Date().toISOString()}`;
             const credential = await WebAuthnP256.createCredential({ name });
-            const response = await createWallet(credential, name);
+
+            const createResponse = await fetch(`${BASE_URL}/wallets/me`, {
+                method: "POST",
+                body: JSON.stringify({
+                    type: "evm-smart-wallet",
+                    config: {
+                        adminSigner: {
+                            type: "evm-passkey",
+                            id: credential.id,
+                            publicKey: {
+                                x: credential.publicKey.x.toString(),
+                                y: credential.publicKey.y.toString(),
+                            },
+                            name,
+                        },
+                        creationSeed: "0",
+                    },
+                }),
+                headers: {
+                    "X-API-KEY": CLIENT_API_KEY,
+                    authorization: `Bearer ${jwt}`,
+                    "Content-Type": "application/json",
+                },
+            });
+
+            const data = await createResponse.json();
+
             setWallet({
-                address: response.address,
-                credentialId: response.config.adminSigner.id,
+                address: data.address,
+                credentialId: data.config.adminSigner.id,
             });
         } catch (error) {
-            console.error("Error creating wallet:", error);
+            console.error("Error with wallet operation:", error);
+            logout();
+            setWallet(null);
         } finally {
             setIsLoading(false);
         }
@@ -74,7 +106,7 @@ export function WalletProvider({ children }: { children: ReactNode }) {
             value={{
                 wallet,
                 isLoading,
-                createNewWallet,
+                getOrCreateWallet,
             }}
         >
             {children}

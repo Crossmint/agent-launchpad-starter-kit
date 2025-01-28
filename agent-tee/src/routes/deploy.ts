@@ -1,5 +1,6 @@
 import { Router } from "express";
 import { ContainerManager } from "../services/container";
+import { CrossmintSmartWalletService } from "../services/wallet";
 
 const router = Router();
 
@@ -7,6 +8,7 @@ const containerManager = new ContainerManager();
 
 router.post("/", async (req, res) => {
     try {
+        const smartWalletAddress = req.query.smartWalletAddress as string;
         // 1. Spin up TEE simulator container if not already running
         if (!containerManager.isRunning()) {
             console.log("Starting TEE simulator container...");
@@ -17,10 +19,16 @@ router.post("/", async (req, res) => {
         const agentKeys = await containerManager.generateAgentKeys();
         const agentPublicKey = agentKeys.keyAddress;
 
+        // 2. Get existing or create a new delegated signer request
+        const smartWalletService = new CrossmintSmartWalletService();
+        const delegatedSigner = await smartWalletService.getOrCreateDelegatedSigner(smartWalletAddress, agentPublicKey);
+
         res.json({
             success: true,
             containerId: containerManager.containerId,
-            agentPublicKey,
+            delegatedSignerMessage: delegatedSigner?.message,
+            delegatedSignerId: delegatedSigner?.id,
+            delegatedSignerAlreadyActive: delegatedSigner?.delegatedSignerAlreadyActive ?? false,
         });
     } catch (error) {
         console.error("Deployment error:", error);

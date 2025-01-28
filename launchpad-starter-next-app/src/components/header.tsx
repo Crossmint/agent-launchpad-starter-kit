@@ -4,25 +4,26 @@ import type React from "react";
 import { LogoutIcon } from "@/icons/logout";
 import { Copy, Image as ImageIcon, User, WalletMinimal } from "lucide-react";
 import Link from "next/link";
-import { useRouter } from "next/navigation";
 
 import { Avatar, AvatarFallback, AvatarImage } from "./avatar";
 import { DropdownMenu, DropdownMenuContent, DropdownMenuTrigger } from "./dropdown-menu";
 import { Typography } from "./typography";
 import { useToast } from "./use-toast";
 import { useWallet } from "@/app/contexts/WalletContext";
+import { useAuth } from "@crossmint/client-sdk-react-ui";
 
 function formatWalletAddress(address: string, startLength: number, endLength: number): string {
     return `${address.substring(0, startLength)}...${address.substring(address.length - endLength)}`;
 }
 
 export const Header: React.FC = () => {
+    const { logout } = useAuth();
     const { wallet, isLoading } = useWallet();
-    const router = useRouter();
     const { toast } = useToast();
 
     const handleLogout = () => {
-        router.push("/");
+        window.location.reload();
+        logout();
     };
 
     const handleCopyAddress = async () => {

@@ -43,22 +43,16 @@
       <a href="#about-the-project">About The Project</a>
       <ul>
         <li><a href="#why-non-custodial">Why Non-Custodial?</a></li>
-        <li><a href="#built-with">Built With</a></li>
       </ul>
     </li>
     <li>
-      <a href="#getting-started">Getting Started</a>
+      <a href="#development">Development</a>
       <ul>
-        <li><a href="#prerequisites">Prerequisites</a></li>
-        <li><a href="#installation">Installation</a></li>
+        <li><a href="#local-setup">Local Setup</a></li>
+        <li><a href="#docker-setup-requires-orbstack">Docker Setup (Requires OrbStack)</a></li>
       </ul>
     </li>
     <li><a href="#usage">Usage</a></li>
-    <li><a href="#roadmap">Roadmap</a></li>
-    <li><a href="#contributing">Contributing</a></li>
-    <li><a href="#license">License</a></li>
-    <li><a href="#contact">Contact</a></li>
-    <li><a href="#acknowledgments">Acknowledgments</a></li>
   </ol>
 </details>
 
@@ -88,57 +82,48 @@ The traditional custodial approach creates significant security risks. If a laun
 **2. Regulatory Compliance:**  
 In jurisdictions like the United States, platforms that have the ability to control or transmit user funds may fall under money transmitter regulations. This creates complex regulatory requirements and potential legal exposure. Non-custodial architecture helps platforms avoid classification as money transmitters by ensuring they never have direct access to or control over user funds.
 
-### Built With
+## Development
 
-- [![Next][Next.js]][Next-url]
-- [![React][React.js]][React-url]
-- Trusted Execution Environment (TEE)
-- Non-custodial Wallet Infrastructure
+### Local Setup
 
-<p align="right">(<a href="#readme-top">back to top</a>)</p>
+1. Obtain free API Key's from the Crossmint Console. You'll need both a server-side and client-side API Key. Refer to [Get an API Key](https://docs.crossmint.com/verifiable-credentials/quickstart#2-get-an-api-key) from the Quickstart guide for detailed instructions.
 
-<!-- GETTING STARTED -->
-
-## Getting Started
-
-To get a local copy up and running, follow these steps.
-
-### Prerequisites
-
-- npm
-  ```sh
-  npm install npm@latest -g
-  ```
-
-### Installation
-
-1. Get your API Keys from CrossMint
-
-2. Clone the repo
-
-   ```sh
-   git clone https://github.com/crossmint/agent-launchpad-starter.git
+2. Set up environment variables:
+   ```bash
+   # For Next.js app
+   cd launchpad-starter-next-app
+   cp .env.example .env
+   
+   # For Express server
+   cd ../agent-tee
+   cp .env.example .env
+   ```
+   To run the staging db, set the USE_STAGING_DB environment variable to 1:
+   ```bash
+   USE_STAGING_DB=1
    ```
 
-3. Install NPM packages
-
-   ```sh
-   npm install
+2. Install dependencies for both applications:
+   ```bash
+   # In each directory (launchpad-starter-next-app and agent-tee)
+   pnpm install
    ```
 
-4. Enter your API keys in `config.js`
+3. Start the applications:
+   ```bash
+   # In launchpad-starter-next-app
+   pnpm dev
 
-   ```js
-   const API_KEY = "ENTER YOUR CROSSMINT API KEY";
+   # In agent-tee (separate terminal)
+   pnpm dev
    ```
 
-5. Change git remote url to avoid accidental pushes to base project
-   ```sh
-   git remote set-url origin your-username/your-repo-name
-   git remote -v # confirm the changes
-   ```
+### Docker Setup (Requires OrbStack)
 
-<p align="right">(<a href="#readme-top">back to top</a>)</p>
+1. [Install OrbStack](https://orbstack.dev/) for local container management
+
+
+The Next.js app will be available at `http://localhost:3001` and the Express server at `http://localhost:4000`.
 
 <!-- USAGE EXAMPLES -->
 
@@ -161,78 +146,3 @@ _For more examples, please refer to the [Documentation](https://docs.crossmint.c
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
-<!-- ROADMAP -->
-
-## Roadmap
-
-- [ ] Multi-wallet support
-- [ ] Advanced TEE integration
-- [ ] Enhanced security features
-- [ ] Multi-sig support
-- [ ] Advanced key rotation
-
-See the [open issues](https://github.com/crossmint/agent-launchpad-starter/issues) for a full list of proposed features (and known issues).
-
-<p align="right">(<a href="#readme-top">back to top</a>)</p>
-
-<!-- CONTRIBUTING -->
-
-## Contributing
-
-Contributions are what make the open source community such an amazing place to learn, inspire, and create. Any contributions you make are **greatly appreciated**.
-
-1. Fork the Project
-2. Create your Feature Branch (`git checkout -b feature/AmazingFeature`)
-3. Commit your Changes (`git commit -m 'Add some AmazingFeature'`)
-4. Push to the Branch (`git push origin feature/AmazingFeature`)
-5. Open a Pull Request
-
-<p align="right">(<a href="#readme-top">back to top</a>)</p>
-
-<!-- LICENSE -->
-
-## License
-
-Distributed under the MIT License. See `LICENSE.txt` for more information.
-
-<p align="right">(<a href="#readme-top">back to top</a>)</p>
-
-<!-- CONTACT -->
-
-## Contact
-
-CrossMint - [@Crossmint Support](https://twitter.com/crossmint)
-
-Project Link: [https://github.com/crossmint/agent-launchpad-starter](https://github.com/crossmint/agent-launchpad-starter)
-
-<p align="right">(<a href="#readme-top">back to top</a>)</p>
-
-<!-- ACKNOWLEDGMENTS -->
-
-## Acknowledgments
-
-- [Next.js Documentation](https://nextjs.org/docs)
-- [CrossMint Documentation](https://docs.crossmint.com/)
-- [TEE Security Best Practices](https://example.com)
-
-<p align="right">(<a href="#readme-top">back to top</a>)</p>
-
-<!-- MARKDOWN LINKS & IMAGES -->
-
-[contributors-shield]: https://img.shields.io/github/contributors/crossmint/agent-launchpad-starter.svg?style=for-the-badge
-[contributors-url]: https://github.com/crossmint/agent-launchpad-starter/graphs/contributors
-[forks-shield]: https://img.shields.io/github/forks/crossmint/agent-launchpad-starter.svg?style=for-the-badge
-[forks-url]: https://github.com/crossmint/agent-launchpad-starter/network/members
-[stars-shield]: https://img.shields.io/github/stars/crossmint/agent-launchpad-starter.svg?style=for-the-badge
-[stars-url]: https://github.com/crossmint/agent-launchpad-starter/stargazers
-[issues-shield]: https://img.shields.io/github/issues/crossmint/agent-launchpad-starter.svg?style=for-the-badge
-[issues-url]: https://github.com/crossmint/agent-launchpad-starter/issues
-[license-shield]: https://img.shields.io/github/license/crossmint/agent-launchpad-starter.svg?style=for-the-badge
-[license-url]: https://github.com/crossmint/agent-launchpad-starter/blob/master/LICENSE.txt
-[linkedin-shield]: https://img.shields.io/badge/-LinkedIn-black.svg?style=for-the-badge&logo=linkedin&colorB=555
-[linkedin-url]: https://linkedin.com/company/crossmint
-[product-screenshot]: images/screenshot.png
-[Next.js]: https://img.shields.io/badge/next.js-000000?style=for-the-badge&logo=nextdotjs&logoColor=white
-[Next-url]: https://nextjs.org/
-[React.js]: https://img.shields.io/badge/React-20232A?style=for-the-badge&logo=react&logoColor=61DAFB
-[React-url]: https://reactjs.org/

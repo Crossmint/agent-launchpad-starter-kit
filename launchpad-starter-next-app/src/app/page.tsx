@@ -7,24 +7,15 @@ import { Typography } from "@/components/typography";
 import Link from "next/link";
 import { useState } from "react";
 import { useWallet } from "./contexts/WalletContext";
+import { SignInAuthButton } from "@/components/signin-auth-button";
 
 function HomePrimaryAction() {
     const [agentSuccessfullyDeployed, setAgentSuccessfullyDeployed] = useState(false);
 
-    const { wallet, isLoading, createNewWallet } = useWallet();
+    const { wallet } = useWallet();
 
-    if (!wallet?.address) {
-        return (
-            <button
-                onClick={createNewWallet}
-                disabled={isLoading}
-                className="bg-card gap-[10px] shadow-light rounded-xl py-3 px-6"
-            >
-                <Typography className="text-[#00150D] font-semibold text-[17px]">
-                    {isLoading ? "Creating Passkey Wallet..." : "Create Passkey Wallet"}
-                </Typography>
-            </button>
-        );
+    if (wallet == null) {
+        return <SignInAuthButton />;
     }
 
     if (agentSuccessfullyDeployed) {

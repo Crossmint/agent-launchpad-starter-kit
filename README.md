@@ -90,10 +90,10 @@ In jurisdictions like the United States, platforms that have the ability to cont
 
 3. Start the applications:
    ```bash
-   # In launchpad-starter-next-app
+   # In /launchpad-starter-next-app
    pnpm dev
 
-   # In agent-tee-phala (separate terminal)
+   # In /agent-tee-phala (separate terminal)
    pnpm dev
    ```
 

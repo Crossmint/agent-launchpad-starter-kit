@@ -1,16 +1,13 @@
-# Agent Launchpad Starter Kit
-
 <!-- Improved compatibility of back to top link -->
 
 <a id="readme-top"></a>
 
 <!-- PROJECT LOGO -->
 <div align="center">
+  <h1 align="center">Agent Launchpad Starter Kit</h1>
+
   <p align="center">
     A secure, non-custodial Next.js application for deploying AI agents with integrated wallet functionality
-    <br />
-    <a href="https://github.com/crossmint/agent-launchpad-starter"><strong>Explore the docs »</strong></a>
-    <br />
     <br />
     <a href="https://github.com/crossmint/agent-launchpad-starter">View Demo</a>
     ·

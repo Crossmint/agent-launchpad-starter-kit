@@ -1,17 +1,17 @@
 require("dotenv").config();
 
 const API_KEY = process.env.CROSSMINT_SERVER_API_KEY as string;
-const BASE_URL =
-    process.env.USE_STAGING_DB === "1"
-        ? "https://staging.crossmint.com/api/2022-06-09"
-        : "http://localhost:3000/api/2022-06-09";
 const CHAIN = "base-sepolia";
 
 export class CrossmintSmartWalletService {
     async getOrCreateDelegatedSigner(
         smartWalletAddress: string,
-        agentKeyAddress: string
+        agentKeyAddress: string,
+        isStagingDb = false
     ): Promise<{ message: string; id: string; delegatedSignerAlreadyActive?: boolean }> {
+        const BASE_URL = isStagingDb
+            ? "https://staging.crossmint.com/api/2022-06-09"
+            : "http://localhost:3000/api/2022-06-09";
         try {
             // 1. Check if the delegated signer already exists
             const getResponse = await fetch(

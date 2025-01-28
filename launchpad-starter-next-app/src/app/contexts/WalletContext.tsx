@@ -3,12 +3,13 @@
 import { createContext, useContext, useState, type ReactNode } from "react";
 import { WebAuthnP256 } from "ox";
 import { useAuth } from "@crossmint/client-sdk-react-ui";
+import { getEnvironmentForKey } from "@crossmint/common-sdk-base";
 
-const BASE_URL =
-    process.env.USE_STAGING_DB === "1"
-        ? "https://staging.crossmint.com/api/2022-06-09"
-        : "http://localhost:3000/api/2022-06-09";
 const CLIENT_API_KEY = process.env.NEXT_PUBLIC_CROSSMINT_API_KEY as string;
+
+const environment = getEnvironmentForKey(CLIENT_API_KEY);
+const BASE_URL =
+    environment === "staging" ? "https://staging.crossmint.com/api/2022-06-09" : "http://localhost:3000/api/2022-06-09";
 
 interface Wallet {
     address: string;

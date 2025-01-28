@@ -1,10 +1,11 @@
 "use server";
 
+import { getEnvironmentForKey } from "@crossmint/common-sdk-base";
+
 const API_KEY = process.env.CROSSMINT_SERVER_API_KEY as string;
+const environment = getEnvironmentForKey(API_KEY);
 const BASE_URL =
-    process.env.USE_STAGING_DB === "1"
-        ? "https://staging.crossmint.com/api/2022-06-09"
-        : "http://localhost:3000/api/2022-06-09";
+    environment === "staging" ? "https://staging.crossmint.com/api/2022-06-09" : "http://localhost:3000/api/2022-06-09";
 
 export async function submitSignatureApproval(
     metadata: any,

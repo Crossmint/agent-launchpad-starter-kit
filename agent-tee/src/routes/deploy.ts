@@ -9,6 +9,7 @@ const containerManager = new ContainerManager();
 router.post("/", async (req, res) => {
     try {
         const smartWalletAddress = req.query.smartWalletAddress as string;
+        const isStagingDb = req.query.isStagingDb === "true" || false;
         // 1. Spin up TEE simulator container if not already running
         if (!containerManager.isRunning()) {
             console.log("Starting TEE simulator container...");
@@ -21,7 +22,11 @@ router.post("/", async (req, res) => {
 
         // 2. Get existing or create a new delegated signer request
         const smartWalletService = new CrossmintSmartWalletService();
-        const delegatedSigner = await smartWalletService.getOrCreateDelegatedSigner(smartWalletAddress, agentPublicKey);
+        const delegatedSigner = await smartWalletService.getOrCreateDelegatedSigner(
+            smartWalletAddress,
+            agentPublicKey,
+            isStagingDb
+        );
 
         res.json({
             success: true,

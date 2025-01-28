@@ -80,10 +80,7 @@ In jurisdictions like the United States, platforms that have the ability to cont
    cd ../agent-tee
    cp .env.example .env
    ```
-   To run the staging db, set the USE_STAGING_DB environment variable to 1:
-   ```bash
-   USE_STAGING_DB=1
-   ```
+   To run the staging db, make sure to use a staging API key from the Crossmint Console, otherwise, it will default to local.
 
 2. Install dependencies for both applications:
    ```bash

@@ -5,10 +5,6 @@
             "path": "."
         },
         {
-            "name": "Agent Tee Server (Phala)",
-            "path": "./agent-tee-phala"
-        },
-        {
             "name": "Agent Launchpad Starter Next.js App",
             "path": "./launchpad-starter-next-app"
         }

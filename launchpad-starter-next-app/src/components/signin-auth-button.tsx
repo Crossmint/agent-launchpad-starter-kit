@@ -36,7 +36,7 @@ export const SignInAuthButton = () => {
     if (wallet == null && jwt != null) {
         return (
             <Button className="bg-card gap-[10px] shadow-light rounded-xl py-3" onClick={getOrCreateWallet}>
-                <Typography className="text-[#00150D] font-semibold text-[17px]">Get or create wallet</Typography>
+                <Typography className="text-[#00150D] font-semibold text-[17px]">Create agent wallet</Typography>
             </Button>
         );
     }

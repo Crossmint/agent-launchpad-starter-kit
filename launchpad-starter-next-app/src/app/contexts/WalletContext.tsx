@@ -3,13 +3,26 @@
 import { createContext, useContext, useState, type ReactNode } from "react";
 import { WebAuthnP256 } from "ox";
 import { useAuth } from "@crossmint/client-sdk-react-ui";
-import { getEnvironmentForKey } from "@crossmint/common-sdk-base";
+import { APIKeyEnvironmentPrefix, getEnvironmentForKey } from "@crossmint/common-sdk-base";
 
-const CLIENT_API_KEY = process.env.NEXT_PUBLIC_CROSSMINT_API_KEY as string;
+const CLIENT_API_KEY = process.env.NEXT_PUBLIC_CROSSMINT_CLIENT_API_KEY as string;
+if (!CLIENT_API_KEY) {
+    throw new Error("NEXT_PUBLIC_CROSSMINT_CLIENT_API_KEY is not set");
+}
 
 const environment = getEnvironmentForKey(CLIENT_API_KEY);
-const BASE_URL =
-    environment === "staging" ? "https://staging.crossmint.com/api/2022-06-09" : "http://localhost:3000/api/2022-06-09";
+const BASE_URL = (() => {
+    switch (environment) {
+        case APIKeyEnvironmentPrefix.STAGING:
+            return "https://staging.crossmint.com/api/2022-06-09";
+        case APIKeyEnvironmentPrefix.PRODUCTION:
+            return "https://www.crossmint.com/api/2022-06-09";
+        default:
+            return "http://localhost:3000/api/2022-06-09";
+    }
+})();
+
+
 
 interface Wallet {
     address: string;

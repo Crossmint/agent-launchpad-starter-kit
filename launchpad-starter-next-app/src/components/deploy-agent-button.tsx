@@ -12,7 +12,7 @@ import { useWallet } from "@/app/contexts/WalletContext";
 import { submitSignatureApproval } from "@/app/_actions/submit-signature-approval";
 import { getEnvironmentForKey } from "@crossmint/common-sdk-base";
 
-const environment = getEnvironmentForKey(process.env.NEXT_PUBLIC_CROSSMINT_API_KEY as string);
+const environment = getEnvironmentForKey(process.env.NEXT_PUBLIC_CROSSMINT_CLIENT_API_KEY as string);
 
 export const DeployAgentButton = ({
     setAgentSuccessfullyDeployed,

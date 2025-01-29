@@ -1,11 +1,19 @@
 "use client";
+import { useEffect } from "react";
 import { useAuth } from "@crossmint/client-sdk-react-ui";
 import { Button } from "./button";
 import { Typography } from "./typography";
 import { useWallet } from "@/app/contexts/WalletContext";
+
 export const SignInAuthButton = () => {
     const { login, jwt, status } = useAuth();
     const { wallet, getOrCreateWallet, isLoading: isLoadingWallet } = useWallet();
+
+    useEffect(() => {
+        if (wallet == null && jwt != null) {
+            getOrCreateWallet();
+        }
+    }, [wallet, jwt]);
 
     if (status === "in-progress" || isLoadingWallet) {
         return (
@@ -30,14 +38,6 @@ export const SignInAuthButton = () => {
                     Waiting for your wallet...
                 </Typography>
             </div>
-        );
-    }
-
-    if (wallet == null && jwt != null) {
-        return (
-            <Button className="bg-card gap-[10px] shadow-light rounded-xl py-3" onClick={getOrCreateWallet}>
-                <Typography className="text-[#00150D] font-semibold text-[17px]">Create agent wallet</Typography>
-            </Button>
         );
     }
 

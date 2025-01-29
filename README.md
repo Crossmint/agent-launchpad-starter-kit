@@ -7,7 +7,7 @@
   <h1 align="center">Agent Launchpad Starter Kit</h1>
 
   <p align="center">
-    A secure, non-custodial Next.js application for deploying AI agents with integrated wallet functionality
+    Example launchpad webapp that showcases how to deploy AI agents with non-custodial wallets. It uses Crossmint smart wallets and deploys agents in a TEE for secure key management.
     <br />
     <a href="https://github.com/crossmint/agent-launchpad-starter">View Demo</a>
     ·
@@ -40,19 +40,32 @@
 
 <!-- ABOUT THE PROJECT -->
 
+## Roadmap
+
+[x] Development mode  
+ [ ] Production deploys  
+ [ ] Solana support  
+[ ] Confidential environment variable setup  
+ [ ] Add support for more TEE networks
+
 ## About The Project
 
 ![Agent Launchpad Starter Kit](https://github.com/user-attachments/assets/364ad94a-cea1-42e5-928c-a75bc7b9709a)
 
-Agent Launchpad Starter Kit is an open-source platform that enables secure deployment of AI agents through an intuitive user interface. The platform creates a seamless experience for agent creators while maintaining robust security and regulatory compliance through non-custodial wallet architecture.
+The goal of this project is to help launchpads and other agent hosting patforms to easily
+deploy AI agents with wallets, following an architecture that is non-custodial for the launchpad,
+yet allows the agent owner and user to control the wallet.
+
+It implements the architecture proposed on [this blog](https://article.app/alfonso/agent-launchpad-wallet-architecture).
 
 ### Key Features:
 
-- Secure user authentication and wallet creation
-- Non-custodial agent deployment system
-- Delegated key management for agent registration
-- Built on Next.js for optimal performance and scalability
-- Trusted Execution Environment (TEE) integration
+- Agent framework agnostic. Compatible with ElizaOS, Zerepy, GAME, Langchain, Vercel AI, and more.
+- Chain agnostic. Currently works for all EVM chains, with Solana coming soon.
+- Non-custodial for the launchpad: launchpad owner can't access the agent's funds / wallet. Required
+  for regulatory compliance in the US.
+- Dual-key architecture. Both agent owner and agent itself can control the wallet.
+- The frontend uuses NextJS and the agents are deployed into a TEE by Phala network
 
 ### Why Non-Custodial?
 
@@ -64,64 +77,82 @@ The traditional custodial approach creates significant security risks. If a laun
 **2. Regulatory Compliance:**  
 In jurisdictions like the United States, platforms that have the ability to control or transmit user funds may fall under money transmitter regulations. This creates complex regulatory requirements and potential legal exposure. Non-custodial architecture helps platforms avoid classification as money transmitters by ensuring they never have direct access to or control over user funds.
 
-## Development
+## Get started
 
 ### Local Setup
 
-1. Obtain free API Key's from the Crossmint Console. You'll need both a server-side and client-side API Key. Refer to [Get an API Key](https://docs.crossmint.com/verifiable-credentials/quickstart#2-get-an-api-key) from the Quickstart guide for detailed instructions.
+1. Obtain free API Keys from the [Staging environment of Crossmint Console](https://staging.crossmint.com). You'll need both a server-side and client-side API Key. Refer to these instructions to [Get a server-side API Key](https://docs.crossmint.com/introduction/platform/api-keys/server-side) and [a client-side one](https://docs.crossmint.com/introduction/platform/api-keys/client-side).
 
-2. Set up environment variables:
+   - Ensure API keys have the required scopes:
+     - Server-side: All 'wallet API' scopes
+     - Client-side: All 'wallet API' and 'users' scopes. Whitelist `http://localhost:3001` as an origin
+
+2. Webapp setup
+
    ```bash
-   # For Next.js app
    cd launchpad-starter-next-app
-   cp .env.example .env
-   
-   # For Express server
-   cd ../agent-tee-phala
-   cp .env.example .env
-   ```
-   To run the staging db, make sure to use a staging API key from the Crossmint Console, otherwise, it will default to local.
-
-2. Install dependencies for both applications:
-   ```bash
-   # In each directory (launchpad-starter-next-app and agent-tee-phala)
    pnpm install
+   cp .env.example .env
    ```
 
-3. Start the applications:
+   Enter your Crossmint API keys in the `.env` file. Leave the URL as is.
+
+   Then start the webapp:
+
    ```bash
-   # In /launchpad-starter-next-app
-   pnpm dev
-
-   # In /agent-tee-phala (separate terminal)
    pnpm dev
    ```
+
+The Next.js app will be available at `http://localhost:3001`
+
+3. Agent setup
+
+   Open a new terminal in the project root folder, and run:
+
+   ```bash
+   cd agent-tee-phala
+   pnpm install
+   cp .env.example .env
+   ```
+
+   Then start the agent:
+
+   ```bash
+   pnpm dev
+   ```
+
+The Express server will be available at `http://localhost:4000`.
 
 ### Docker Setup (Requires OrbStack)
 
 1. [Install OrbStack](https://orbstack.dev/) for local container management
 
+## Deploying to Production
 
-The Next.js app will be available at `http://localhost:3001` and the Express server at `http://localhost:4000`.
+### Production Deployment Checklist
 
-<!-- USAGE EXAMPLES -->
+1. API Keys
 
-## Usage
+   - Replace staging API keys with production keys from [Crossmint Console](https://www.crossmint.com/console)
+   - Ensure API keys have the required scopes:
+     - Server-side: All 'wallet API' scopes
+     - Client-side: All 'wallet API' and 'users' scopes. Whitelist your webapp url as an origin.
 
-This starter kit is designed for:
+2. Deploy Agent to Phala Cloud
 
-- Workflow automation platforms
-- Multi-tenant agent providers
-- Infrastructure companies supporting AI agent deployment
-- B2B companies creating user-owned or company-owned agents
+   - Create an account on [Phala Cloud](https://cloud.phala.network)
+   - Follow the [deployment guide](https://docs.phala.network/developers/deploy-to-phala-cloud) to deploy your agent
+   - Update the `NEXT_PUBLIC_TEE_SERVER_URL` in your webapp's environment variables to point to your Phala Cloud endpoint
 
-Examples include:
+3. Deploy Webapp
 
-- Cognition Labs (DevOps agents)
-- 11x (GTM agents)
-- Other agent infrastructure providers
+   - Deploy your Next.js application to your preferred hosting platform (Vercel, AWS, etc.)
+   - Set up environment variables in your hosting platform's dashboard
 
-_For more examples, please refer to the [Documentation](https://docs.crossmint.com/docs/agent-launchpad)_
+4. Testing
+
+   - Verify wallet creation flow works end-to-end
+   - Test agent deployment and communication
+   - Confirm authentication and authorization are working as expected
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
-

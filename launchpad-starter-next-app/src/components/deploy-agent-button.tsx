@@ -10,9 +10,6 @@ import { Typography } from "./typography";
 import { useToast } from "./use-toast";
 import { useWallet } from "@/app/contexts/WalletContext";
 import { submitSignatureApproval } from "@/app/_actions/submit-signature-approval";
-import { getEnvironmentForKey } from "@crossmint/common-sdk-base";
-
-const environment = getEnvironmentForKey(process.env.NEXT_PUBLIC_CROSSMINT_CLIENT_API_KEY as string);
 
 export const DeployAgentButton = ({
     setAgentSuccessfullyDeployed,
@@ -41,15 +38,13 @@ export const DeployAgentButton = ({
             }
 
             // 1. Deploy the agent
-            const response = await fetch(
-                `${process.env.NEXT_PUBLIC_TEE_SERVER_URL}/api/deploy?smartWalletAddress=${wallet.address}&isStagingDb=${environment === "staging"}`,
-                {
-                    method: "POST",
-                    headers: {
-                        "Content-Type": "application/json",
-                    },
-                }
-            );
+            const response = await fetch(`/api/deploy`, {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify({ smartWalletAddress: wallet.address }),
+            });
 
             const data = (await response.json()) as {
                 success: true;

@@ -4,7 +4,6 @@ import { keccak256 } from "viem";
 import { exec } from "child_process";
 import { promisify } from "util";
 
-require("dotenv").config();
 const execAsync = promisify(exec);
 
 const TEE_SERVER_PORT = process.env.TEE_SERVER_PORT || 8090;

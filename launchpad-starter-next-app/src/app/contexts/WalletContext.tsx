@@ -1,28 +1,16 @@
 "use client";
 
 import { createContext, useContext, useState, type ReactNode } from "react";
-import { WebAuthnP256 } from "ox";
 import { useAuth } from "@crossmint/client-sdk-react-ui";
-import { APIKeyEnvironmentPrefix, getEnvironmentForKey } from "@crossmint/common-sdk-base";
+import { WebAuthnP256 } from "ox";
+import { getBaseUrlFromApiKey } from "@/lib/utils";
 
 const CLIENT_API_KEY = process.env.NEXT_PUBLIC_CROSSMINT_CLIENT_API_KEY as string;
 if (!CLIENT_API_KEY) {
     throw new Error("NEXT_PUBLIC_CROSSMINT_CLIENT_API_KEY is not set");
 }
 
-const environment = getEnvironmentForKey(CLIENT_API_KEY);
-const BASE_URL = (() => {
-    switch (environment) {
-        case APIKeyEnvironmentPrefix.STAGING:
-            return "https://staging.crossmint.com/api/2022-06-09";
-        case APIKeyEnvironmentPrefix.PRODUCTION:
-            return "https://www.crossmint.com/api/2022-06-09";
-        default:
-            return "http://localhost:3000/api/2022-06-09";
-    }
-})();
-
-
+const CROSSMINT_BASE_URL = getBaseUrlFromApiKey(CLIENT_API_KEY);
 
 interface Wallet {
     address: string;
@@ -51,7 +39,7 @@ export function WalletProvider({ children }: { children: ReactNode }) {
         setIsLoading(true);
         try {
             // First, try to get existing wallet
-            const getResponse = await fetch(`${BASE_URL}/wallets/me:evm-smart-wallet`, {
+            const getResponse = await fetch(`${CROSSMINT_BASE_URL}/wallets/me:evm-smart-wallet`, {
                 method: "GET",
                 headers: {
                     "X-API-KEY": CLIENT_API_KEY,
@@ -76,7 +64,7 @@ export function WalletProvider({ children }: { children: ReactNode }) {
             const name = `Agent launchpad starter ${new Date().toISOString()}`;
             const credential = await WebAuthnP256.createCredential({ name });
 
-            const createResponse = await fetch(`${BASE_URL}/wallets/me`, {
+            const createResponse = await fetch(`${CROSSMINT_BASE_URL}/wallets/me`, {
                 method: "POST",
                 body: JSON.stringify({
                     type: "evm-smart-wallet",

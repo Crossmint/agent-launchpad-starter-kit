@@ -1,11 +1,9 @@
 "use server";
 
-import { getEnvironmentForKey } from "@crossmint/common-sdk-base";
+import { getBaseUrlFromApiKey } from "@/lib/utils";
 
 const API_KEY = process.env.CROSSMINT_SERVER_API_KEY as string;
-const environment = getEnvironmentForKey(API_KEY);
-const BASE_URL =
-    environment === "staging" ? "https://staging.crossmint.com/api/2022-06-09" : "http://localhost:3000/api/2022-06-09";
+const CROSSMINT_BASE_URL = getBaseUrlFromApiKey(API_KEY);
 
 export async function submitSignatureApproval(
     metadata: any,
@@ -15,22 +13,25 @@ export async function submitSignatureApproval(
     signatureId: string
 ) {
     try {
-        const response = await fetch(`${BASE_URL}/wallets/${walletAddress}/signatures/${signatureId}/approvals`, {
-            method: "POST",
-            headers: {
-                "X-API-KEY": API_KEY,
-                "Content-Type": "application/json",
-            },
-            body: JSON.stringify({
-                approvals: [
-                    {
-                        signer,
-                        metadata,
-                        signature,
-                    },
-                ],
-            }),
-        });
+        const response = await fetch(
+            `${CROSSMINT_BASE_URL}/wallets/${walletAddress}/signatures/${signatureId}/approvals`,
+            {
+                method: "POST",
+                headers: {
+                    "X-API-KEY": API_KEY,
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify({
+                    approvals: [
+                        {
+                            signer,
+                            metadata,
+                            signature,
+                        },
+                    ],
+                }),
+            }
+        );
 
         if (!response.ok) {
             throw new Error("Failed to submit signature approval");

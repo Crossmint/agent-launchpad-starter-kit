@@ -105,24 +105,6 @@ In jurisdictions like the United States, platforms that have the ability to cont
 
 The Next.js app will be available at `http://localhost:3001`
 
-3. Agent setup
-
-   Open a new terminal in the project root folder, and run:
-
-   ```bash
-   cd agent-tee-phala
-   pnpm install
-   cp .env.example .env
-   ```
-
-   Then start the agent:
-
-   ```bash
-   pnpm dev
-   ```
-
-The Express server will be available at `http://localhost:4000`.
-
 ### Docker Setup (Requires OrbStack)
 
 1. [Install OrbStack](https://orbstack.dev/) for local container management

@@ -35,13 +35,26 @@ export class ContainerManager {
     }
 
     async generateAgentKeys(): Promise<{ keyAddress: string; privateKeyAddress: string }> {
+        if (!this.isRunning()) {
+            // wait up to 5 seconds for container to be running
+            for (let i = 0; i < 5; i++) {
+                await new Promise((resolve) => setTimeout(resolve, 1000));
+                if (this.isRunning()) {
+                    break;
+                }
+            }
+            if (!this.isRunning()) {
+                throw new Error("Container not running");
+            }
+        }
+
         const client = new TappdClient(TEE_SERVER_URL);
 
-        // Derive keys
-        console.log("Generating key in TEE simulator...");
-        const randomNumString = Math.random().toString();
-        // Call the deriveKey function and pass in the root of trust to derive a key
-        const randomDeriveKey = await client.deriveKey("/", randomNumString);
+        // Generate a unique path for key derivation
+        const uniquePath = `/keys/${Date.now()}-${Math.random().toString(36).substring(2)}`;
+        // Call the deriveKey function with a unique path
+        const randomDeriveKey = await client.deriveKey(uniquePath, "");
+
         // Hash the derivedKey uint8Array value
         const keccakPrivateKey = keccak256(randomDeriveKey.asUint8Array());
         // Get the private key account from the derived key hash
@@ -49,7 +62,6 @@ export class ContainerManager {
 
         console.log("keys generated in docker container ", this.containerId);
         console.log("account:", account.address);
-        // console.log("privateKey:", keccakPrivateKey);
 
         return { keyAddress: account.address, privateKeyAddress: keccakPrivateKey };
     }

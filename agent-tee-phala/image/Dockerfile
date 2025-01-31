@@ -14,7 +14,11 @@ RUN --mount=type=cache,id=pnpm,target=/pnpm/store pnpm install --frozen-lockfile
 # Copy source code
 COPY . .
 
+EXPOSE 4000
+
+ENV PORT=4000
+
 # Build TypeScript
 RUN pnpm build
-ENV DSTACK_ENDPOINT="http://host.docker.internal:8090"
+ENV DSTACK_ENDPOINT="http://localhost:4000"
 CMD ["pnpm", "start"]

@@ -9,35 +9,41 @@ const IS_DEV = process.env.NODE_ENV === "development";
 
 export class ContainerManager {
     public containerId: string | null = null;
+    public deploymentUrl: string | null = null;
 
     async startContainer(): Promise<void> {
         try {
-            const LOCAL_COMPOSE_FILE_PATH = path.join(process.cwd(), "..", ".tee-cloud/compose-files/tee-compose.yaml");
+            const LOCAL_COMPOSE_FILE_PATH = path.join(
+                process.cwd(),
+                "..",
+                "agent-tee-phala",
+                ".tee-cloud/compose-files/tee-compose.yaml"
+            );
             if (IS_DEV) {
                 // Development: Use docker-compose
-                await execAsync(
-                    `DSTACK_ENDPOINT=http://localhost:8090 docker-compose -f ${LOCAL_COMPOSE_FILE_PATH} up -d`
-                );
                 const { stdout } = await execAsync(`docker-compose -f ${LOCAL_COMPOSE_FILE_PATH} up -d`);
                 this.containerId = stdout.trim();
+                this.deploymentUrl = `http://localhost:${TEE_SERVER_PORT}`;
             } else {
                 // Production: Use direct docker command
+                // TODO: extract image name from env var
                 const { stdout } = await execAsync(
                     `docker run -d --rm -p ${TEE_SERVER_PORT}:${TEE_SERVER_PORT} jonathanpaella/agentlaunchpadstarterkit:latest`
                 );
                 this.containerId = stdout.trim();
+                // todo: get/set production url
             }
 
+            await this.waitForContainerToBeReady();
             console.log(`TEE container started: ${this.containerId}`);
-
-            // Wait for container to be ready
-            await new Promise((resolve) => setTimeout(resolve, 2000));
+            console.log(`Deployment URL: ${this.deploymentUrl}`);
 
             // Show container logs
             const logCommand = IS_DEV
                 ? `docker-compose -f ${LOCAL_COMPOSE_FILE_PATH} logs app`
                 : `docker logs ${this.containerId}`;
             const { stdout: logs } = await execAsync(logCommand);
+
             console.log("Container logs:", logs);
         } catch (error) {
             console.error("Failed to start container:", error);
@@ -67,5 +73,20 @@ export class ContainerManager {
 
     isRunning(): boolean {
         return this.containerId !== null;
+    }
+
+    async waitForContainerToBeReady(): Promise<void> {
+        // Wait up to 60 seconds for container to be ready
+        const startTime = Date.now();
+        while (Date.now() - startTime < 60000) {
+            try {
+                const { stdout } = await execAsync(`docker inspect -f '{{.State.Running}}' ${this.containerId}`);
+                if (stdout.trim() === "true") {
+                    break;
+                }
+            } catch (_error) {
+                // Container not found or other error, keep waiting
+            }
+        }
     }
 }

@@ -21,9 +21,13 @@ export async function POST(request: Request) {
             await containerManager.startContainer();
         }
 
-        // 2. TODO get agent key from deployed TEE instance
-
+        // 2. Get agent key from deployed TEE instance
+        const agentPublicKey = await fetch(`${containerManager.deploymentUrl}/api/getPublicKey`).then((res) =>
+            res.json()
+        );
+        console.log(`Agent public key: ${agentPublicKey}`);
         // 3. Get existing or create a new delegated signer request
+        // ***remove comment once step 1 and 2 are working
         // const delegatedSigner = await getOrCreateDelegatedSigner(smartWalletAddress, agentPublicKey);
 
         return NextResponse.json({
@@ -40,7 +44,7 @@ export async function POST(request: Request) {
     } catch (error) {
         console.error("Deployment error:", error);
         // Ensure container is stopped on error
-        await containerManager.stopContainer();
+        // await containerManager.stopContainer();
 
         return NextResponse.json(
             {

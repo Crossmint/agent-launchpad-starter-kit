@@ -1,0 +1,20 @@
+{
+    "name": "agent-tee-phala",
+    "version": "1.0.0",
+    "scripts": {
+      "build": "tsc",
+      "start": " node dist/index.js",
+      "dev": "ts-node-dev --respawn src/index.ts",
+      "test": "bash scripts/test.sh"
+    },
+    "dependencies": {
+      "@phala/dstack-sdk": "latest",
+      "viem": "2.22.11"
+    },
+    "devDependencies": {
+      "@types/node": "^20.0.0",
+      "typescript": "^5.0.0",
+      "ts-node-dev": "^2.0.0",
+      "ts-node": "^10.0.0"
+    }
+  }

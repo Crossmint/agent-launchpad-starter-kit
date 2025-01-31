@@ -1,0 +1,12 @@
+version: "3"
+services:
+  app:
+    image: agent-tee-phala
+    container_name: agent-tee-phala
+    ports:
+      - "8090:8090"
+    environment:
+      - NODE_ENV=development
+    volumes:
+      - /var/run/tappd.sock:/var/run/tappd.sock
+    restart: always

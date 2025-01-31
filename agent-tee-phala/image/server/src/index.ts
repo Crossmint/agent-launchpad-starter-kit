@@ -5,12 +5,10 @@ import express from "express";
 
 const app = express();
 const port = process.env.PORT || 4000;
-const dstackEndpoint = process.env.DSTACK_ENDPOINT || `http://localhost:${port}`;
 
 app.get("/api/getPublicKey", async (req, res) => {
     try {
-        console.log("Dstack endpoint:", dstackEndpoint);
-        const client = new TappdClient(dstackEndpoint);
+        const client = new TappdClient(process.env.DSTACK_SIMULATOR_ENDPOINT);
         // Generate a unique path for key derivation
         const uniquePath = `/keys/${Date.now()}-${Math.random().toString(36).substring(2)}`;
         const randomDeriveKey = await client.deriveKey(uniquePath, "");

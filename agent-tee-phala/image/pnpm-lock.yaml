@@ -9,7 +9,7 @@ importers:
   .:
     dependencies:
       '@phala/dstack-sdk':
-        specifier: latest
+        specifier: ^0.1.7
         version: 0.1.7(typescript@5.7.3)
       '@types/express':
         specifier: ^5.0.0

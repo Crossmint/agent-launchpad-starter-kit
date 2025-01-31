@@ -23,7 +23,7 @@ export class ContainerManager {
                 // Development: Use docker-compose
                 const { stdout } = await execAsync(`docker-compose -f ${LOCAL_COMPOSE_FILE_PATH} up -d`);
                 this.containerId = stdout.trim();
-                this.deploymentUrl = `http://localhost:${TEE_SERVER_PORT}`;
+                this.deploymentUrl = `http://host.docker.internal:${TEE_SERVER_PORT}`;
             } else {
                 // Production: Use direct docker command
                 // TODO: extract image name from env var

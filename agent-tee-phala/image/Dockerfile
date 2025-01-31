@@ -20,5 +20,5 @@ ENV PORT=4000
 
 # Build TypeScript
 RUN pnpm build
-ENV DSTACK_ENDPOINT="http://localhost:4000"
+ENV DSTACK_SIMULATOR_ENDPOINT="http://host.docker.internal:8090"
 CMD ["pnpm", "start"]

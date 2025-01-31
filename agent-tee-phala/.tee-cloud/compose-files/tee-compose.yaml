@@ -8,6 +8,4 @@ services:
     environment:
       - NODE_ENV=development
       - PORT=4000
-    volumes:
-      - /var/run/tappd.sock:/var/run/tappd.sock
     restart: always

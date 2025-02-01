@@ -6,24 +6,34 @@ const execAsync = promisify(exec);
 
 const TEE_SERVER_PORT = process.env.TEE_SERVER_PORT || 8090;
 const IS_DEV = process.env.NODE_ENV === "development";
+const DEVELOPMENT_DEPLOYMENT_URL = "http://app.compose-files.orb.local:4000";
+const LOCAL_COMPOSE_FILE_PATH = path.join(
+    process.cwd(),
+    "..",
+    "agent-tee-phala",
+    ".tee-cloud/compose-files/tee-compose.yaml"
+);
 
 export class ContainerManager {
     public containerId: string | null = null;
     public deploymentUrl: string | null = null;
+    public simulatorId?: string | null = null;
 
     async startContainer(): Promise<void> {
         try {
-            const LOCAL_COMPOSE_FILE_PATH = path.join(
-                process.cwd(),
-                "..",
-                "agent-tee-phala",
-                ".tee-cloud/compose-files/tee-compose.yaml"
-            );
             if (IS_DEV) {
                 // Development: Use docker-compose
-                const { stdout } = await execAsync(`docker-compose -f ${LOCAL_COMPOSE_FILE_PATH} up -d`);
-                this.containerId = stdout.trim();
-                this.deploymentUrl = `http://host.docker.internal:${TEE_SERVER_PORT}`;
+                // Start simulator on port 8090
+                console.log("Starting simulator...");
+                const { stdout: simulatorId } = await execAsync(
+                    `docker run -d --rm -p 8090:8090 phalanetwork/tappd-simulator:latest`
+                );
+                console.log("Simulator started!");
+                this.simulatorId = simulatorId.trim();
+                // Start TEE container that will start the express server on port 4000
+                const { stdout: teeCompose } = await execAsync(`docker-compose -f ${LOCAL_COMPOSE_FILE_PATH} up -d`);
+                this.containerId = teeCompose.trim();
+                this.deploymentUrl = DEVELOPMENT_DEPLOYMENT_URL;
             } else {
                 // Production: Use direct docker command
                 // TODO: extract image name from env var
@@ -31,7 +41,8 @@ export class ContainerManager {
                     `docker run -d --rm -p ${TEE_SERVER_PORT}:${TEE_SERVER_PORT} jonathanpaella/agentlaunchpadstarterkit:latest`
                 );
                 this.containerId = stdout.trim();
-                // todo: get/set production url
+
+                // TODO: get production url
             }
 
             await this.waitForContainerToBeReady();
@@ -54,20 +65,18 @@ export class ContainerManager {
     async stopContainer(): Promise<void> {
         if (this.isRunning()) {
             try {
-                await execAsync(`docker stop ${this.containerId}`);
+                await execAsync(`docker-compose -f ${LOCAL_COMPOSE_FILE_PATH} down`);
+                if (this.simulatorId) {
+                    await execAsync(`docker stop ${this.simulatorId}`);
+                    console.log("Simulator stopped!");
+                }
                 console.log("Container stopped:", this.containerId);
                 this.containerId = null;
+                this.deploymentUrl = null;
             } catch (error) {
                 console.error("Failed to stop container:", error);
                 throw error;
             }
-        }
-        // check if running port 8090
-        const { stdout } = await execAsync(`lsof -t -i:${TEE_SERVER_PORT}`);
-        if (stdout) {
-            await execAsync(`kill -9 $(lsof -ti:${TEE_SERVER_PORT})`);
-            console.log(`Process running on port ${TEE_SERVER_PORT} killed`);
-            this.containerId = null;
         }
     }
 
@@ -80,10 +89,13 @@ export class ContainerManager {
         const startTime = Date.now();
         while (Date.now() - startTime < 60000) {
             try {
-                const { stdout } = await execAsync(`docker inspect -f '{{.State.Running}}' ${this.containerId}`);
-                if (stdout.trim() === "true") {
+                // Just checking if container is running is not enough
+                // We need to verify the application inside is ready to accept requests
+                const response = await fetch(`${this.deploymentUrl}/health`).then((res) => res.ok);
+                if (response) {
                     break;
                 }
+                await new Promise((resolve) => setTimeout(resolve, 1000)); // Wait 1 second between retries
             } catch (_error) {
                 // Container not found or other error, keep waiting
             }

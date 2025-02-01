@@ -1,6 +1,6 @@
 import { NextResponse } from "next/server";
 import { ContainerManager } from "@/services/container";
-// import { getOrCreateDelegatedSigner } from "@/services/delegatedSigner";
+import { getOrCreateDelegatedSigner } from "@/services/delegatedSigner";
 
 const containerManager = new ContainerManager();
 
@@ -22,25 +22,21 @@ export async function POST(request: Request) {
         }
 
         // 2. Get agent key from deployed TEE instance
-        const agentPublicKey = await fetch(`${containerManager.deploymentUrl}/api/getPublicKey`).then((res) =>
+        const { publicKey } = await fetch(`${containerManager.deploymentUrl}/api/getPublicKey`).then((res) =>
             res.json()
         );
-        console.log(`Agent public key: ${agentPublicKey}`);
+        console.log(`Agent public key: ${publicKey}`);
+
         // 3. Get existing or create a new delegated signer request
-        // ***remove comment once step 1 and 2 are working
-        // const delegatedSigner = await getOrCreateDelegatedSigner(smartWalletAddress, agentPublicKey);
+        const delegatedSigner = await getOrCreateDelegatedSigner(smartWalletAddress, publicKey);
 
         return NextResponse.json({
-            success: false,
-            message: "Not implemented todo later",
+            success: true,
+            containerId: containerManager.containerId,
+            delegatedSignerMessage: delegatedSigner?.message,
+            delegatedSignerId: delegatedSigner?.id,
+            delegatedSignerAlreadyActive: delegatedSigner?.delegatedSignerAlreadyActive ?? false,
         });
-        // return NextResponse.json({
-        //     success: true,
-        //     containerId: containerManager.containerId,
-        //     delegatedSignerMessage: delegatedSigner?.message,
-        //     delegatedSignerId: delegatedSigner?.id,
-        //     delegatedSignerAlreadyActive: delegatedSigner?.delegatedSignerAlreadyActive ?? false,
-        // });
     } catch (error) {
         console.error("Deployment error:", error);
         // Ensure container is stopped on error

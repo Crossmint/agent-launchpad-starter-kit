@@ -5,7 +5,9 @@
     "build": "tsc",
     "start": "node dist/index.js",
     "dev": "ts-node-dev --respawn server/src/index.ts",
-    "build:docker": "tsc && docker build -t agent-tee-phala ."
+    "build:docker": "tsc && docker build -t agent-tee-phala .",
+    "pull:docker-tee-simulator": "docker pull phalanetwork/tappd-simulator:latest && docker run --rm -d -p 8090:8090 phalanetwork/tappd-simulator:latest",
+    "start:docker": "pnpm pull:docker-tee-simulator && docker-compose -f ../.tee-cloud/compose-files/tee-compose.yaml up -d"
   },
   "dependencies": {
     "@phala/dstack-sdk": "^0.1.7",

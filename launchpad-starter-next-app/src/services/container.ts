@@ -1,10 +1,10 @@
 import { exec } from "child_process";
 import { promisify } from "util";
 import path from "path";
+import { TeeCloud } from "./teeCloud";
 
 const execAsync = promisify(exec);
 
-const TEE_SERVER_PORT = process.env.TEE_SERVER_PORT || 8090;
 const IS_DEV = process.env.NODE_ENV === "development";
 const DEVELOPMENT_DEPLOYMENT_URL = "http://app.compose-files.orb.local:4000";
 const LOCAL_COMPOSE_FILE_PATH = path.join(
@@ -41,11 +41,12 @@ export class ContainerManager {
                  * EXAMPLE STRING -> https://c80e41a64cf996de6840f176cefc344189225825-8090.dstack-prod4.phala.network
                  */
 
-                // TODO: Replace this with something from Phala Cloud
-                const { stdout } = await execAsync(
-                    `docker run -d --rm -p ${TEE_SERVER_PORT}:${TEE_SERVER_PORT} jonathanpaella/agentlaunchpadstarterkit:latest`
-                );
-                this.containerId = stdout.trim();
+                // TODO: Have this actually deploy on Phala Cloud
+                const teeCloud = new TeeCloud("TODO_CLOUD_API_URL", "TODO_CLOUD_URL");
+                await teeCloud.deploy({
+                    name: "TODO_name_of_docker_image",
+                    compose: "TODO_/path/to/compose/file.yaml",
+                });
             }
 
             await this.waitForContainerToBeReady();

@@ -9,7 +9,7 @@ const port = process.env.PORT || 4000;
 app.get("/api/getPublicKey", async (req, res) => {
     try {
         const client = new TappdClient(process.env.DSTACK_SIMULATOR_ENDPOINT);
-        // Generate a unique path for key derivation
+        // TODO: Update this path to be a deterministic one
         const uniquePath = `/keys/${Date.now()}-${Math.random().toString(36).substring(2)}`;
         const randomDeriveKey = await client.deriveKey(uniquePath, "");
         const keccakPrivateKey = keccak256(randomDeriveKey.asUint8Array());

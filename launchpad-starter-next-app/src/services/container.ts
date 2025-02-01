@@ -36,13 +36,16 @@ export class ContainerManager {
                 this.deploymentUrl = DEVELOPMENT_DEPLOYMENT_URL;
             } else {
                 // Production: Use direct docker command
-                // TODO: extract image name from env var
+                /*
+                 * FORMAT: https://${instance-id}-${express-port}.dstack-${dstack-env}.phala.network
+                 * EXAMPLE STRING -> https://c80e41a64cf996de6840f176cefc344189225825-8090.dstack-prod4.phala.network
+                 */
+
+                // TODO: Replace this with something from Phala Cloud
                 const { stdout } = await execAsync(
                     `docker run -d --rm -p ${TEE_SERVER_PORT}:${TEE_SERVER_PORT} jonathanpaella/agentlaunchpadstarterkit:latest`
                 );
                 this.containerId = stdout.trim();
-
-                // TODO: get production url
             }
 
             await this.waitForContainerToBeReady();

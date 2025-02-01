@@ -40,7 +40,7 @@ export async function POST(request: Request) {
     } catch (error) {
         console.error("Deployment error:", error);
         // Ensure container is stopped on error
-        // await containerManager.stopContainer();
+        await containerManager.stopContainer();
 
         return NextResponse.json(
             {

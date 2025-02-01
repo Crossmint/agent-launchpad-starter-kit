@@ -17,10 +17,7 @@ export async function getOrCreateDelegatedSigner(
             `${CROSSMINT_BASE_URL}/wallets/${smartWalletAddress}/signers/${`evm-keypair:${agentKeyAddress}`}`,
             {
                 method: "GET",
-                headers: {
-                    "X-API-KEY": API_KEY,
-                    "Content-Type": "application/json",
-                },
+                headers: getCommonHeaders(),
             }
         );
 
@@ -52,10 +49,7 @@ export async function getOrCreateDelegatedSigner(
         // 2. Create a new delegated signer
         const response = await fetch(`${CROSSMINT_BASE_URL}/wallets/${smartWalletAddress}/signers`, {
             method: "POST",
-            headers: {
-                "X-API-KEY": API_KEY,
-                "Content-Type": "application/json",
-            },
+            headers: getCommonHeaders(),
             body: JSON.stringify({
                 signer: `evm-keypair:${agentKeyAddress}`,
                 chain: CHAIN,
@@ -79,5 +73,12 @@ function parseDelegatedSignerMessageAndId(delegatedSignerResponse: any) {
         message: existingChain?.approvals?.pending[0]?.message,
         id: existingChain?.id,
         status: existingChain?.status,
+    };
+}
+
+function getCommonHeaders() {
+    return {
+        "X-API-KEY": API_KEY,
+        "Content-Type": "application/json",
     };
 }

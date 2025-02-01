@@ -15,18 +15,20 @@ export async function POST(request: Request) {
             );
         }
 
-        // 1. Spin up TEE simulator container if not already running
+        // 1. Start TEE container if not already running
         if (!containerManager.isRunning()) {
-            console.log("Starting TEE simulator container...");
+            console.log("Starting TEE container...");
             await containerManager.startContainer();
         }
 
-        // 2. Generate agent keys in TEE
-        const agentKeys = await containerManager.generateAgentKeys();
-        const agentPublicKey = agentKeys.keyAddress;
+        // 2. Get agent key from deployed TEE instance
+        const { publicKey } = await fetch(`${containerManager.deploymentUrl}/api/getPublicKey`).then((res) =>
+            res.json()
+        );
+        console.log(`Agent public key: ${publicKey}`);
 
         // 3. Get existing or create a new delegated signer request
-        const delegatedSigner = await getOrCreateDelegatedSigner(smartWalletAddress, agentPublicKey);
+        const delegatedSigner = await getOrCreateDelegatedSigner(smartWalletAddress, publicKey);
 
         return NextResponse.json({
             success: true,

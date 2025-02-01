@@ -1,0 +1,24 @@
+{
+  "name": "agent-tee-phala",
+  "version": "1.0.0",
+  "scripts": {
+    "build": "tsc",
+    "start": "node dist/index.js",
+    "dev": "ts-node-dev --respawn server/src/index.ts",
+    "build:docker": "tsc && docker build -t agent-tee-phala .",
+    "pull:docker-tee-simulator": "docker pull phalanetwork/tappd-simulator:latest && docker run --rm -d -p 8090:8090 phalanetwork/tappd-simulator:latest",
+    "start:docker": "pnpm pull:docker-tee-simulator && docker-compose -f ../.tee-cloud/compose-files/tee-compose.yaml up -d"
+  },
+  "dependencies": {
+    "@phala/dstack-sdk": "^0.1.7",
+    "@types/express": "^5.0.0",
+    "express": "^4.21.2",
+    "viem": "2.22.11"
+  },
+  "devDependencies": {
+    "@types/node": "^20.0.0",
+    "ts-node": "^10.0.0",
+    "ts-node-dev": "^2.0.0",
+    "typescript": "^5.0.0"
+  }
+}

@@ -1,32 +1,64 @@
-import { TappdClient } from "@phala/dstack-sdk";
-import { privateKeyToAccount } from "viem/accounts";
-import { keccak256 } from "viem";
 import { exec } from "child_process";
 import { promisify } from "util";
+import path from "path";
+import { TeeCloud } from "./teeCloud";
 
 const execAsync = promisify(exec);
 
-const TEE_SERVER_PORT = process.env.TEE_SERVER_PORT || 8090;
-const TEE_SERVER_URL = process.env.TEE_SERVER_URL || "http://localhost:8090";
+const IS_DEV = process.env.NODE_ENV === "development";
+const DEVELOPMENT_DEPLOYMENT_URL = "http://app.compose-files.orb.local:4000";
+const LOCAL_COMPOSE_FILE_PATH = path.join(
+    process.cwd(),
+    "..",
+    "agent-tee-phala",
+    ".tee-cloud/compose-files/tee-compose.yaml"
+);
 
 export class ContainerManager {
     public containerId: string | null = null;
+    public deploymentUrl: string | null = null;
+    public simulatorId?: string | null = null;
 
     async startContainer(): Promise<void> {
         try {
-            // Start the TEE simulator container
-            const { stdout } = await execAsync(
-                `docker run -d --rm -p ${TEE_SERVER_PORT}:${TEE_SERVER_PORT} phalanetwork/tappd-simulator:latest`
-            );
-            this.containerId = stdout.trim();
+            if (IS_DEV) {
+                // Development: Use docker-compose
+                // Start simulator on port 8090
+                console.log("Starting simulator...");
+                const { stdout: simulatorId } = await execAsync(
+                    `docker run -d --rm -p 8090:8090 phalanetwork/tappd-simulator:latest`
+                );
+                console.log("Simulator started!");
+                this.simulatorId = simulatorId.trim();
+                // Start TEE container that will start the express server on port 4000
+                const { stdout: teeCompose } = await execAsync(`docker-compose -f ${LOCAL_COMPOSE_FILE_PATH} up -d`);
+                this.containerId = teeCompose.trim();
+                this.deploymentUrl = DEVELOPMENT_DEPLOYMENT_URL;
+            } else {
+                // Production: Use direct docker command
+                /*
+                 * FORMAT: https://${instance-id}-${express-port}.dstack-${dstack-env}.phala.network
+                 * EXAMPLE STRING -> https://c80e41a64cf996de6840f176cefc344189225825-8090.dstack-prod4.phala.network
+                 */
 
-            console.log("TEE simulator container started:", this.containerId);
+                // TODO: Have this actually deploy on Phala Cloud
+                const teeCloud = new TeeCloud("TODO_CLOUD_API_URL", "TODO_CLOUD_URL");
+                await teeCloud.deploy({
+                    name: "TODO_name_of_docker_image",
+                    compose: "TODO_/path/to/compose/file.yaml",
+                });
+            }
 
-            // Wait for container to be ready
-            await new Promise((resolve) => setTimeout(resolve, 2000));
+            await this.waitForContainerToBeReady();
+            console.log(`TEE container started: ${this.containerId}`);
+            console.log(`Deployment URL: ${this.deploymentUrl}`);
 
             // Show container logs
-            const { stdout: logs } = await execAsync(`docker logs ${this.containerId}`);
+            const logCommand = IS_DEV
+                ? `docker-compose -f ${LOCAL_COMPOSE_FILE_PATH} logs app`
+                : `docker logs ${this.containerId}`;
+            const { stdout: logs } = await execAsync(logCommand);
+
             console.log("Container logs:", logs);
         } catch (error) {
             console.error("Failed to start container:", error);
@@ -34,59 +66,43 @@ export class ContainerManager {
         }
     }
 
-    async generateAgentKeys(): Promise<{ keyAddress: string; privateKeyAddress: string }> {
-        if (!this.isRunning()) {
-            // wait up to 5 seconds for container to be running
-            for (let i = 0; i < 5; i++) {
-                await new Promise((resolve) => setTimeout(resolve, 1000));
-                if (this.isRunning()) {
-                    break;
-                }
-            }
-            if (!this.isRunning()) {
-                throw new Error("Container not running");
-            }
-        }
-
-        const client = new TappdClient(TEE_SERVER_URL);
-
-        // Generate a unique path for key derivation
-        const uniquePath = `/keys/${Date.now()}-${Math.random().toString(36).substring(2)}`;
-        // Call the deriveKey function with a unique path
-        const randomDeriveKey = await client.deriveKey(uniquePath, "");
-
-        // Hash the derivedKey uint8Array value
-        const keccakPrivateKey = keccak256(randomDeriveKey.asUint8Array());
-        // Get the private key account from the derived key hash
-        const account = privateKeyToAccount(keccakPrivateKey);
-
-        console.log("keys generated in docker container ", this.containerId);
-        console.log("account:", account.address);
-
-        return { keyAddress: account.address, privateKeyAddress: keccakPrivateKey };
-    }
-
     async stopContainer(): Promise<void> {
         if (this.isRunning()) {
             try {
-                await execAsync(`docker stop ${this.containerId}`);
+                await execAsync(`docker-compose -f ${LOCAL_COMPOSE_FILE_PATH} down`);
+                if (this.simulatorId) {
+                    await execAsync(`docker stop ${this.simulatorId}`);
+                    console.log("Simulator stopped!");
+                }
                 console.log("Container stopped:", this.containerId);
                 this.containerId = null;
+                this.deploymentUrl = null;
             } catch (error) {
                 console.error("Failed to stop container:", error);
                 throw error;
             }
         }
-        // check if running port 8090
-        const { stdout } = await execAsync(`lsof -t -i:${TEE_SERVER_PORT}`);
-        if (stdout) {
-            await execAsync(`kill -9 $(lsof -ti:${TEE_SERVER_PORT})`);
-            console.log(`Process running on port ${TEE_SERVER_PORT} killed`);
-            this.containerId = null;
-        }
     }
 
     isRunning(): boolean {
         return this.containerId !== null;
+    }
+
+    async waitForContainerToBeReady(): Promise<void> {
+        // Wait up to 60 seconds for container to be ready
+        const startTime = Date.now();
+        while (Date.now() - startTime < 60000) {
+            try {
+                // Just checking if container is running is not enough
+                // We need to verify the application inside is ready to accept requests
+                const response = await fetch(`${this.deploymentUrl}/health`).then((res) => res.ok);
+                if (response) {
+                    break;
+                }
+                await new Promise((resolve) => setTimeout(resolve, 1000)); // Wait 1 second between retries
+            } catch (_error) {
+                // Container not found or other error, keep waiting
+            }
+        }
     }
 }

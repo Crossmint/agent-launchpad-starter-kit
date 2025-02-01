@@ -1,7 +1,7 @@
 version: "3"
 services:
   app:
-    image: agent-tee-phala
+    image: jonathanpaella/agentlaunchpadstarterkit:latest
     container_name: agent-tee-phala
     environment:
       - NODE_ENV=development

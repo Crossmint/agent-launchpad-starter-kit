@@ -1,10 +1,9 @@
-# Use the official Node.js image
-FROM node:18-alpine
+FROM --platform=linux/amd64 node:18-alpine
 
-# Enable pnpm
-ENV PNPM_HOME="/pnpm"
-ENV PATH="$PNPM_HOME:$PATH"
-RUN corepack enable
+# Install pnpm directly instead of using corepack
+RUN wget -qO /bin/pnpm "https://github.com/pnpm/pnpm/releases/latest/download/pnpm-linuxstatic-x64" && \
+    chmod +x /bin/pnpm
+
 WORKDIR /app
 
 # Install dependencies

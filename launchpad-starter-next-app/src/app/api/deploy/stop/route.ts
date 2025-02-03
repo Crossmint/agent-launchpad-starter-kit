@@ -1,5 +1,5 @@
 import { NextResponse } from "next/server";
-import { ContainerManager } from "@/services/container";
+import { ContainerManager } from "@/server/services/container";
 
 const containerManager = new ContainerManager();
 

@@ -5,6 +5,7 @@ import express from "express";
 
 const app = express();
 const port = process.env.PORT || 4000;
+// TODO: Update this to be the correct deployment URL
 const deploymentUrl = process.env.DEPLOYMENT_URL || `http://app.compose-files.orb.local:${port}`;
 
 app.get("/api/getPublicKey", async (req, res) => {
@@ -26,9 +27,13 @@ app.get("/api/getPublicKey", async (req, res) => {
     }
 });
 
-// Add a health check endpoint and return the deployment URL
-app.get("/health", (req, res) => {
+app.get("/api/getDeploymentInfo", (req, res) => {
     res.json({ status: "ok", url: deploymentUrl, port: port });
+});
+
+// Add a health check endpoint
+app.get("/health", (req, res) => {
+    res.json({ status: "ok" });
 });
 
 app.listen(port, () => {

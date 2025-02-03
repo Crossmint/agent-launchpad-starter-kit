@@ -111,6 +111,17 @@ The Next.js app will be available at `http://localhost:3001`
 
 ## Deploying to Production
 
+### Building the Docker Image 
+
+```bash
+docker build --pull --rm -f 'agent-tee-phala/image/Dockerfile' --platform linux/amd64 -t 'agentlaunchpadstarterkit:latest' 'agent-tee-phala/image'
+```
+
+### Running the Docker Container
+
+```bash
+
+
 ### Production Deployment Checklist
 
 1. API Keys

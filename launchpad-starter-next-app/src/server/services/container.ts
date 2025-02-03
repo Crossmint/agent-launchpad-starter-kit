@@ -1,11 +1,13 @@
 import { exec } from "child_process";
 import { promisify } from "util";
 import path from "path";
-import { TeeCloud } from "./teeCloud";
+import { TeeCloud } from "./phala/teeCloud";
 
 const execAsync = promisify(exec);
 
-const IS_DEV = process.env.NODE_ENV === "development";
+// TODO: Remove this
+const IS_DEV = false;
+// const IS_DEV = process.env.NODE_ENV === "development";
 const LOCAL_COMPOSE_FILE_PATH = path.join(
     process.cwd(),
     "..",
@@ -31,36 +33,35 @@ export class ContainerManager {
                 this.simulatorId = simulatorId.trim();
                 // Start TEE container that will start the express server on port 4000
                 const { stdout: teeCompose } = await execAsync(`docker-compose -f ${LOCAL_COMPOSE_FILE_PATH} up -d`);
+                console.log("TEE container started!");
                 this.containerId = teeCompose.trim();
+                this.deploymentUrl = "http://app.compose-files.orb.local:4000";
             } else {
                 // Production: Use Phala Production hardware (Phala Cloud)
-                /*
-                 * FORMAT: https://${instance-id}-${express-port}.dstack-${dstack-env}.phala.network
-                 * EXAMPLE STRING -> https://c80e41a64cf996de6840f176cefc344189225825-8090.dstack-prod4.phala.network
-                 */
+                /* *ASSUME WE HAVE ALREADY DEPLOYED TO DOCKER HUB */
+                const teeCloud = new TeeCloud();
+                const DockerImageObject = {
+                    name: "agentlaunchpadstarterkit",
+                    compose: path.join(process.cwd(), "src", "server", "services", "phala", "example-compose.yaml"),
+                    envs: [],
+                };
+                await teeCloud.deploy(DockerImageObject);
 
-                // TODO: Have this actually deploy on Phala Cloud
-                const teeCloud = new TeeCloud("TODO_CLOUD_API_URL", "TODO_CLOUD_URL");
-                await teeCloud.deploy({
-                    name: "TODO_name_of_docker_image",
-                    compose: "TODO_/path/to/compose/file.yaml",
-                });
+                // Wait for deployment using the helper function
+                this.deploymentUrl = await teeCloud.waitForDeployment();
+                console.log("Deployment URL:", this.deploymentUrl);
             }
 
-            const deployUrl = await this.waitForContainerReadinessAndReturnUrl();
-            if (IS_DEV && deployUrl != null) {
-                this.deploymentUrl = deployUrl;
-            }
+            await this.waitForContainerReadiness();
+
             console.log(`TEE container started: ${this.containerId}`);
             console.log(`Deployment URL: ${this.deploymentUrl}`);
 
-            // Show container logs
-            const logCommand = IS_DEV
-                ? `docker-compose -f ${LOCAL_COMPOSE_FILE_PATH} logs app`
-                : `docker logs ${this.containerId}`;
-            const { stdout: logs } = await execAsync(logCommand);
-
-            console.log("Container logs:", logs);
+            if (IS_DEV) {
+                // Show container logs
+                const { stdout: logs } = await execAsync(`docker-compose -f ${LOCAL_COMPOSE_FILE_PATH} logs app`);
+                console.log("Container logs:", logs);
+            }
         } catch (error) {
             console.error("Failed to start container:", error);
             throw error;
@@ -89,23 +90,21 @@ export class ContainerManager {
         return this.containerId !== null;
     }
 
-    async waitForContainerReadinessAndReturnUrl(): Promise<string | undefined> {
+    async waitForContainerReadiness(): Promise<void> {
         // Wait up to 60 seconds for container to be ready
         const startTime = Date.now();
         while (Date.now() - startTime < 60000) {
             try {
                 // Just checking if container is running is not enough
                 // We need to verify the application inside is ready to accept requests
-                const response = await fetch(`${this.deploymentUrl}/health`);
-                const data = await response.json();
+                const response = await fetch(`${this.deploymentUrl}/health`).then((res) => res.json());
                 if (response.ok) {
-                    return data.url;
+                    break;
                 }
                 await new Promise((resolve) => setTimeout(resolve, 1000)); // Wait 1 second between retries
             } catch (_error) {
                 // Container not found or other error, keep waiting
             }
         }
-        return undefined;
     }
 }

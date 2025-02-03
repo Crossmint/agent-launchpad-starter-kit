@@ -1,0 +1,11 @@
+version: "3"
+services:
+  app:
+    image: jonathanpaella/agentlaunchpadstarterkit:latest
+    container_name: agent-tee-phala
+    environment:
+      - NODE_ENV=development
+      - PORT=4000
+    volumes:
+      - /var/run/tappd.sock:/var/run/tappd.sock
+    restart: always

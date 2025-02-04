@@ -1,6 +1,14 @@
 import fs from "fs";
 import { x25519 } from "@noble/curves/ed25519";
 import * as crypto from "crypto";
+import type {
+    DeployOptions,
+    CvmConfig,
+    GetPubkeyFromCvmResponse,
+    CreateCvmResponse,
+    Cvm,
+    Env,
+} from "@/app/types/phala";
 
 export const CLOUD_API_URL = "https://cloud-api.phala.network";
 export const CLOUD_URL = "https://cloud.phala.network";
@@ -10,63 +18,6 @@ const headers = {
     "Content-Type": "application/json",
     "X-API-Key": process.env.PHALA_CLOUD_API_KEY as string,
 };
-
-interface DeployOptions {
-    debug?: boolean;
-    type?: string;
-    mode?: string;
-    name: string;
-    vcpu?: number;
-    memory?: number;
-    diskSize?: number;
-    compose?: string;
-    env?: string[];
-    envFile?: string;
-    envs: Env[];
-}
-
-interface Env {
-    key: string;
-    value: string;
-}
-
-interface CvmConfig {
-    teepod_id: number;
-    name: string;
-    image: string;
-    vcpu: number;
-    memory: number;
-    disk_size: number;
-    compose_manifest: {
-        docker_compose_file: string;
-        docker_config: {
-            url: string;
-            username: string;
-            password: string;
-        };
-        features: string[];
-        kms_enabled: boolean;
-        manifest_version: number;
-        name: string;
-        public_logs: boolean;
-        public_sysinfo: boolean;
-        tproxy_enabled: boolean;
-    };
-    listed: boolean;
-    encrypted_env?: string;
-    app_env_encrypt_pubkey?: string;
-    app_id_salt?: string;
-}
-
-interface CreateCvmResponse {
-    app_id: string;
-    [key: string]: any;
-}
-
-interface GetPubkeyFromCvmResponse {
-    app_env_encrypt_pubkey: string;
-    app_id_salt: string;
-}
 
 export class TeeCloud {
     private readonly CLOUD_API_URL: string;
@@ -199,7 +150,7 @@ export class TeeCloud {
         return deploymentUrl;
     }
 
-    public async queryCvmsByUserId(): Promise<unknown | null> {
+    public async queryCvmsByUserId(): Promise<Cvm[] | null> {
         try {
             const userInfo = await this.getUserInfo();
             console.log("userInfo", userInfo);

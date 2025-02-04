@@ -8,7 +8,7 @@ import { WebAuthnP256 } from "ox";
 import { Button } from "./button";
 import { Typography } from "./typography";
 import { useToast } from "./use-toast";
-import { useWallet } from "@/app/contexts/wallet-context";
+import { useWallet } from "@/app/providers/wallet-provider";
 import { submitSignatureApproval } from "@/app/_actions/submit-signature-approval";
 
 export const DeployAgentButton = ({

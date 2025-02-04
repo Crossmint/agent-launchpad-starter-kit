@@ -9,7 +9,7 @@ import { Avatar, AvatarFallback, AvatarImage } from "./avatar";
 import { DropdownMenu, DropdownMenuContent, DropdownMenuTrigger } from "./dropdown-menu";
 import { Typography } from "./typography";
 import { useToast } from "./use-toast";
-import { useWallet } from "@/app/contexts/wallet-context";
+import { useWallet } from "@/app/providers/wallet-provider";
 import { useAuth } from "@crossmint/client-sdk-react-ui";
 
 function formatWalletAddress(address: string, startLength: number, endLength: number): string {

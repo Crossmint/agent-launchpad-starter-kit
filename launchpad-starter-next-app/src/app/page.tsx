@@ -6,7 +6,7 @@ import { PoweredByCrossmint } from "@/components/powered-by-crossmint";
 import { Typography } from "@/components/typography";
 import Link from "next/link";
 import { useState } from "react";
-import { useWallet } from "./contexts/wallet-context";
+import { useWallet } from "./providers/wallet-provider";
 import { SignInAuthButton } from "@/components/signin-auth-button";
 
 async function stopAgent(setStopAgentState: (state: boolean) => void) {

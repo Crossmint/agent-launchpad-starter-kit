@@ -9,13 +9,6 @@ import { useState } from "react";
 import { useWallet } from "./providers/wallet-provider";
 import { SignInAuthButton } from "@/components/signin-auth-button";
 
-async function stopAgent(setStopAgentState: (state: boolean) => void) {
-    try {
-        await fetch("/api/deploy/stop", { method: "POST" });
-        setStopAgentState(false);
-    } catch (_e) {}
-}
-
 function HomePrimaryAction() {
     const [agentSuccessfullyDeployed, setAgentSuccessfullyDeployed] = useState(false);
 
@@ -36,9 +29,6 @@ function HomePrimaryAction() {
                     >
                         View Rufus
                     </Link>
-                </div>
-                <div className="flex gap-2 items-center self-center min-h-[52px]">
-                    <button onClick={() => stopAgent(setAgentSuccessfullyDeployed)}>Stop Rufus</button>
                 </div>
             </>
         );

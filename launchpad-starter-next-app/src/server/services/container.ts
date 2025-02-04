@@ -42,13 +42,13 @@ export class ContainerManager {
                 const teeCloud = new TeeCloud();
                 const DockerImageObject = {
                     name: "agentlaunchpadstarterkit",
-                    compose: path.join(process.cwd(), "src", "server", "services", "phala", "example-compose.yaml"),
+                    compose: path.join(process.cwd(), "../agent-tee-phala/.tee-cloud/compose-files/tee-compose.yaml"),
                     envs: [],
                 };
-                await teeCloud.deploy(DockerImageObject);
+                const { appId } = await teeCloud.deploy(DockerImageObject);
 
                 // Wait for deployment using the helper function
-                this.deploymentUrl = await teeCloud.waitForDeployment();
+                this.deploymentUrl = await teeCloud.waitForDeployment(appId);
                 console.log("Deployment URL:", this.deploymentUrl);
             }
 
@@ -97,7 +97,7 @@ export class ContainerManager {
             try {
                 // Just checking if container is running is not enough
                 // We need to verify the application inside is ready to accept requests
-                const response = await fetch(`${this.deploymentUrl}/health`).then((res) => res.json());
+                const response = await fetch(`${this.deploymentUrl}/api/health`).then((res) => res.json());
                 if (response.ok) {
                     break;
                 }

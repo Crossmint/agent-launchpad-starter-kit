@@ -8,6 +8,7 @@ import type {
     CreateCvmResponse,
     Cvm,
     Env,
+    CvmNetwork,
 } from "@/app/types/phala";
 
 export const CLOUD_API_URL = "https://cloud-api.phala.network";
@@ -33,7 +34,7 @@ export class TeeCloud {
         }
     }
 
-    async deploy(options: DeployOptions): Promise<void> {
+    async deploy(options: DeployOptions): Promise<{ appId: string }> {
         console.log("Deploying CVM ...");
 
         const vmConfig = this.createVmConfig(options);
@@ -65,7 +66,7 @@ export class TeeCloud {
         console.log("Deployment successful");
         console.log("App Id:", response.app_id);
         console.log("Phala Dashboard URL:", `${this.CLOUD_URL}/dashboard/cvms/app_${response.app_id}`);
-        return;
+        return { appId: response.app_id };
     }
 
     private createVmConfig(options: DeployOptions): CvmConfig {
@@ -115,6 +116,7 @@ export class TeeCloud {
     }
 
     public async waitForDeployment(
+        appId: string,
         options = {
             initialDelay: 1000,
             maxDelay: 30000,
@@ -134,8 +136,8 @@ export class TeeCloud {
 
             await new Promise((resolve) => setTimeout(resolve, waitTime));
 
-            const cvmsResponse = (await this.queryCvmsByUserId()) as any;
-            deploymentUrl = cvmsResponse?.[0]?.dapp_dashboard_url;
+            const cvmResponse = await this.queryCvmByIdentifier(appId);
+            deploymentUrl = cvmResponse?.public_urls?.[0]?.app || null;
 
             if (!deploymentUrl) {
                 console.log(`Waiting for deployment... (attempt ${retryCount + 1}/${options.maxRetries})`);
@@ -153,12 +155,22 @@ export class TeeCloud {
     public async queryCvmsByUserId(): Promise<Cvm[] | null> {
         try {
             const userInfo = await this.getUserInfo();
-            console.log("userInfo", userInfo);
             return await fetch(`${this.CLOUD_API_URL}/api/v1/cvms?user_id=${userInfo?.id}`, {
                 headers,
             }).then((res) => res.json());
         } catch (error: any) {
             console.error("Error during get cvms by user id:", error.response?.data || error.message);
+            return null;
+        }
+    }
+
+    public async queryCvmByIdentifier(identifier: string): Promise<CvmNetwork | null> {
+        try {
+            return await fetch(`${this.CLOUD_API_URL}/api/v1/cvms/app_${identifier}/network`, {
+                headers,
+            }).then((res) => res.json());
+        } catch (error: any) {
+            console.error("Error during get cvm by identifier:", error.response?.data || error.message);
             return null;
         }
     }

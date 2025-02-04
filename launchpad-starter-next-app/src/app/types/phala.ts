@@ -58,6 +58,20 @@ interface Cvm {
     allow_upgrade: boolean;
 }
 
+interface CvmNetwork {
+    is_online: boolean;
+    is_public: boolean;
+    error?: string;
+    internal_ip: string;
+    latest_handshake: string;
+    public_urls: PublicUrl[];
+}
+
+interface PublicUrl {
+    app: string;
+    instance: string;
+}
+
 interface Hosted {
     id: string;
     name: string;
@@ -90,4 +104,4 @@ interface GetPubkeyFromCvmResponse {
     app_id_salt: string;
 }
 
-export type { DeployOptions, Env, CvmConfig, Cvm, CreateCvmResponse, GetPubkeyFromCvmResponse };
+export type { DeployOptions, Env, CvmConfig, Cvm, CreateCvmResponse, GetPubkeyFromCvmResponse, CvmNetwork };

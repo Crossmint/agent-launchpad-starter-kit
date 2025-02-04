@@ -3,7 +3,7 @@ import { useEffect } from "react";
 import { useAuth } from "@crossmint/client-sdk-react-ui";
 import { Button } from "./button";
 import { Typography } from "./typography";
-import { useWallet } from "@/app/contexts/WalletContext";
+import { useWallet } from "@/app/contexts/wallet-context";
 
 export const SignInAuthButton = () => {
     const { login, jwt, status } = useAuth();

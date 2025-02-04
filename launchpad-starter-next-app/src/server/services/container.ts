@@ -1,7 +1,7 @@
 import { exec } from "child_process";
 import { promisify } from "util";
 import path from "path";
-import { TeeCloud } from "./phala/teeCloud";
+import { TeeCloud } from "./phala/tee-cloud";
 
 const execAsync = promisify(exec);
 

@@ -1,6 +1,6 @@
 import { NextResponse } from "next/server";
 import { ContainerManager } from "@/server/services/container";
-import { getOrCreateDelegatedSigner } from "@/server/services/delegatedSigner";
+import { getOrCreateDelegatedSigner } from "@/server/services/delegated-signer";
 
 const containerManager = new ContainerManager();
 

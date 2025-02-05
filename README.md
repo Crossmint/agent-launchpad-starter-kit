@@ -40,6 +40,7 @@
     <li>
     <a href="#deploying-to-production">Deploying to Production</a>
       <ul>
+        <li><a href="#building-the-docker-image">Building the Docker Image</a></li>
         <li><a href="#production-deployment-checklist">Production Deployment Checklist</a></li>
       </ul>
     </li>

@@ -52,8 +52,6 @@
 
 ![Crossmint Agent Wallets](https://github.com/user-attachments/assets/10f6f134-951a-4bea-8511-59e84940eb80)
 
-![Agent Launchpad Starter Kit](https://github.com/user-attachments/assets/364ad94a-cea1-42e5-928c-a75bc7b9709a)
-
 The goal of this project is to help launchpads and other agent hosting patforms to easily
 deploy AI agents with wallets, following an architecture that is non-custodial for the launchpad,
 yet allows the agent owner and user to control the wallet.
@@ -80,6 +78,8 @@ The traditional custodial approach creates significant security risks. If a laun
 In jurisdictions like the United States, platforms that have the ability to control or transmit user funds may fall under money transmitter regulations. This creates complex regulatory requirements and potential legal exposure. Non-custodial architecture helps platforms avoid classification as money transmitters by ensuring they never have direct access to or control over user funds.
 
 ## Get started
+
+![Agent Launchpad Starter Kit](https://github.com/user-attachments/assets/364ad94a-cea1-42e5-928c-a75bc7b9709a)
 
 ### Local Setup
 

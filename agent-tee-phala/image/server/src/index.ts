@@ -24,8 +24,7 @@ app.post("/api/initialize", async (req: Request, res: Response) => {
 
     try {
         const client = new TappdClient(process.env.DSTACK_SIMULATOR_ENDPOINT);
-        const uniquePath = `/keys/${smartWalletAddress}`;
-        const randomDeriveKey = await client.deriveKey(uniquePath, "");
+        const randomDeriveKey = await client.deriveKey(smartWalletAddress, "");
         const keccakPrivateKey = keccak256(randomDeriveKey.asUint8Array());
         const account = privateKeyToAccount(keccakPrivateKey);
 

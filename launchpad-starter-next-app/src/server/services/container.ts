@@ -58,6 +58,7 @@ export class ContainerManager {
 
                 // Wait for deployment using the helper function
                 this.deploymentUrl = await phalaCloud.waitForDeployment(appId);
+                this.containerId = appId;
                 console.log("Deployment URL:", this.deploymentUrl);
             }
 
@@ -99,21 +100,44 @@ export class ContainerManager {
         return this.containerId !== null;
     }
 
+    // TODO: make re-usable function for both deploying and waiting for container readiness
     async waitForContainerReadiness(): Promise<void> {
-        // Wait up to 60 seconds for container to be ready
-        const startTime = Date.now();
-        while (Date.now() - startTime < 60000) {
+        const options = {
+            initialDelay: 1000,
+            maxDelay: 30000,
+            maxRetries: 30, // Increased from 12 to 30 to maintain ~60s total wait time
+            backoffFactor: 1.5,
+        };
+        let retryCount = 0;
+
+        while (retryCount < options.maxRetries) {
+            // Calculate wait time with exponential backoff, capped at maxDelay
+            const waitTime = Math.min(
+                options.initialDelay * Math.pow(options.backoffFactor, retryCount),
+                options.maxDelay
+            );
+
             try {
-                // Just checking if container is running is not enough
-                // We need to verify the application inside is ready to accept requests
-                const response = await fetch(`${this.deploymentUrl}/api/health`).then((res) => res.json());
-                if (response.ok) {
-                    break;
+                const controller = new AbortController();
+                const timeoutId = setTimeout(() => controller.abort(), 5000); // 5 second timeout
+
+                const response = await fetch(`${this.deploymentUrl}/api/health`, {
+                    signal: controller.signal,
+                }).then((res) => res.json());
+
+                clearTimeout(timeoutId);
+
+                if (response.status === "ok") {
+                    return; // Container is ready
                 }
-                await new Promise((resolve) => setTimeout(resolve, 1000)); // Wait 1 second between retries
             } catch (_error) {
-                // Container not found or other error, keep waiting
+                console.log(`Waiting for container readiness... (attempt ${retryCount + 1}/${options.maxRetries})`);
             }
+
+            await new Promise((resolve) => setTimeout(resolve, waitTime));
+            retryCount++;
         }
+
+        throw new Error("Container failed to become ready within timeout period");
     }
 }

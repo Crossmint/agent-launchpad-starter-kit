@@ -4,7 +4,7 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { CrossmintProvider, CrossmintAuthProvider } from "@crossmint/client-sdk-react-ui";
 import type { ReactNode } from "react";
 
-import { WalletProvider } from "../contexts/WalletContext";
+import { WalletProvider } from "./wallet-provider";
 
 export function Providers({ children }: { children: ReactNode }) {
     const queryClient = new QueryClient();

@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Passkey } from "@/icons/passkey";
 import { Spinner } from "@/icons/spinner";
 import { WebAuthnP256 } from "ox";
@@ -8,7 +8,7 @@ import { WebAuthnP256 } from "ox";
 import { Button } from "./button";
 import { Typography } from "./typography";
 import { useToast } from "./use-toast";
-import { useWallet } from "@/app/contexts/WalletContext";
+import { useWallet } from "@/app/providers/wallet-provider";
 import { submitSignatureApproval } from "@/app/_actions/submit-signature-approval";
 
 export const DeployAgentButton = ({
@@ -24,6 +24,7 @@ export const DeployAgentButton = ({
                 <Spinner />
                 <Typography className="text-primary-foreground" variant={"h4"}>
                     Deploying Rufus...
+                    <Timer />
                 </Typography>
             </div>
         );
@@ -104,4 +105,17 @@ export const DeployAgentButton = ({
             </div>
         </Button>
     );
+};
+
+const Timer = () => {
+    const [count, setCount] = useState(0);
+
+    useEffect(() => {
+        const interval = setInterval(() => {
+            setCount((prevCount) => prevCount + 1);
+        }, 1000);
+        return () => clearInterval(interval);
+    }, []);
+
+    return count + "s";
 };

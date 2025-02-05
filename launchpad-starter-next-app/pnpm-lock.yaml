@@ -14,6 +14,9 @@ importers:
       '@crossmint/common-sdk-base':
         specifier: ^0.3.1
         version: 0.3.1
+      '@noble/curves':
+        specifier: ^1.8.1
+        version: 1.8.1
       '@phala/dstack-sdk':
         specifier: ^0.1.7
         version: 0.1.7(bufferutil@4.0.9)(typescript@5.7.3)(utf-8-validate@5.0.10)(zod@3.22.4)
@@ -6060,8 +6063,8 @@ snapshots:
   ox@0.6.5(typescript@5.7.3)(zod@3.22.4):
     dependencies:
       '@adraffy/ens-normalize': 1.11.0
-      '@noble/curves': 1.7.0
-      '@noble/hashes': 1.6.1
+      '@noble/curves': 1.8.1
+      '@noble/hashes': 1.7.1
       '@scure/bip32': 1.6.0
       '@scure/bip39': 1.5.0
       abitype: 1.0.7(typescript@5.7.3)(zod@3.22.4)

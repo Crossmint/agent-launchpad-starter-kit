@@ -28,7 +28,7 @@
       </ul>
     </li>
     <li>
-      <a href="#development">Development</a>
+      <a href="#get-started">Get Started</a>
       <ul>
         <li><a href="#local-setup">Local Setup</a></li>
         <li><a href="#docker-setup-requires-orbstack">Docker Setup (Requires OrbStack)</a></li>
@@ -43,10 +43,10 @@
 ## Roadmap
 
 [x] Development mode  
- [ ] Production deploys  
- [ ] Solana support  
+[x] Production deploys  
+[ ] Solana support  
 [ ] Confidential environment variable setup  
- [ ] Add support for more TEE networks
+[ ] Add support for more TEE networks
 
 ## About The Project
 
@@ -111,6 +111,22 @@ The Next.js app will be available at `http://localhost:3001`
 
 ## Deploying to Production
 
+### Building the Docker Image 
+
+
+1. From the root directory of this project, run the following command to build the Docker image:
+
+```bash
+docker build --pull --rm -f 'agent-tee-phala/image/Dockerfile' --platform linux/amd64 -t '{your-image-name}:{version}' 'agent-tee-phala/image'
+```
+
+Example: 
+```bash
+docker build --pull --rm -f 'agent-tee-phala/image/Dockerfile' --platform linux/amd64 -t 'agentlaunchpadstarterkit:latest' 'agent-tee-phala/image'
+```
+
+2. In the [`launchpad-starter-next-app/src/server/services/container.ts`](launchpad-starter-next-app/src/server/services/container.ts), there's a inline comment that explains how to update the docker image name and version. Go to line 47 to find the instructions.
+
 ### Production Deployment Checklist
 
 1. API Keys
@@ -123,8 +139,10 @@ The Next.js app will be available at `http://localhost:3001`
 2. Deploy Agent to Phala Cloud
 
    - Create an account on [Phala Cloud](https://cloud.phala.network)
-   - Follow the [deployment guide](https://docs.phala.network/developers/deploy-to-phala-cloud) to deploy your agent
-   - Update the `NEXT_PUBLIC_TEE_SERVER_URL` in your webapp's environment variables to point to your Phala Cloud endpoint
+   - Create a new project and copy the API key
+   - Update the `PHALA_CLOUD_API_KEY` in your webapp's environment variables to add your Phala Cloud API key
+      - NOTE: adding the API key to the environment variables will automatically use production environments in Phala Cloud. 
+      - To use local environments, you can just leave `PHALA_CLOUD_API_KEY` empty.
 
 3. Deploy Webapp
 

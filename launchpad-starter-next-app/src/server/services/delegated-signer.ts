@@ -1,11 +1,14 @@
-/* THIS FILE IS ONLY TO BE USED SERVER-SIDE! */
-
 import { getBaseUrlFromApiKey } from "@/lib/utils";
 
 const API_KEY = process.env.CROSSMINT_SERVER_API_KEY as string;
 const CHAIN = "base-sepolia";
 
 const CROSSMINT_BASE_URL = getBaseUrlFromApiKey(API_KEY);
+
+const headers = {
+    "X-API-KEY": API_KEY,
+    "Content-Type": "application/json",
+};
 
 export async function getOrCreateDelegatedSigner(
     smartWalletAddress: string,
@@ -17,10 +20,7 @@ export async function getOrCreateDelegatedSigner(
             `${CROSSMINT_BASE_URL}/wallets/${smartWalletAddress}/signers/${`evm-keypair:${agentKeyAddress}`}`,
             {
                 method: "GET",
-                headers: {
-                    "X-API-KEY": API_KEY,
-                    "Content-Type": "application/json",
-                },
+                headers,
             }
         );
 
@@ -52,10 +52,7 @@ export async function getOrCreateDelegatedSigner(
         // 2. Create a new delegated signer
         const response = await fetch(`${CROSSMINT_BASE_URL}/wallets/${smartWalletAddress}/signers`, {
             method: "POST",
-            headers: {
-                "X-API-KEY": API_KEY,
-                "Content-Type": "application/json",
-            },
+            headers,
             body: JSON.stringify({
                 signer: `evm-keypair:${agentKeyAddress}`,
                 chain: CHAIN,

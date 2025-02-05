@@ -6,7 +6,7 @@ import { cn } from "../lib/utils";
 import "./globals.css";
 import { Header } from "@/components/header";
 import { Toaster } from "@/components/toaster";
-import { Providers } from "./_lib/providers";
+import { Providers } from "./providers/providers";
 
 export const metadata: Metadata = {
     title: "Crossmint Agent Launchpad",

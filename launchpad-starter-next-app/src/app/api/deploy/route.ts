@@ -22,9 +22,12 @@ export async function POST(request: Request) {
         }
 
         // 2. Get agent key from deployed TEE instance
-        const { publicKey } = await fetch(`${containerManager.deploymentUrl}/api/getPublicKey`).then((res) =>
-            res.json()
-        );
+        const { publicKey } = await fetch(`${containerManager.deploymentUrl}/api/initialize`, {
+            method: "POST",
+            headers: {
+                "x-secret-key": smartWalletAddress,
+            },
+        }).then((res) => res.json());
         console.log(`Agent public key: ${publicKey}`);
 
         // 3. Get existing or create a new delegated signer request

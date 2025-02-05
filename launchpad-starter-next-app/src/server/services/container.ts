@@ -1,7 +1,7 @@
 import { exec } from "child_process";
 import { promisify } from "util";
 import path from "path";
-import { TeeCloud } from "./phala/tee-cloud";
+import { PhalaCloud } from "./phala/phala-cloud";
 
 const execAsync = promisify(exec);
 
@@ -23,8 +23,10 @@ export class ContainerManager {
     async startContainer(): Promise<void> {
         try {
             if (IS_DEV) {
-                // Development: Use docker-compose
-                // Start simulator on port 8090
+                /*
+                 * DEVELOPMENT: Use docker-compose
+                 * Start simulator on port 8090
+                 */
                 console.log("Starting simulator...");
                 const { stdout: simulatorId } = await execAsync(
                     `docker run -d --rm -p 8090:8090 phalanetwork/tappd-simulator:latest`
@@ -37,18 +39,27 @@ export class ContainerManager {
                 this.containerId = teeCompose.trim();
                 this.deploymentUrl = "http://app.compose-files.orb.local:4000";
             } else {
-                // Production: Use Phala Production hardware (Phala Cloud)
-                /* *ASSUME WE HAVE ALREADY DEPLOYED TO DOCKER HUB */
-                const teeCloud = new TeeCloud();
+                /*
+                 * PRODUCTION: Use Phala Production hardware (Phala Cloud)
+                 * ASSUME WE HAVE ALREADY DEPLOYED TO DOCKER HUB
+                 * AND WE JUST NEED TO DEPLOY TO PHALA CLOUD
+                 *
+                 * To add your own docker image:
+                 * 1. Build your docker image and push it to docker hub
+                 * 2. Update the name in the DockerImageObject below
+                 * 3. Update the compose file path in the .tee-cloud folder
+                 *   3a. Or replace the contents of the tee-compose.yaml file directly
+                 */
+                const phalaCloud = new PhalaCloud();
                 const DockerImageObject = {
                     name: "agentlaunchpadstarterkit",
                     compose: path.join(process.cwd(), "../agent-tee-phala/.tee-cloud/compose-files/tee-compose.yaml"),
                     envs: [],
                 };
-                const { appId } = await teeCloud.deploy(DockerImageObject);
+                const { appId } = await phalaCloud.deploy(DockerImageObject);
 
                 // Wait for deployment using the helper function
-                this.deploymentUrl = await teeCloud.waitForDeployment(appId);
+                this.deploymentUrl = await phalaCloud.waitForDeployment(appId);
                 console.log("Deployment URL:", this.deploymentUrl);
             }
 

@@ -113,6 +113,7 @@ The Next.js app will be available at `http://localhost:3001`
 
 ### Building the Docker Image 
 
+From the root directory of this project, run the following command to build the Docker image:
 ```bash
 docker build --pull --rm -f 'agent-tee-phala/image/Dockerfile' --platform linux/amd64 -t 'agentlaunchpadstarterkit:latest' 'agent-tee-phala/image'
 ```

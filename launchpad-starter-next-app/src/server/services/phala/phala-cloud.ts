@@ -20,7 +20,7 @@ const headers = {
     "X-API-Key": process.env.PHALA_CLOUD_API_KEY as string,
 };
 
-export class TeeCloud {
+export class PhalaCloud {
     private readonly CLOUD_API_URL: string;
     private readonly CLOUD_URL: string;
     private apiKey: string;

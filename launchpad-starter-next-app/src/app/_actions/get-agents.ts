@@ -1,8 +1,8 @@
 "use server";
 
-import { TeeCloud } from "@/server/services/phala/tee-cloud";
+import { PhalaCloud } from "@/server/services/phala/phala-cloud";
 
 export async function getMyDeployedAgents() {
-    const teeCloud = new TeeCloud();
-    return await teeCloud.queryCvmsByUserId();
+    const phalaCloud = new PhalaCloud();
+    return await phalaCloud.queryCvmsByUserId();
 }

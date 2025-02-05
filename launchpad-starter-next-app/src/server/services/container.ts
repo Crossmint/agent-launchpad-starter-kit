@@ -5,9 +5,7 @@ import { PhalaCloud } from "./phala/phala-cloud";
 
 const execAsync = promisify(exec);
 
-// TODO: Remove this
-const IS_DEV = false;
-// const IS_DEV = process.env.NODE_ENV === "development";
+const IS_DEV = !process.env.PHALA_CLOUD_API_KEY;
 const LOCAL_COMPOSE_FILE_PATH = path.join(
     process.cwd(),
     "..",

@@ -141,6 +141,8 @@ docker build --pull --rm -f 'agent-tee-phala/image/Dockerfile' --platform linux/
    - Create an account on [Phala Cloud](https://cloud.phala.network)
    - Create a new project and copy the API key
    - Update the `PHALA_CLOUD_API_KEY` in your webapp's environment variables to add your Phala Cloud API key
+      - NOTE: adding the API key to the environment variables will automatically use production environments in Phala Cloud. 
+      - To use local environments, you can just leave `PHALA_CLOUD_API_KEY` empty.
 
 3. Deploy Webapp
 

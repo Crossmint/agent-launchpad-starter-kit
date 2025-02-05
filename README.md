@@ -50,6 +50,8 @@
 
 ## About The Project
 
+![Crossmint Agent Wallets](https://github.com/user-attachments/assets/10f6f134-951a-4bea-8511-59e84940eb80)
+
 ![Agent Launchpad Starter Kit](https://github.com/user-attachments/assets/364ad94a-cea1-42e5-928c-a75bc7b9709a)
 
 The goal of this project is to help launchpads and other agent hosting patforms to easily

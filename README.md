@@ -22,6 +22,9 @@
   <summary>Table of Contents</summary>
   <ol>
     <li>
+      <a href="#roadmap">Roadmap</a>
+    </li>
+    <li>
       <a href="#about-the-project">About The Project</a>
       <ul>
         <li><a href="#why-non-custodial">Why Non-Custodial?</a></li>
@@ -34,7 +37,12 @@
         <li><a href="#docker-setup-requires-orbstack">Docker Setup (Requires OrbStack)</a></li>
       </ul>
     </li>
-    <li><a href="#usage">Usage</a></li>
+    <li>
+    <a href="#deploying-to-production">Deploying to Production</a>
+      <ul>
+        <li><a href="#production-deployment-checklist">Production Deployment Checklist</a></li>
+      </ul>
+    </li>
   </ol>
 </details>
 

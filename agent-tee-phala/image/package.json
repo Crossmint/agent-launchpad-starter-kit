@@ -10,6 +10,13 @@
     "start:docker": "pnpm pull:docker-tee-simulator && docker-compose -f ../.tee-cloud/compose-files/tee-compose.yaml up -d"
   },
   "dependencies": {
+    "@elizaos/core": "^0.1.9",
+    "@goat-sdk/adapter-vercel-ai": "0.2.0",
+    "@goat-sdk/core": "0.4.6",
+    "@goat-sdk/plugin-erc20": "0.2.2",
+    "@goat-sdk/plugin-kim": "0.1.2",
+    "@goat-sdk/wallet-evm": "0.2.0",
+    "@goat-sdk/wallet-viem": "0.2.0",
     "@phala/dstack-sdk": "^0.1.7",
     "@types/express": "^5.0.0",
     "express": "^4.21.2",
@@ -18,7 +25,7 @@
   },
   "devDependencies": {
     "@types/node": "^20.0.0",
-    "ts-node": "^10.0.0",
+    "ts-node": "^10.9.2",
     "ts-node-dev": "^2.0.0",
     "typescript": "^5.0.0"
   }

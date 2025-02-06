@@ -11,21 +11,9 @@ importers:
       '@elizaos/core':
         specifier: ^0.1.9
         version: 0.1.9(@google-cloud/vertexai@1.9.3)(@langchain/core@0.3.38(openai@4.73.0(zod@3.23.8)))(axios@1.7.9)(react@19.0.0)(sswr@2.1.0(svelte@5.19.8))(svelte@5.19.8)(vue@3.5.13(typescript@5.7.3))(ws@8.18.0)
-      '@goat-sdk/adapter-vercel-ai':
-        specifier: 0.2.0
-        version: 0.2.0(@goat-sdk/core@0.4.6(zod@3.23.8))(ai@3.4.33(openai@4.73.0(zod@3.23.8))(react@19.0.0)(sswr@2.1.0(svelte@5.19.8))(svelte@5.19.8)(vue@3.5.13(typescript@5.7.3))(zod@3.23.8))
       '@goat-sdk/core':
         specifier: 0.4.6
         version: 0.4.6(zod@3.23.8)
-      '@goat-sdk/plugin-erc20':
-        specifier: 0.2.2
-        version: 0.2.2(@goat-sdk/core@0.4.6(zod@3.23.8))(typescript@5.7.3)(viem@2.22.11(typescript@5.7.3)(zod@3.23.8))
-      '@goat-sdk/plugin-kim':
-        specifier: 0.1.2
-        version: 0.1.2(@goat-sdk/core@0.4.6(zod@3.23.8))(typescript@5.7.3)(viem@2.22.11(typescript@5.7.3)(zod@3.23.8))
-      '@goat-sdk/wallet-evm':
-        specifier: 0.2.0
-        version: 0.2.0(@goat-sdk/core@0.4.6(zod@3.23.8))(typescript@5.7.3)
       '@goat-sdk/wallet-viem':
         specifier: 0.2.0
         version: 0.2.0(@goat-sdk/wallet-evm@0.2.0(@goat-sdk/core@0.4.6(zod@3.23.8))(typescript@5.7.3))(viem@2.22.11(typescript@5.7.3)(zod@3.23.8))
@@ -380,28 +368,10 @@ packages:
     resolution: {integrity: sha512-MNCnE5icY+OM5ahgYJItmydZ7AxhtzhgA5tQI13jVntzhLT0z+tetHIlAL1VA0XFZgldDzqxeTf9Pr5TW3VErg==}
     engines: {node: '>=18.0.0'}
 
-  '@goat-sdk/adapter-vercel-ai@0.2.0':
-    resolution: {integrity: sha512-NqUyO38i6ELbWXSDHddfkD1k4QCUcvfs3jVQArlJ9OO9NSlkKvnbZjO1tTjoVoERjRKfKsCqfMPgsgo3akx7tA==}
-    peerDependencies:
-      '@goat-sdk/core': 0.4.0
-      ai: 4.0.3
-
   '@goat-sdk/core@0.4.6':
     resolution: {integrity: sha512-jFk0G9d/WlR1juIhCKtgEr7HBi2v7/veqouP1Zm1KC6EU2bNHXMYrh2TkeO1wjep3ur1MK4DDY1c+rS4WSY/7g==}
     peerDependencies:
       zod: ^3.0.0
-
-  '@goat-sdk/plugin-erc20@0.2.2':
-    resolution: {integrity: sha512-uobj8A2GRAHAU8PNY9Be0iA8p+311zRDIRKHRQX0uooCWD4CxD6iMj99Q4RvBl8Es+Kc7JMQPRoZzMLawJUSJw==}
-    peerDependencies:
-      '@goat-sdk/core': 0.4.0
-      viem: 2.21.49
-
-  '@goat-sdk/plugin-kim@0.1.2':
-    resolution: {integrity: sha512-jZ7PTjGk7LPGAmMflhAieZsE0Q28TWinNNuDnljrp6NdfjrLK3wLOQB9syWyFHDCsa+RiddSVjr1ZQJkPFhfKw==}
-    peerDependencies:
-      '@goat-sdk/core': 0.4.0
-      viem: 2.21.49
 
   '@goat-sdk/wallet-evm@0.2.0':
     resolution: {integrity: sha512-w/sWi7WHsTz8G+jNWI0xJ+l4wWOVFrSxh7PHfYOEZQyFexOioEdEG5QGYkgYT3/VoYApsx9G1H8itKxs1Mg5Mw==}
@@ -2798,38 +2768,10 @@ snapshots:
       eventsource-parser: 1.1.2
       robot3: 0.4.1
 
-  '@goat-sdk/adapter-vercel-ai@0.2.0(@goat-sdk/core@0.4.6(zod@3.23.8))(ai@3.4.33(openai@4.73.0(zod@3.23.8))(react@19.0.0)(sswr@2.1.0(svelte@5.19.8))(svelte@5.19.8)(vue@3.5.13(typescript@5.7.3))(zod@3.23.8))':
-    dependencies:
-      '@goat-sdk/core': 0.4.6(zod@3.23.8)
-      ai: 3.4.33(openai@4.73.0(zod@3.23.8))(react@19.0.0)(sswr@2.1.0(svelte@5.19.8))(svelte@5.19.8)(vue@3.5.13(typescript@5.7.3))(zod@3.23.8)
-      zod: 3.23.8
-
   '@goat-sdk/core@0.4.6(zod@3.23.8)':
     dependencies:
       reflect-metadata: 0.2.2
       zod: 3.23.8
-
-  '@goat-sdk/plugin-erc20@0.2.2(@goat-sdk/core@0.4.6(zod@3.23.8))(typescript@5.7.3)(viem@2.22.11(typescript@5.7.3)(zod@3.23.8))':
-    dependencies:
-      '@goat-sdk/core': 0.4.6(zod@3.23.8)
-      '@goat-sdk/wallet-evm': 0.2.0(@goat-sdk/core@0.4.6(zod@3.23.8))(typescript@5.7.3)
-      viem: 2.22.11(typescript@5.7.3)(zod@3.23.8)
-      zod: 3.23.8
-    transitivePeerDependencies:
-      - bufferutil
-      - typescript
-      - utf-8-validate
-
-  '@goat-sdk/plugin-kim@0.1.2(@goat-sdk/core@0.4.6(zod@3.23.8))(typescript@5.7.3)(viem@2.22.11(typescript@5.7.3)(zod@3.23.8))':
-    dependencies:
-      '@goat-sdk/core': 0.4.6(zod@3.23.8)
-      '@goat-sdk/wallet-evm': 0.2.0(@goat-sdk/core@0.4.6(zod@3.23.8))(typescript@5.7.3)
-      viem: 2.22.11(typescript@5.7.3)(zod@3.23.8)
-      zod: 3.23.8
-    transitivePeerDependencies:
-      - bufferutil
-      - typescript
-      - utf-8-validate
 
   '@goat-sdk/wallet-evm@0.2.0(@goat-sdk/core@0.4.6(zod@3.23.8))(typescript@5.7.3)':
     dependencies:

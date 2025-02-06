@@ -6,7 +6,6 @@ import type { Request, Response } from "express";
 
 import { exec } from "child_process";
 import { promisify } from "util";
-import path from "path";
 import dotenv from "dotenv";
 dotenv.config();
 
@@ -31,7 +30,7 @@ app.post("/api/initialize", async (req: Request, res: Response) => {
     }
 
     try {
-        const client = new TappdClient(process.env.DSTACK_SIMULATOR_ENDPOINT);
+        const client = new TappdClient(process.env.DSTACK_SIMULATOR_ENDPOINT || undefined);
         const randomDeriveKey = await client.deriveKey(smartWalletAddress, "");
         const keccakPrivateKey = keccak256(randomDeriveKey.asUint8Array());
         const account = privateKeyToAccount(keccakPrivateKey);
@@ -68,10 +67,8 @@ async function initializeAgent(privateKey: string) {
 
     try {
         console.log("Initializing agent...");
-        const agentPath = path.join(__dirname, "../../../agent/index.ts");
-
         const { stdout } = await execAsync(
-            `EVM_PRIVATE_KEY=${privateKey} EVM_PROVIDER_URL=https://sepolia.mode.network npx ts-node ${agentPath}`
+            `EVM_PRIVATE_KEY=${privateKey} EVM_PROVIDER_URL=https://sepolia.mode.network pnpm run start:agent`
         );
         console.log("Agent initialized successfully");
         console.log("stdout:", stdout);

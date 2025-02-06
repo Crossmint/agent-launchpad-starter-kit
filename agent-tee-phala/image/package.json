@@ -3,19 +3,16 @@
   "version": "1.0.0",
   "scripts": {
     "build": "tsc",
-    "start": "node dist/index.js",
+    "start": "node dist/server/src/index.js",
     "dev": "ts-node-dev --respawn server/src/index.ts",
     "build:docker": "tsc && docker build -t agent-tee-phala .",
     "pull:docker-tee-simulator": "docker pull phalanetwork/tappd-simulator:latest && docker run --rm -d -p 8090:8090 phalanetwork/tappd-simulator:latest",
-    "start:docker": "pnpm pull:docker-tee-simulator && docker-compose -f ../.tee-cloud/compose-files/tee-compose.yaml up -d"
+    "start:docker": "pnpm pull:docker-tee-simulator && docker-compose -f ../.tee-cloud/compose-files/tee-compose.yaml up -d",
+    "start:agent": "npx ts-node dist/agent/index.js"
   },
   "dependencies": {
     "@elizaos/core": "^0.1.9",
-    "@goat-sdk/adapter-vercel-ai": "0.2.0",
     "@goat-sdk/core": "0.4.6",
-    "@goat-sdk/plugin-erc20": "0.2.2",
-    "@goat-sdk/plugin-kim": "0.1.2",
-    "@goat-sdk/wallet-evm": "0.2.0",
     "@goat-sdk/wallet-viem": "0.2.0",
     "@phala/dstack-sdk": "^0.1.7",
     "@types/express": "^5.0.0",

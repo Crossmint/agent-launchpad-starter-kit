@@ -38,7 +38,10 @@ export class ContainerManager {
                 console.log("Build complete!");
 
                 // Start TEE container that will start the express server on port 4000
-                const { stdout: teeCompose } = await execAsync(`docker-compose -f ${LOCAL_COMPOSE_FILE_PATH} up -d`);
+                const DSTACK_SIMULATOR_ENDPOINT = "http://host.docker.internal:8090";
+                const { stdout: teeCompose } = await execAsync(
+                    `DSTACK_SIMULATOR_ENDPOINT=${DSTACK_SIMULATOR_ENDPOINT} docker-compose -f ${LOCAL_COMPOSE_FILE_PATH} up -d`
+                );
                 console.log("TEE container started!");
                 this.containerId = teeCompose.trim();
                 this.deploymentUrl = "http://app.compose-files.orb.local:4000";

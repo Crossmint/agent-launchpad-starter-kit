@@ -7,8 +7,8 @@ services:
     image: jonathanpaella/agentlaunchpadstarterkit:latest
     container_name: agent-tee-phala
     environment:
-      - NODE_ENV=development
       - PORT=4000
+      - DSTACK_SIMULATOR_ENDPOINT=${DSTACK_SIMULATOR_ENDPOINT:-}
     ports:
       - 4000:4000
     volumes:

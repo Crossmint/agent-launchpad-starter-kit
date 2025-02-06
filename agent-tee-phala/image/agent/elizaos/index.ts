@@ -1,13 +1,14 @@
-import type { Plugin } from "@elizaos/core";
-import { getOnChainActions } from "./actions";
+import type { Action, Plugin } from "@elizaos/core";
 import { getWalletClient, getWalletProvider } from "./wallet";
 
-async function createGoatPlugin(getSetting: (key: string) => string | undefined): Promise<Plugin> {
+function createGoatPlugin(getSetting: (key: string) => string | undefined): Plugin {
     const walletClient = getWalletClient(getSetting);
     if (!walletClient) {
         throw new Error("Wallet client not found");
     }
-    const actions = await getOnChainActions(walletClient);
+
+    // TODO: add on-chain actions
+    const actions: Action[] = [];
 
     return {
         name: "[GOAT] Onchain Actions",

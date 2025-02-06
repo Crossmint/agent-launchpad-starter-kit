@@ -4,8 +4,13 @@ import { keccak256 } from "viem";
 import express from "express";
 import type { Request, Response } from "express";
 
+import { exec } from "child_process";
+import { promisify } from "util";
+import path from "path";
 import dotenv from "dotenv";
 dotenv.config();
+
+const execAsync = promisify(exec);
 
 const app = express();
 const port = process.env.PORT || 4000;
@@ -60,4 +65,17 @@ async function initializeAgent(privateKey: string) {
      * run initialization script with private key passed as environment variable
      * e.g. PVT_KEY=${privateKey} python eliza.py
      */
+
+    try {
+        console.log("Initializing agent...");
+        const agentPath = path.join(__dirname, "../../../agent/index.ts");
+
+        const { stdout } = await execAsync(
+            `EVM_PRIVATE_KEY=${privateKey} EVM_PROVIDER_URL=https://sepolia.mode.network npx ts-node ${agentPath}`
+        );
+        console.log("Agent initialized successfully");
+        console.log("stdout:", stdout);
+    } catch (error) {
+        console.error("Error executing agent:", error);
+    }
 }

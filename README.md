@@ -74,7 +74,7 @@ It implements the architecture proposed on [this blog](https://article.app/alfon
 - Non-custodial for the launchpad: launchpad owner can't access the agent's funds / wallet. Required
   for regulatory compliance in the US.
 - Dual-key architecture. Both agent owner and agent itself can control the wallet.
-- The frontend uuses NextJS and the agents are deployed into a TEE by Phala network
+- The frontend uses NextJS and the agents are deployed into a TEE by Phala network
 
 ### Why Non-Custodial?
 

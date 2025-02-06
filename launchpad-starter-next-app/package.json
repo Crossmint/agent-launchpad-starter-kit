@@ -4,13 +4,13 @@
     "private": true,
     "scripts": {
         "build": "next build",
-        "dev": "docker pull phalanetwork/tappd-simulator:latest && next dev -p 3001",
+        "dev": "docker pull phalanetwork/tappd-simulator:latest && next dev -p 3001 && echo '\n🚀 Please make sure OrbStack is running before continuing...\n'",
         "lint": "next lint",
         "lint:fix": "biome check --write",
         "start": "next start"
     },
     "dependencies": {
-        "@crossmint/client-sdk-react-ui": "^1.13.4",
+        "@crossmint/client-sdk-react-ui": "^1.13.7",
         "@crossmint/common-sdk-base": "^0.3.1",
         "@noble/curves": "^1.8.1",
         "@phala/dstack-sdk": "^0.1.7",

@@ -31,6 +31,12 @@ export class ContainerManager {
                 );
                 console.log("Simulator started!");
                 this.simulatorId = simulatorId.trim();
+
+                // Build and start TEE container that will start the express server on port 4000
+                console.log("Building TEE container...");
+                await execAsync(`docker-compose -f ${LOCAL_COMPOSE_FILE_PATH} build`);
+                console.log("Build complete!");
+
                 // Start TEE container that will start the express server on port 4000
                 const { stdout: teeCompose } = await execAsync(`docker-compose -f ${LOCAL_COMPOSE_FILE_PATH} up -d`);
                 console.log("TEE container started!");

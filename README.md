@@ -7,7 +7,7 @@
   <h1 align="center">Agent Launchpad Starter Kit</h1>
 
   <p align="center">
-    Example launchpad webapp that showcases how to deploy AI agents with non-custodial wallets. It uses Crossmint smart wallets and deploys agents in a TEE for secure key management.
+    Example webapp that showcases how to deploy AI agents with non-custodial wallets. It uses Crossmint smart wallets and deploys agents in a TEE for secure key management.
     <br />
     <a href="https://github.com/crossmint/agent-launchpad-starter">View Demo</a>
     ·
@@ -16,6 +16,15 @@
     <a href="https://github.com/crossmint/agent-launchpad-starter/issues/new?labels=enhancement&template=feature-request---.md">Request Feature</a>
   </p>
 </div>
+
+> **ℹ️ Beta Software Notice**
+>
+> This codebase is currently in beta and has not undergone formal security audits. It serves as an illustration and blueprint for implementing non-custodial wallet architectures in AI agent systems. Before using this in production:
+>
+> 1. **Conduct Security Audits**: Thoroughly review and audit the codebase, especially the wallet management and TEE deployment components
+> 2. **Stay Updated**: Star and watch this repository to receive updates as we add functionality and enhance security measures
+>
+> We are actively improving the security and functionality of this codebase. Your feedback and contributions are welcome!
 
 <!-- TABLE OF CONTENTS -->
 <details>
@@ -51,11 +60,10 @@
 
 ## Roadmap
 
-[x] Development mode  
-[x] Production deploys  
-[ ] Solana support  
-[ ] Confidential environment variable setup  
-[ ] Add support for more TEE networks
+[ ] Solana Smart Wallets (~Feb 10)  
+[ ] Add support for more TEE networks: Marlin, Lit (~Feb 10)  
+[ ] Sample code for user-initiated wallet actions  
+[ ] Non-custodial agent software updates
 
 ## About The Project
 
@@ -90,6 +98,12 @@ In jurisdictions like the United States, platforms that have the ability to cont
 
 ![Agent Launchpad Starter Kit](https://github.com/user-attachments/assets/364ad94a-cea1-42e5-928c-a75bc7b9709a)
 
+### Pre-requisites
+
+1. [Install pnpm](https://pnpm.io/installation) as package manager
+2. [Install OrbStack](https://orbstack.dev/) for local container management
+3. Create a developer project in Crossmint [staging console](https://staging.crossmint.com/console) and [production](https://www.crossmint.com/console)
+
 ### Local Setup
 
 1. Obtain free API Keys from the [Staging environment of Crossmint Console](https://staging.crossmint.com). You'll need both a server-side and client-side API Key. Refer to these instructions to [Get a server-side API Key](https://docs.crossmint.com/introduction/platform/api-keys/server-side) and [a client-side one](https://docs.crossmint.com/introduction/platform/api-keys/client-side).
@@ -116,14 +130,27 @@ In jurisdictions like the United States, platforms that have the ability to cont
 
 The Next.js app will be available at `http://localhost:3001`
 
-### Docker Setup (Requires OrbStack)
+3. Agent setup
 
-1. [Install OrbStack](https://orbstack.dev/) for local container management
+   Open a new terminal in the project root folder, and run:
+
+   ```bash
+   cd agent-tee-phala
+   pnpm install
+   cp .env.example .env
+   ```
+
+   Then start the agent:
+
+   ```bash
+   pnpm dev
+   ```
+
+The Express server will be available at `http://localhost:4000`.
 
 ## Deploying to Production
 
-### Building the Docker Image 
-
+### Building the Docker Image
 
 1. From the root directory of this project, run the following command to build the Docker image:
 
@@ -131,7 +158,8 @@ The Next.js app will be available at `http://localhost:3001`
 docker build --pull --rm -f 'agent-tee-phala/image/Dockerfile' --platform linux/amd64 -t '{your-image-name}:{version}' 'agent-tee-phala/image'
 ```
 
-Example: 
+Example:
+
 ```bash
 docker build --pull --rm -f 'agent-tee-phala/image/Dockerfile' --platform linux/amd64 -t 'agentlaunchpadstarterkit:latest' 'agent-tee-phala/image'
 ```
@@ -147,23 +175,34 @@ docker build --pull --rm -f 'agent-tee-phala/image/Dockerfile' --platform linux/
      - Server-side: All 'wallet API' scopes
      - Client-side: All 'wallet API' and 'users' scopes. Whitelist your webapp url as an origin.
 
-2. Deploy Agent to Phala Cloud
+2. Security Checklist
+
+   - Verify and audit all code in your agent image folder to ensure it meets security standards
+   - Publish reproduceable build code to an open source repository for transparency
+   - Implement client-side checks to prevent agent deployments to TEEs that cannot remotely attest they are running audited code versions
+   - Configure TEE to disallow code upgrades without explicit end user approval (feature coming soon to Phala and Marlin)
+
+3. Deploy Agent to TEE (Phala Cloud)
 
    - Create an account on [Phala Cloud](https://cloud.phala.network)
    - Create a new project and copy the API key
    - Update the `PHALA_CLOUD_API_KEY` in your webapp's environment variables to add your Phala Cloud API key
-      - NOTE: adding the API key to the environment variables will automatically use production environments in Phala Cloud. 
-      - To use local environments, you can just leave `PHALA_CLOUD_API_KEY` empty.
+     - NOTE: adding the API key to the environment variables will automatically use production environments in Phala Cloud.
+     - To use local environments, you can just leave `PHALA_CLOUD_API_KEY` empty.
 
-3. Deploy Webapp
+4. Deploy Webapp
 
    - Deploy your Next.js application to your preferred hosting platform (Vercel, AWS, etc.)
    - Set up environment variables in your hosting platform's dashboard
 
-4. Testing
+5. Testing
 
    - Verify wallet creation flow works end-to-end
    - Test agent deployment and communication
    - Confirm authentication and authorization are working as expected
+
+## Disclaimer
+
+This software is provided "AS IS", without warranty of any kind, express or implied, including but not limited to the warranties of merchantability, fitness for a particular purpose and noninfringement. In no event shall the authors or copyright holders be liable for any claim, damages or other liability, whether in an action of contract, tort or otherwise, arising from, out of or in connection with the software or the use or other dealings in the software.
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>

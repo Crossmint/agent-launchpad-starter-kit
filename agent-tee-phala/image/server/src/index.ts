@@ -4,6 +4,9 @@ import { keccak256 } from "viem";
 import express from "express";
 import type { Request, Response } from "express";
 
+import dotenv from "dotenv";
+dotenv.config();
+
 const app = express();
 const port = process.env.PORT || 4000;
 
@@ -15,7 +18,7 @@ app.get("/api/getPublicKey", (req, res) => {
 });
 
 app.post("/api/initialize", async (req: Request, res: Response) => {
-    // TODO: For now this is just the smart wallet address (TBD)
+    // TODO: For now this is just the evm smart wallet address (TBD)
     const smartWalletAddress = req.header("x-secret-key");
     if (!smartWalletAddress) {
         res.status(400).json({ error: "missing 'x-secret-key' header in request for initialization" });
@@ -54,6 +57,7 @@ app.listen(port, () => {
 async function initializeAgent(privateKey: string) {
     // TODO: Initialize AI agent with smart wallet configuration using privateKey as delegated signer
     /* For example:
-     * run initialization script as environment variable
+     * run initialization script with private key passed as environment variable
+     * e.g. PVT_KEY=${privateKey} node eliza.ts
      */
 }

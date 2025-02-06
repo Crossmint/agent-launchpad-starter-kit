@@ -58,6 +58,6 @@ async function initializeAgent(privateKey: string) {
     // TODO: Initialize AI agent with smart wallet configuration using privateKey as delegated signer
     /* For example:
      * run initialization script with private key passed as environment variable
-     * e.g. PVT_KEY=${privateKey} node eliza.ts
+     * e.g. PVT_KEY=${privateKey} python eliza.py
      */
 }

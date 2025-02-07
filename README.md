@@ -145,7 +145,7 @@ The Next.js app will be available at `http://localhost:3001`
    pnpm build
    ```
 
-  Note: When running the nextjs app, the docker image will build and deploy in a simulated TEE environment. This simulated environment allows you to test your agent locally before deploying to production TEEs.
+  Note: When running the nextjs app, the docker image will build and deploy in a simulated TEE environment. This simulated environment allows you to test your docker image code locally before deploying to production TEEs & Docker hub.
 
 ## Deploying to Production
 

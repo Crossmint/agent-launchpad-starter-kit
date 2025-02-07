@@ -1,14 +1,8 @@
-import type { Action, Plugin } from "@elizaos/core";
+import type { Plugin } from "@elizaos/core";
 import { getWalletClient, getWalletProvider } from "./wallet";
 
-function createGoatPlugin(getSetting: (key: string) => string | undefined): Plugin {
-    const walletClient = getWalletClient(getSetting);
-    if (!walletClient) {
-        throw new Error("Wallet client not found");
-    }
-
-    // TODO: add on-chain actions
-    const actions: Action[] = [];
+export default async function createElizaGoatPlugin(): Promise<Plugin> {
+    const { walletClient, actions } = await getWalletClient();
 
     return {
         name: "[GOAT] Onchain Actions",
@@ -19,5 +13,3 @@ function createGoatPlugin(getSetting: (key: string) => string | undefined): Plug
         actions: actions,
     };
 }
-
-export default createGoatPlugin;

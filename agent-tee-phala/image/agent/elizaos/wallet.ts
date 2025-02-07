@@ -1,31 +1,39 @@
+import { crossmint } from "@goat-sdk/crossmint";
+import { USDC, erc20 } from "@goat-sdk/plugin-erc20";
+
+import { sendETH } from "@goat-sdk/wallet-evm";
+import { getOnChainActions } from "./actions";
 import type { WalletClientBase } from "@goat-sdk/core";
-import { viem } from "@goat-sdk/wallet-viem";
-import { createWalletClient, http } from "viem";
-import { privateKeyToAccount } from "viem/accounts";
-import { mode } from "viem/chains";
 
-// Add the chain you want to use, remember to update also
-// the EVM_PROVIDER_URL to the correct one for the chain
-export const chain = mode;
+require("dotenv").config();
 
-export function getWalletClient(getSetting: (key: string) => string | undefined) {
-    const privateKey = getSetting("EVM_PRIVATE_KEY");
-    if (!privateKey) {
-        return null;
-    }
+const apiKey = process.env.CROSSMINT_SERVER_API_KEY;
+const walletSignerSecretKey = process.env.SIGNER_WALLET_SECRET_KEY;
+const alchemyApiKey = process.env.ALCHEMY_API_KEY_BASE_SEPOLIA;
+const smartWalletAddress = process.env.SMART_WALLET_ADDRESS;
 
-    const provider = getSetting("EVM_PROVIDER_URL");
-    if (!provider) {
-        throw new Error("EVM_PROVIDER_URL not configured");
-    }
+if (!apiKey || !walletSignerSecretKey || !alchemyApiKey || !smartWalletAddress) {
+    throw new Error("Missing environment variables");
+}
 
-    const wallet = createWalletClient({
-        account: privateKeyToAccount(privateKey as `0x${string}`),
-        chain: chain,
-        transport: http(provider),
+const { smartwallet, faucet } = crossmint(apiKey);
+
+export async function getWalletClient() {
+    const walletClient = await smartwallet({
+        address: smartWalletAddress,
+        signer: {
+            secretKey: walletSignerSecretKey as `0x${string}`,
+        },
+        chain: "base-sepolia",
+        provider: alchemyApiKey as string,
     });
+    const plugins = [sendETH(), erc20({ tokens: [USDC] }), faucet()];
+    const actions = await getOnChainActions(walletClient, plugins);
 
-    return viem(wallet);
+    return {
+        walletClient,
+        actions,
+    };
 }
 
 export function getWalletProvider(walletClient: WalletClientBase) {

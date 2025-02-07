@@ -25,7 +25,9 @@ export async function POST(request: Request) {
         const { publicKey } = await fetch(`${containerManager.deploymentUrl}/api/initialize`, {
             method: "POST",
             headers: {
-                "x-secret-key": smartWalletAddress,
+                "x-api-key": process.env.CROSSMINT_SERVER_API_KEY as string,
+                "x-wallet-address": smartWalletAddress,
+                "x-alchemy-api-key": process.env.ALCHEMY_API_KEY as string,
             },
         }).then((res) => res.json());
         console.log(`Agent public key: ${publicKey}`);

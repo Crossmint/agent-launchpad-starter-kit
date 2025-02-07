@@ -11,14 +11,21 @@
     "start:agent": "npx ts-node dist/agent/index.js"
   },
   "dependencies": {
+    "@ai-sdk/openai": "^1.1.9",
     "@elizaos/core": "^0.1.9",
+    "@goat-sdk/adapter-vercel-ai": "^0.2.8",
     "@goat-sdk/core": "0.4.6",
+    "@goat-sdk/crossmint": "^0.3.16",
+    "@goat-sdk/plugin-erc20": "^0.2.10",
+    "@goat-sdk/plugin-kim": "^0.1.10",
+    "@goat-sdk/wallet-evm": "^0.2.8",
     "@goat-sdk/wallet-viem": "0.2.0",
     "@phala/dstack-sdk": "^0.1.7",
     "@types/express": "^5.0.0",
+    "ai": "^4.1.24",
+    "dotenv": "^16.4.5",
     "express": "^4.21.2",
-    "viem": "2.22.11",
-    "dotenv": "^16.4.5"
+    "viem": "2.22.11"
   },
   "devDependencies": {
     "@types/node": "^20.0.0",

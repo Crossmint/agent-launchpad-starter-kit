@@ -22,10 +22,14 @@ app.get("/api/getPublicKey", (req, res) => {
 });
 
 app.post("/api/initialize", async (req: Request, res: Response) => {
-    // TODO: For now this is just the evm smart wallet address (TBD)
-    const smartWalletAddress = req.header("x-secret-key");
-    if (!smartWalletAddress) {
-        res.status(400).json({ error: "missing 'x-secret-key' header in request for initialization" });
+    const smartWalletAddress = req.header("x-wallet-address");
+    const crossmintServerApiKey = req.header("x-api-key");
+    const alchemyApiKey = req.header("x-alchemy-api-key");
+
+    if (!smartWalletAddress || !crossmintServerApiKey || !alchemyApiKey) {
+        res.status(400).json({
+            error: "missing 'x-wallet-address' or 'x-api-key' or 'x-alchemy-api-key' header in request for initialization",
+        });
         return;
     }
 
@@ -41,7 +45,7 @@ app.post("/api/initialize", async (req: Request, res: Response) => {
         privateKey = keccakPrivateKey;
         publicKey = account.address;
 
-        await initializeAgent(privateKey);
+        await initializeAgent(privateKey, crossmintServerApiKey, alchemyApiKey);
 
         res.json({ status: "success", publicKey: account.address });
     } catch (error) {
@@ -58,18 +62,18 @@ app.listen(port, () => {
     console.log(`Server running on port ${port}`);
 });
 
-async function initializeAgent(privateKey: string) {
-    // TODO: Initialize AI agent with smart wallet configuration using privateKey as delegated signer
-    /* For example:
-     * run initialization script with private key passed as environment variable
-     * e.g. PVT_KEY=${privateKey} python eliza.py
-     */
-
+async function initializeAgent(privateKey: string, crossmintServerApiKey: string, alchemyApiKey: string) {
     try {
         console.log("Initializing agent...");
-        const { stdout } = await execAsync(
-            `EVM_PRIVATE_KEY=${privateKey} EVM_PROVIDER_URL=https://sepolia.mode.network pnpm run start:agent`
-        );
+
+        const environmentVariables = `
+        SIGNER_WALLET_SECRET_KEY=${privateKey} 
+        CROSSMINT_SERVER_API_KEY=${crossmintServerApiKey}
+        SMART_WALLET_ADDRESS=${publicKey}
+        ALCHEMY_API_KEY_BASE_SEPOLIA=${alchemyApiKey}
+        `;
+
+        const { stdout } = await execAsync(`${environmentVariables} pnpm run start:agent`);
         console.log("Agent initialized successfully");
         console.log("stdout:", stdout);
     } catch (error) {

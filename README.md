@@ -9,11 +9,9 @@
   <p align="center">
     Example webapp that showcases how to deploy AI agents with non-custodial wallets. It uses Crossmint smart wallets and deploys agents in a TEE for secure key management.
     <br />
-    <a href="https://github.com/crossmint/agent-launchpad-starter">View Demo</a>
+    <a href="https://github.com/crossmint/agent-launchpad-starter-kit/issues/new?labels=bug&template=bug-report---.md">Report Bug</a>
     ·
-    <a href="https://github.com/crossmint/agent-launchpad-starter/issues/new?labels=bug&template=bug-report---.md">Report Bug</a>
-    ·
-    <a href="https://github.com/crossmint/agent-launchpad-starter/issues/new?labels=enhancement&template=feature-request---.md">Request Feature</a>
+    <a href="https://github.com/crossmint/agent-launchpad-starter-kit/issues/new?labels=enhancement&template=feature-request---.md">Request Feature</a>
   </p>
 </div>
 
@@ -102,15 +100,17 @@ In jurisdictions like the United States, platforms that have the ability to cont
 
 1. [Install pnpm](https://pnpm.io/installation) as package manager
 2. [Install OrbStack](https://orbstack.dev/) for local container management
+     - Launch the Orbstack app on your computer and select "Docker" from the OrbStack setup menu
 3. Create a developer project in Crossmint [staging console](https://staging.crossmint.com/console) and [production](https://www.crossmint.com/console)
 
 ### Local Setup
 
 1. Obtain free API Keys from the [Staging environment of Crossmint Console](https://staging.crossmint.com). You'll need both a server-side and client-side API Key. Refer to these instructions to [Get a server-side API Key](https://docs.crossmint.com/introduction/platform/api-keys/server-side) and [a client-side one](https://docs.crossmint.com/introduction/platform/api-keys/client-side).
 
+   - Ensure the Wallet Type is set to `Smart wallet` under Settings > General
    - Ensure API keys have the required scopes:
      - Server-side: All 'wallet API' scopes
-     - Client-side: All 'wallet API' and 'users' scopes. Whitelist `http://localhost:3001` as an origin
+     - Client-side: All 'wallet API' and 'users' scopes. Whitelist `http://localhost:3001` as an origin and check the "JWT Auth" box
 
 2. Webapp setup
 
@@ -120,7 +120,7 @@ In jurisdictions like the United States, platforms that have the ability to cont
    cp .env.example .env
    ```
 
-   Enter your Crossmint API keys in the `.env` file. Leave the URL as is.
+   Enter your Crossmint API keys in the `.env` file. Leave the Docker URL and Phala API key as is for now.
 
    Then start the webapp:
 
@@ -135,18 +135,9 @@ The Next.js app will be available at `http://localhost:3001`
    Open a new terminal in the project root folder, and run:
 
    ```bash
-   cd agent-tee-phala
+   cd agent-tee-phala/image
    pnpm install
-   cp .env.example .env
    ```
-
-   Then start the agent:
-
-   ```bash
-   pnpm dev
-   ```
-
-The Express server will be available at `http://localhost:4000`.
 
 ## Deploying to Production
 
@@ -173,7 +164,7 @@ docker build --pull --rm -f 'agent-tee-phala/image/Dockerfile' --platform linux/
    - Replace staging API keys with production keys from [Crossmint Console](https://www.crossmint.com/console)
    - Ensure API keys have the required scopes:
      - Server-side: All 'wallet API' scopes
-     - Client-side: All 'wallet API' and 'users' scopes. Whitelist your webapp url as an origin.
+     - Client-side: All 'wallet API' and 'users' scopes. Whitelist your webapp url as an origin and check the "JWT Auth" box.
 
 2. Security Checklist
 

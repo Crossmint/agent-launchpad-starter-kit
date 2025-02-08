@@ -5,8 +5,6 @@ import { sendETH } from "@goat-sdk/wallet-evm";
 import { getOnChainActions } from "./actions";
 import type { WalletClientBase } from "@goat-sdk/core";
 
-require("dotenv").config();
-
 const apiKey = process.env.CROSSMINT_SERVER_API_KEY;
 const walletSignerSecretKey = process.env.SIGNER_WALLET_SECRET_KEY;
 const alchemyApiKey = process.env.ALCHEMY_API_KEY_BASE_SEPOLIA;

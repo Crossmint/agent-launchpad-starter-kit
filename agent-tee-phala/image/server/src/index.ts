@@ -66,13 +66,7 @@ async function initializeAgent(privateKey: string, crossmintServerApiKey: string
     try {
         console.log("Initializing agent...");
 
-        const environmentVariables = `
-        SIGNER_WALLET_SECRET_KEY=${privateKey} 
-        CROSSMINT_SERVER_API_KEY=${crossmintServerApiKey}
-        SMART_WALLET_ADDRESS=${publicKey}
-        ALCHEMY_API_KEY_BASE_SEPOLIA=${alchemyApiKey}
-        `;
-
+        const environmentVariables = `SIGNER_WALLET_SECRET_KEY=${privateKey} CROSSMINT_SERVER_API_KEY=${crossmintServerApiKey} SMART_WALLET_ADDRESS=${publicKey} ALCHEMY_API_KEY_BASE_SEPOLIA=${alchemyApiKey}`;
         const { stdout } = await execAsync(`${environmentVariables} pnpm run start:agent`);
         console.log("Agent initialized successfully");
         console.log("stdout:", stdout);

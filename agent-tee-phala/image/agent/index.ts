@@ -5,7 +5,7 @@ export default async function startAgent() {
     const plugins = await createElizaGoatPlugin();
     // @ts-ignore TODO: Finish character and deploy the agent here...
     const character: Character = {
-        name: "GOAT Agent",
+        name: "Rufus Agent",
         adjectives: ["smart", "helpful", "friendly"],
         lore: ["You are a helpful assistant that can help with a variety of tasks."],
         bio: "You are a helpful assistant that can help with a variety of tasks.",

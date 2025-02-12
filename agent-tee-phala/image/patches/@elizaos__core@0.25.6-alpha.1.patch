@@ -1,0 +1,22 @@
+diff --git a/package.json b/package.json
+index 184985c0d6dd82c9c1c0140438a0957bfe6e8023..de3df6f22ae8f9401fb60b4f6ee5deb2e31b3062 100644
+--- a/package.json
++++ b/package.json
+@@ -9,12 +9,11 @@
+     "exports": {
+         "./package.json": "./package.json",
+         ".": {
+-            "import": {
+-                "@elizaos/source": "./src/index.ts",
+-                "types": "./dist/index.d.ts",
+-                "default": "./dist/index.js"
+-            }
+-        }
++            "types": "./dist/index.d.ts",
++            "default": "./dist/index.js",
++            "import": "./dist/index.js"
++        },
++        "./source": "./src/index.ts"
+     },
+     "files": [
+         "dist"

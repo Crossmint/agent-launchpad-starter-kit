@@ -139,11 +139,21 @@ The Next.js app will be available at `http://localhost:3001`
    pnpm install
    ```
 
+   Then, build the image code:
+
+   ```bash
+   pnpm build
+   ```
+
+  Note: When running the nextjs app, the docker image will build and deploy in a simulated TEE environment. This simulated environment allows you to test your docker image code locally before deploying to production TEEs & Docker hub.
+
 ## Deploying to Production
 
 ### Building the Docker Image
 
-1. From the root directory of this project, run the following command to build the Docker image:
+In order to run the docker image within a TEE, we need to first build the image.
+
+1. From the root directory of this project, run the following command to build the Docker image: its important to use the `--platform linux/amd64` flag to ensure the image is built for the correct architecture.
 
 ```bash
 docker build --pull --rm -f 'agent-tee-phala/image/Dockerfile' --platform linux/amd64 -t '{your-image-name}:{version}' 'agent-tee-phala/image'
@@ -155,7 +165,8 @@ Example:
 docker build --pull --rm -f 'agent-tee-phala/image/Dockerfile' --platform linux/amd64 -t 'agentlaunchpadstarterkit:latest' 'agent-tee-phala/image'
 ```
 
-2. In the [`launchpad-starter-next-app/src/server/services/container.ts`](launchpad-starter-next-app/src/server/services/container.ts), there's a inline comment that explains how to update the docker image name and version. Go to line 47 to find the instructions.
+2. Publish the image to Docker Hub.
+In the [`launchpad-starter-next-app/src/server/services/container.ts`](launchpad-starter-next-app/src/server/services/container.ts), there's a inline comment that explains how to update the docker image name and version. Go to line 47 to find the instructions.
 
 ### Production Deployment Checklist
 

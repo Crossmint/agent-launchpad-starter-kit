@@ -3,12 +3,12 @@
     "target": "es2020",
     "module": "commonjs",
     "outDir": "./dist",
-    "rootDir": "server/src",
+    "rootDir": "./",
     "strict": true,
     "esModuleInterop": true,
     "skipLibCheck": true,
-    "forceConsistentCasingInFileNames": true
+    "forceConsistentCasingInFileNames": true,
   },
-  "include": ["server/src/**/*"],
-  "exclude": ["node_modules"]
+  "include": ["server/src/**/*", "agent/**/*"],
+  "exclude": ["node_modules", "dist"]
 }

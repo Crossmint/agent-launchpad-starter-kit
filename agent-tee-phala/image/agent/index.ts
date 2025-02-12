@@ -1,10 +1,5 @@
 import type { Character } from "@elizaos/core";
 import createElizaGoatPlugin from "./elizaos";
-const openAiApiKey = process.env.OPENAI_API_KEY as string;
-
-if (!openAiApiKey) {
-    throw new Error("Missing openai api key");
-}
 
 export default async function startAgent() {
     const plugins = await createElizaGoatPlugin();
@@ -18,6 +13,7 @@ export default async function startAgent() {
         clients: [],
         // services: [],
     };
+    console.log("Skipping agent deployment...");
 }
 
 startAgent();

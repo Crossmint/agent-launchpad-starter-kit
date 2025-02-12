@@ -16,17 +16,18 @@ const port = process.env.PORT || 4000;
 
 let privateKey: string;
 let publicKey: string;
+let smartWalletAddress: string;
 
 app.get("/api/getPublicKey", (req, res) => {
     res.json({ publicKey });
 });
 
 app.post("/api/initialize", async (req: Request, res: Response) => {
-    const smartWalletAddress = req.header("x-wallet-address");
+    const smartWalletAddressHeader = req.header("x-wallet-address");
     const crossmintServerApiKey = req.header("x-api-key");
     const alchemyApiKey = req.header("x-alchemy-api-key");
 
-    if (!smartWalletAddress || !crossmintServerApiKey || !alchemyApiKey) {
+    if (!smartWalletAddressHeader || !crossmintServerApiKey || !alchemyApiKey) {
         res.status(400).json({
             error: "missing 'x-wallet-address' or 'x-api-key' or 'x-alchemy-api-key' header in request for initialization",
         });
@@ -35,7 +36,7 @@ app.post("/api/initialize", async (req: Request, res: Response) => {
 
     try {
         const client = new TappdClient(process.env.DSTACK_SIMULATOR_ENDPOINT || undefined);
-        const randomDeriveKey = await client.deriveKey(smartWalletAddress, "");
+        const randomDeriveKey = await client.deriveKey(smartWalletAddressHeader, "");
         const keccakPrivateKey = keccak256(randomDeriveKey.asUint8Array());
         const account = privateKeyToAccount(keccakPrivateKey);
 
@@ -44,6 +45,7 @@ app.post("/api/initialize", async (req: Request, res: Response) => {
 
         privateKey = keccakPrivateKey;
         publicKey = account.address;
+        smartWalletAddress = smartWalletAddressHeader;
 
         await initializeAgent(privateKey, crossmintServerApiKey, alchemyApiKey);
 
@@ -65,10 +67,8 @@ app.listen(port, () => {
 async function initializeAgent(privateKey: string, crossmintServerApiKey: string, alchemyApiKey: string) {
     try {
         console.log("Initializing agent...");
-
-        const environmentVariables = `SIGNER_WALLET_SECRET_KEY=${privateKey} CROSSMINT_SERVER_API_KEY=${crossmintServerApiKey} SMART_WALLET_ADDRESS=${publicKey} ALCHEMY_API_KEY_BASE_SEPOLIA=${alchemyApiKey}`;
+        const environmentVariables = `SIGNER_WALLET_SECRET_KEY=${privateKey} CROSSMINT_SERVER_API_KEY=${crossmintServerApiKey} SMART_WALLET_ADDRESS=${smartWalletAddress} ALCHEMY_API_KEY_BASE_SEPOLIA=${alchemyApiKey}`;
         const { stdout } = await execAsync(`${environmentVariables} pnpm run start:agent`);
-        console.log("Agent initialized successfully");
         console.log("stdout:", stdout);
     } catch (error) {
         console.error("Error executing agent:", error);

@@ -6,7 +6,7 @@ settings:
 
 patchedDependencies:
   '@elizaos/core@0.25.6-alpha.1':
-    hash: t6z3qyzqfg2v5hbqfjhp4bxlk4
+    hash: 8243192228e39a4e16019e5cef7f1f274c4879ad52fe85e735cd457ec3a91d68
     path: patches/@elizaos__core@0.25.6-alpha.1.patch
 
 importers:
@@ -21,7 +21,7 @@ importers:
         version: 0.25.6-alpha.1(@google-cloud/vertexai@1.9.3)(@langchain/core@0.3.38(openai@4.82.0(ws@8.18.0(bufferutil@4.0.9)(utf-8-validate@5.0.10))(zod@3.23.8)))(axios@1.7.9)(react@19.0.0)(whatwg-url@5.0.0)(ws@8.18.0(bufferutil@4.0.9)(utf-8-validate@5.0.10))(zod@3.23.8)
       '@elizaos/core':
         specifier: 0.25.6-alpha.1
-        version: 0.25.6-alpha.1(patch_hash=t6z3qyzqfg2v5hbqfjhp4bxlk4)(@google-cloud/vertexai@1.9.3)(@langchain/core@0.3.38(openai@4.82.0(ws@8.18.0(bufferutil@4.0.9)(utf-8-validate@5.0.10))(zod@3.23.8)))(axios@1.7.9)(react@19.0.0)(ws@8.18.0(bufferutil@4.0.9)(utf-8-validate@5.0.10))(zod@3.23.8)
+        version: 0.25.6-alpha.1(patch_hash=8243192228e39a4e16019e5cef7f1f274c4879ad52fe85e735cd457ec3a91d68)(@google-cloud/vertexai@1.9.3)(@langchain/core@0.3.38(openai@4.82.0(ws@8.18.0(bufferutil@4.0.9)(utf-8-validate@5.0.10))(zod@3.23.8)))(axios@1.7.9)(react@19.0.0)(ws@8.18.0(bufferutil@4.0.9)(utf-8-validate@5.0.10))(zod@3.23.8)
       '@goat-sdk/adapter-vercel-ai':
         specifier: ^0.2.8
         version: 0.2.8(@goat-sdk/core@0.4.6(zod@3.23.8))(ai@4.1.24(react@19.0.0)(zod@3.23.8))(zod@3.23.8)
@@ -2894,7 +2894,7 @@ snapshots:
 
   '@elizaos/adapter-sqljs@0.25.6-alpha.1(@google-cloud/vertexai@1.9.3)(@langchain/core@0.3.38(openai@4.82.0(ws@8.18.0(bufferutil@4.0.9)(utf-8-validate@5.0.10))(zod@3.23.8)))(axios@1.7.9)(react@19.0.0)(whatwg-url@5.0.0)(ws@8.18.0(bufferutil@4.0.9)(utf-8-validate@5.0.10))(zod@3.23.8)':
     dependencies:
-      '@elizaos/core': 0.25.6-alpha.1(patch_hash=t6z3qyzqfg2v5hbqfjhp4bxlk4)(@google-cloud/vertexai@1.9.3)(@langchain/core@0.3.38(openai@4.82.0(ws@8.18.0(bufferutil@4.0.9)(utf-8-validate@5.0.10))(zod@3.23.8)))(axios@1.7.9)(react@19.0.0)(ws@8.18.0(bufferutil@4.0.9)(utf-8-validate@5.0.10))(zod@3.23.8)
+      '@elizaos/core': 0.25.6-alpha.1(patch_hash=8243192228e39a4e16019e5cef7f1f274c4879ad52fe85e735cd457ec3a91d68)(@google-cloud/vertexai@1.9.3)(@langchain/core@0.3.38(openai@4.82.0(ws@8.18.0(bufferutil@4.0.9)(utf-8-validate@5.0.10))(zod@3.23.8)))(axios@1.7.9)(react@19.0.0)(ws@8.18.0(bufferutil@4.0.9)(utf-8-validate@5.0.10))(zod@3.23.8)
       '@types/sql.js': 1.4.9
       sql.js: 1.12.0
       uuid: 11.0.3
@@ -2922,7 +2922,7 @@ snapshots:
       - ws
       - zod
 
-  '@elizaos/core@0.25.6-alpha.1(patch_hash=t6z3qyzqfg2v5hbqfjhp4bxlk4)(@google-cloud/vertexai@1.9.3)(@langchain/core@0.3.38(openai@4.82.0(ws@8.18.0(bufferutil@4.0.9)(utf-8-validate@5.0.10))(zod@3.23.8)))(axios@1.7.9)(react@19.0.0)(ws@8.18.0(bufferutil@4.0.9)(utf-8-validate@5.0.10))(zod@3.23.8)':
+  '@elizaos/core@0.25.6-alpha.1(patch_hash=8243192228e39a4e16019e5cef7f1f274c4879ad52fe85e735cd457ec3a91d68)(@google-cloud/vertexai@1.9.3)(@langchain/core@0.3.38(openai@4.82.0(ws@8.18.0(bufferutil@4.0.9)(utf-8-validate@5.0.10))(zod@3.23.8)))(axios@1.7.9)(react@19.0.0)(ws@8.18.0(bufferutil@4.0.9)(utf-8-validate@5.0.10))(zod@3.23.8)':
     dependencies:
       '@ai-sdk/amazon-bedrock': 1.1.0(zod@3.23.8)
       '@ai-sdk/anthropic': 0.0.56(zod@3.23.8)

@@ -23,6 +23,7 @@
     "@goat-sdk/wallet-viem": "0.2.0",
     "@phala/dstack-sdk": "^0.1.7",
     "@types/express": "^5.0.0",
+    "@types/sql.js": "^1.4.9",
     "ai": "^4.1.24",
     "dotenv": "^16.4.5",
     "express": "^4.21.2",

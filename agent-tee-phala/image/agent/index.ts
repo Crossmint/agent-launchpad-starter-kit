@@ -1,9 +1,16 @@
-import type { Character } from "@elizaos/core";
+import { AgentRuntime, ModelProviderName, type Character } from "@elizaos/core";
+import { SqlJsDatabaseAdapter } from "@elizaos/adapter-sqljs";
+import initSqlJs from "sql.js";
 import createElizaGoatPlugin from "./elizaos";
+
+const openAiApiKey = process.env.OPENAI_API_KEY as string;
+
+if (!openAiApiKey) {
+    throw new Error("Missing OPENAI_API_KEY environment variable");
+}
 
 export default async function startAgent() {
     const plugins = await createElizaGoatPlugin();
-    // @ts-ignore TODO: Finish character and deploy the agent here...
     const character: Character = {
         name: "Rufus Agent",
         adjectives: ["smart", "helpful", "friendly"],
@@ -11,9 +18,29 @@ export default async function startAgent() {
         bio: "You are a helpful assistant that can help with a variety of tasks.",
         plugins: [plugins],
         clients: [],
-        // services: [],
+        messageExamples: [],
+        modelProvider: ModelProviderName.OPENAI,
+        postExamples: [],
+        style: { all: [], chat: [], post: [] },
+        topics: [],
     };
-    console.log("Skipping agent deployment...");
+
+    // Initialize the database
+    const SQL = await initSqlJs({
+        locateFile: (file) => `https://sql.js.org/dist/${file}`,
+    });
+    const db = new SQL.Database();
+
+    // Initialize the agent
+    const agent = new AgentRuntime({
+        character,
+        modelProvider: ModelProviderName.OPENAI,
+        token: openAiApiKey,
+        databaseAdapter: new SqlJsDatabaseAdapter(db),
+        cacheManager: undefined as any,
+    });
+    await agent.initialize();
+    console.log("Agent initialized...");
 }
 
 startAgent();

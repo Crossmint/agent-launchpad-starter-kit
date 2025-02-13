@@ -34,6 +34,8 @@
     <li>
       <a href="#about-the-project">About The Project</a>
       <ul>
+        <li><a href="#system-architecture">System Architecture</a></li>
+        <li><a href="#key-features">Key Features</a></li>
         <li><a href="#why-non-custodial">Why Non-Custodial?</a></li>
       </ul>
     </li>
@@ -72,6 +74,10 @@ deploy AI agents with wallets, following an architecture that is non-custodial f
 yet allows the agent owner and user to control the wallet.
 
 It implements the architecture proposed on [this blog](https://article.app/alfonso/agent-launchpad-wallet-architecture).
+
+### System Architecture
+![System Architecture](https://github.com/user-attachments/assets/2570bb5d-144d-420a-84b2-8290f8a2f7f2)
+
 
 ### Key Features:
 

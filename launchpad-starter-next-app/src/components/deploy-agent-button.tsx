@@ -10,6 +10,8 @@ import { Typography } from "./typography";
 import { useToast } from "./use-toast";
 import { useWallet } from "@/app/providers/wallet-provider";
 import { submitSignatureApproval } from "@/app/_actions/submit-signature-approval";
+import { signSolanaMessage } from "@/app/_actions/solana/sign-solana-message";
+import { submitTransactionApproval } from "@/app/_actions/submit-txn-approval";
 
 export const DeployAgentButton = ({
     setAgentSuccessfullyDeployed,
@@ -37,8 +39,8 @@ export const DeployAgentButton = ({
                 toast({ title: "Error occurred during wallet creation" });
                 return;
             }
-
-            const walletSignerType = wallet.type.includes("solana") ? "solana-keypair" : "evm-keypair";
+            const isEVMWallet = wallet.type.includes("evm");
+            const walletSignerType = !isEVMWallet ? "solana-keypair" : "evm-keypair";
 
             // 1. Deploy the agent
             const response = await fetch(`/api/deploy`, {
@@ -55,6 +57,7 @@ export const DeployAgentButton = ({
                 delegatedSignerMessage: string;
                 delegatedSignerId: string;
                 delegatedSignerAlreadyActive?: boolean;
+                targetSignerLocator: string;
             };
 
             console.log({ data });
@@ -65,29 +68,31 @@ export const DeployAgentButton = ({
                 return;
             }
 
-            // 2. Sign the delegated signer message that was returned from the server
-            let signature;
-            let metadata;
-
-            if (!walletSignerType.includes("solana")) {
-                // EVM passkey wallet uses WebAuthn (passkeys)
-                const { metadata: webAuthnMetadata, signature: webAuthnSignature } = await WebAuthnP256.sign({
+            if (isEVMWallet) {
+                // 2 Sign the delegated signer message for EVM passkey wallet
+                const { metadata, signature } = await WebAuthnP256.sign({
                     credentialId: wallet.credentialId,
                     challenge: data.delegatedSignerMessage as `0x${string}`,
                 });
-                signature = { r: webAuthnSignature.r.toString(), s: webAuthnSignature.s.toString() };
-                metadata = webAuthnMetadata;
+                // 3. call the server-side action to submit the signature approval
+                await submitSignatureApproval(
+                    { r: signature.r.toString(), s: signature.s.toString() },
+                    data.targetSignerLocator,
+                    wallet.address,
+                    data.delegatedSignerId,
+                    metadata
+                );
             } else {
-                // TODO: Implement Solana signature approval
+                // 2 Sign the delegated signer message for Solana keypair wallet
+                const signature = await signSolanaMessage(data.delegatedSignerMessage);
+                // 3. call the server-side action to submit the signature approval
+                await submitTransactionApproval(
+                    signature,
+                    data.targetSignerLocator,
+                    wallet.address,
+                    data.delegatedSignerId
+                );
             }
-            // 3. call the server-side action to submit the signature approval
-            await submitSignatureApproval(
-                signature,
-                `${walletSignerType}:${wallet.credentialId}`,
-                wallet.address,
-                data.delegatedSignerId,
-                metadata
-            );
 
             setAgentSuccessfullyDeployed(true);
         } catch (error) {

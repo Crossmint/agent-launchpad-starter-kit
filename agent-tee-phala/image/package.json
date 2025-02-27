@@ -21,7 +21,7 @@
     "@goat-sdk/plugin-kim": "^0.1.10",
     "@goat-sdk/wallet-evm": "^0.2.8",
     "@goat-sdk/wallet-viem": "0.2.0",
-    "@phala/dstack-sdk": "^0.1.7",
+    "@phala/dstack-sdk": "^0.1.10",
     "@types/express": "^5.0.0",
     "ai": "^4.1.24",
     "dotenv": "^16.4.5",

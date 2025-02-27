@@ -1,5 +1,8 @@
 import { TappdClient } from "@phala/dstack-sdk";
-import { privateKeyToAccount } from "viem/accounts";
+// @ts-expect-error issue with the types from source code
+import { toKeypair } from "@phala/dstack-sdk/solana";
+// @ts-expect-error issue with the types from source code
+import { toViemAccount } from "@phala/dstack-sdk/viem";
 import { keccak256 } from "viem";
 import express from "express";
 import type { Request, Response } from "express";
@@ -35,22 +38,35 @@ app.post("/api/initialize", async (req: Request, res: Response) => {
     }
 
     try {
-        // TODO Add support for generating keys for Solana
+        const isEVMWallet = smartWalletAddressHeader.startsWith("0x");
         const client = new TappdClient(process.env.DSTACK_SIMULATOR_ENDPOINT || undefined);
         const randomDeriveKey = await client.deriveKey(smartWalletAddressHeader, "");
-        const keccakPrivateKey = keccak256(randomDeriveKey.asUint8Array());
-        const account = privateKeyToAccount(keccakPrivateKey);
 
-        console.log("Generated agent keys from TEE");
-        console.log("Account address:", account.address);
+        if (isEVMWallet) {
+            const keccakPrivateKey = keccak256(randomDeriveKey.asUint8Array());
+            const account = toViemAccount(randomDeriveKey);
 
-        privateKey = keccakPrivateKey;
-        publicKey = account.address;
+            console.log("Generated agent keys from TEE");
+            console.log("EVM Account address:", account.address);
+
+            privateKey = keccakPrivateKey;
+            publicKey = account.address;
+        } else {
+            const keypair = toKeypair(randomDeriveKey);
+            publicKey = keypair.publicKey.toString();
+            privateKey = keypair.secretKey.toString();
+
+            console.log("Generated agent keys from TEE");
+            console.log("Solana Account address:", publicKey);
+
+            console.log({ keypair });
+        }
+
         smartWalletAddress = smartWalletAddressHeader;
 
         // await initializeAgent(privateKey, crossmintServerApiKey, alchemyApiKey);
 
-        res.json({ status: "success", publicKey: account.address });
+        res.json({ status: "success", publicKey });
     } catch (error) {
         console.error("Error generating agent public key:", error);
         res.status(500).json({ error: "Failed to generate public key" });

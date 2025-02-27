@@ -23,7 +23,7 @@ function HomePrimaryAction({ wallet }: { wallet: Wallet | null }) {
         return (
             <>
                 <Fireworks />
-                <div className="flex gap-2 items-center self-center min-h-[52px]">
+                <div className="flex gap-2 items-center justify-center min-h-[52px]">
                     <Link
                         href="/agents"
                         className="underline text-secondary-foreground text-lg font-semibold underline-offset-4"

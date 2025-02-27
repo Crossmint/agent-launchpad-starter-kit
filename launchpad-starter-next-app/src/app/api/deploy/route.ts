@@ -2,7 +2,7 @@ import { NextResponse } from "next/server";
 import { ContainerManager } from "@/server/services/container";
 import { getOrCreateDelegatedSigner } from "@/server/services/delegated-signer";
 
-const CHAIN = process.env.NEXT_PUBLIC_PREFERRED_CHAIN ?? "base-sepolia";
+const CHAIN = process.env.NEXT_PUBLIC_PREFERRED_CHAIN || "base-sepolia";
 
 const containerManager = new ContainerManager();
 
@@ -45,6 +45,7 @@ export async function POST(request: Request) {
         return NextResponse.json({
             success: true,
             containerId: containerManager.containerId,
+            targetSignerLocator: delegatedSigner?.targetSignerLocator,
             delegatedSignerMessage: delegatedSigner?.message,
             delegatedSignerId: delegatedSigner?.id,
             delegatedSignerAlreadyActive: delegatedSigner?.delegatedSignerAlreadyActive ?? false,

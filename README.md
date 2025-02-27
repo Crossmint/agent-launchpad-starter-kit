@@ -43,6 +43,7 @@
       <a href="#get-started">Get Started</a>
       <ul>
         <li><a href="#local-setup">Local Setup</a></li>
+        <li><a href="#solana-smart-wallets">Solana Smart Wallets</a></li>
         <li><a href="#docker-setup-requires-orbstack">Docker Setup (Requires OrbStack)</a></li>
       </ul>
     </li>
@@ -60,15 +61,16 @@
 
 ## Roadmap
 
-[ ] Solana Smart Wallets (~Feb 10)  
-[ ] Add support for more TEE networks: Marlin, Lit (~Feb 10)  
+[x] Solana Smart Wallets (~Feb 10)  
+[ ] Passkey support for Solana Smart Wallets (~Mar 10)  
+[ ] Add support for more TEE networks: Marlin, Lit, etc (~Mar 10)  
 [ ] Sample code for user-initiated wallet actions  
 [ ] Non-custodial agent software updates
 
 ## About The Project
 
 ![Crossmint Agent Wallets](https://github.com/user-attachments/assets/10bdd357-38bb-4661-8d01-0568d0440263)
-
+✅
 The goal of this project is to help launchpads and other agent hosting patforms to easily
 deploy AI agents with wallets, following an architecture that is non-custodial for the launchpad,
 yet allows the agent owner and user to control the wallet.
@@ -100,6 +102,7 @@ In jurisdictions like the United States, platforms that have the ability to cont
 
 ## Get started
 
+todo update this image to new screenshot
 ![Agent Launchpad Starter Kit](https://github.com/user-attachments/assets/364ad94a-cea1-42e5-928c-a75bc7b9709a)
 
 ### Pre-requisites
@@ -151,7 +154,15 @@ The Next.js app will be available at `http://localhost:3001`
    pnpm build
    ```
 
-  Note: When running the nextjs app, the docker image will build and deploy in a simulated TEE environment. This simulated environment allows you to test your docker image code locally before deploying to production TEEs & Docker hub.
+  > **Note**:  When running the nextjs app, the docker image will build and deploy in a simulated TEE environment. This simulated environment allows you to test your docker image code locally before deploying to production TEEs & Docker hub.
+
+
+#### Solana Smart Wallets
+
+> **Note on Solana Smart Wallets**: 
+> The default implementation uses Crossmint's Smart Wallets for Solana, which requires generating a keypair and setting the `NEXT_PUBLIC_SOLANA_SIGNER_PUBLIC_KEY` environment variable. This is a public key that signs transactions on behalf of the Solana Smart Wallet.
+>
+> If you prefer to use external wallets like Phantom instead, you can modify the wallet connection logic in the frontend code. See the [Solana Wallet Adapter](https://github.com/solana-labs/wallet-adapter) documentation for integrating external Solana wallets.
 
 ## Deploying to Production
 

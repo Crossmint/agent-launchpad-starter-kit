@@ -9,8 +9,8 @@ importers:
   .:
     dependencies:
       '@crossmint/client-sdk-react-ui':
-        specifier: ^1.13.7
-        version: 1.13.7(@dynamic-labs/logger@2.6.3(eventemitter3@5.0.1))(@dynamic-labs/rpc-providers@2.6.3(viem@2.17.5(bufferutil@4.0.9)(typescript@5.7.3)(utf-8-validate@5.0.10)(zod@3.22.4)))(@types/react-dom@19.0.3(@types/react@19.0.7))(@types/react@19.0.7)(bufferutil@4.0.9)(react-dom@19.0.0(react@19.0.0))(react@19.0.0)(typescript@5.7.3)(utf-8-validate@5.0.10)
+        specifier: ^1.14.9
+        version: 1.15.0(@dynamic-labs/logger@2.6.3(eventemitter3@5.0.1))(@dynamic-labs/rpc-providers@2.6.3(viem@2.17.5(bufferutil@4.0.9)(typescript@5.7.3)(utf-8-validate@5.0.10)(zod@3.22.4)))(@types/react-dom@19.0.3(@types/react@19.0.7))(@types/react@19.0.7)(bufferutil@4.0.9)(react-dom@19.0.0(react@19.0.0))(react@19.0.0)(typescript@5.7.3)(utf-8-validate@5.0.10)
       '@crossmint/common-sdk-base':
         specifier: ^0.3.1
         version: 0.3.1
@@ -166,29 +166,32 @@ packages:
   '@coinbase/wallet-sdk@4.0.4':
     resolution: {integrity: sha512-74c040CRnGhfRjr3ArnkAgud86erIqdkPHNt5HR1k9u97uTIZCJww9eGYT67Qf7gHPpGS/xW8Be1D4dvRm63FA==}
 
-  '@crossmint/client-sdk-auth@1.1.13':
-    resolution: {integrity: sha512-jKYYpr/dhhW/ikHC8e9zEDwMdZXMEsx2YAjfdK7tYrX+VtCS1J409gNhekfpUCWc+6CjC8tmz/llndz4Woyu7w==}
+  '@crossmint/client-sdk-auth@1.1.20':
+    resolution: {integrity: sha512-lQiMOtCNyN/KrTvJ1q5elKyKrLV3z4Jv9evGaC/g1ycUrh1AR2LH9vcrka7XWK8Qe4W+QmT697nAcjPQnGejnw==}
 
-  '@crossmint/client-sdk-base@1.4.5':
-    resolution: {integrity: sha512-/7pcj6QAoG2rGlDtxagG4JqoyWGJUfm3yzCLPkpHLR8VAt9eFte9JiCc6s/MGktC2OZXU+ANQPSCcoBQvQyPJA==}
+  '@crossmint/client-sdk-base@1.4.11':
+    resolution: {integrity: sha512-N3wYXUB/Fx/RdKF0Toydh4w7z20PiUR9iuxlycYN3xaa8XJy7aOmopZyB2rLv26qn65S5KJa2vd1g2xacqu4bA==}
 
-  '@crossmint/client-sdk-react-ui@1.13.7':
-    resolution: {integrity: sha512-V1y01IaQIxSKJX2a5iz9lJcXDltf3yz7DKsPsYJ9qKKArKHJXhbAuV5FnVhr/m9KMpDdelwUbq053oD23Kjf+Q==}
+  '@crossmint/client-sdk-react-ui@1.15.0':
+    resolution: {integrity: sha512-exwLUDeAefAQCG9mZY4SCLgj1I5U+XtpHHgdg4ovBAeypnwyC6n/Lh7iHoL/QKrKXoAUjvD/oY+qmzeinDaa3A==}
     peerDependencies:
       react: '>=17.0.2'
       react-dom: '>=17.0.2'
 
-  '@crossmint/client-sdk-smart-wallet@0.1.30':
-    resolution: {integrity: sha512-r6iI3db7GuaSVl6HfVTkSsHqvlzzoysWO6HfaTNvrUPBknlCuCFGzbyV/dljckD/NBTaqjGdZKqd5ZvLvqGuhQ==}
+  '@crossmint/client-sdk-smart-wallet@0.2.0':
+    resolution: {integrity: sha512-eJYvyix80DBqp19HiON7PvtgHQWXF7sgriXTje4yGjr8GcbgOWbXyTp5pt9r8bm2lL9t+fLiUiUxl91njZ6SpQ==}
 
-  '@crossmint/client-sdk-window@0.2.2':
-    resolution: {integrity: sha512-JGNdAz4HNoyUXGOCs9sBOiH/WLaC1iamXw1ZHVPl/Kxs0wYKYu6vkau7UJ693FHKHm4G64EoCYKEoacag/7vnw==}
+  '@crossmint/client-sdk-window@0.2.3':
+    resolution: {integrity: sha512-Xh2F7z8ddKCEZPuuRxjHwGSy1x3JpGn3LX7PKX764UuknbDSqruiSJhONY6dY6eelfyY/glyFEnAkCXi3SVnxw==}
 
-  '@crossmint/common-sdk-auth@1.0.11':
-    resolution: {integrity: sha512-1VTj97mNKrfhi9zrpCYO8hvgOSWRS7NbeOhXaVv3RJ+yOD0tt1J7PyoPJZX8V2v+dUM3HDWbPukpDPZSScx6sA==}
+  '@crossmint/common-sdk-auth@1.0.18':
+    resolution: {integrity: sha512-1cVoKejua+yYkKMj8cizvf5ACvcGhnhVarE+/QFH52ldyh7lrASzaMPrkQ07xAzKrBZ/oCquTQwUaO105NT8QQ==}
 
   '@crossmint/common-sdk-base@0.3.1':
     resolution: {integrity: sha512-07M1epHTEfvsbsu7BoBrHgH6ou2LUEymWyQUiSKn8zChmRPNG1ZFGiBQpqkfhyp3zGvLn2L9GzEbqk9dNwrFfw==}
+
+  '@crossmint/common-sdk-base@0.3.2':
+    resolution: {integrity: sha512-txM2nsJn+/hg4Bl8+9hbSPFmFetwEnTYb8+bWxWxzPHbtU4s5k6331aIf8mswezwBsMOUweTGPpPqVm2GZY1iQ==}
 
   '@datadog/browser-core@4.42.2':
     resolution: {integrity: sha512-LnkcdFyNRpMEuvV1ePfKdgRvYh+VqqAiVRoAmgObcuzdYdIwQSfcJp4GFbBgr5v7uF2uhAp/b96MIyKlqi0Ixg==}
@@ -1202,13 +1205,6 @@ packages:
   '@scure/bip39@1.5.0':
     resolution: {integrity: sha512-Dop+ASYhnrwm9+HA/HwXg7j2ZqM6yk2fyLWb5znexjctFY3+E+eU8cIWI0Pql0Qx4hPZCijlGq4OL71g+Uz30A==}
 
-  '@simplewebauthn/browser@8.3.7':
-    resolution: {integrity: sha512-ZtRf+pUEgOCvjrYsbMsJfiHOdKcrSZt2zrAnIIpfmA06r0FxBovFYq0rJ171soZbe13KmWzAoLKjSxVW7KxCdQ==}
-
-  '@simplewebauthn/typescript-types@8.3.4':
-    resolution: {integrity: sha512-38xtca0OqfRVNloKBrFB5LEM6PN5vzFbJG6rAutPVrtGHFYxPdiV3btYWq0eAZAZmP+dqFPYJxJWeJrGfmYHng==}
-    deprecated: This package has been renamed to @simplewebauthn/types. Please install @simplewebauthn/types instead to ensure you receive future updates.
-
   '@solana/buffer-layout@4.0.1':
     resolution: {integrity: sha512-E1ImOIAD1tBZFRdjeM4/pzTiTApC0AOBGwyAMS4fwIodCWArzJ3DWdoh8cKxeFM2fElkxBh2Aqts1BPC373rHA==}
     engines: {node: '>=5.10'}
@@ -1496,32 +1492,6 @@ packages:
 
   '@walletconnect/window-metadata@1.0.1':
     resolution: {integrity: sha512-9koTqyGrM2cqFRW517BPY/iEtUDx2r1+Pwwu5m7sJ7ka79wi3EyqhqcICk/yDmv6jAS1rjKgTKXlEhanYjijcA==}
-
-  '@zerodev/ecdsa-validator@5.3.1':
-    resolution: {integrity: sha512-4xg/uBgjQLyO5GoE9TkQqO7HRwSPVbchd6UXit+R3excN1fC27k7UcjLmm5rTrM2JxbgncIodGcNQMxYKNejsA==}
-    peerDependencies:
-      '@zerodev/sdk': ^5.2.1
-      permissionless: ^0.1.18
-      viem: ^2.16.3
-
-  '@zerodev/passkey-validator@5.4.0':
-    resolution: {integrity: sha512-H4oLEq0acAEWI2xYcBuy/da/i1ypSZTUBcRStW9A4mXha6dii7QZ9slJoG3HSqpmPm3BR1hBDENTAkG3nN81ZA==}
-    peerDependencies:
-      '@zerodev/sdk': ^5.2.1
-      '@zerodev/webauthn-key': ^5.3.0
-      permissionless: ^0.1.18
-      viem: ^2.16.3
-
-  '@zerodev/sdk@5.3.3':
-    resolution: {integrity: sha512-NZs0dW9cvRdmcju7rQ4C47TysbDnhpWxPzPQrfZ5VJFHQTa01qAZcKJrTpzVeduzMDnntZgv2ueFrYGAW00Xog==}
-    peerDependencies:
-      permissionless: ^0.1.18
-      viem: ^2.16.3
-
-  '@zerodev/webauthn-key@5.3.1':
-    resolution: {integrity: sha512-8s/gdKppXgh15wrER50nAIhaD/QTEwecN288RbXI+TWVmdwzuLOpbMuzfgBvisfiE1kNJlfYEl9qos7aKm6EkQ==}
-    peerDependencies:
-      viem: ^2.16.3
 
   JSONStream@1.3.5:
     resolution: {integrity: sha512-E+iruNOY8VV9s4JEbe1aNEm6MiszPRr/UfcHMz0TQh1BXSxHK+ASV1R6W4HpjBhSeS+54PIsAMCBmwD06LLsqQ==}
@@ -2221,6 +2191,7 @@ packages:
 
   lodash.isequal@4.5.0:
     resolution: {integrity: sha512-pDo3lu8Jhfjqls6GkMgpahsF9kCyayhgykjyLMNFTKWrpVdAQtYyB4muAMWozBB4ig/dtWAmsMxLEI8wuz+DYQ==}
+    deprecated: This package is deprecated. Use require('node:util').isDeepStrictEqual instead.
 
   lodash@4.17.21:
     resolution: {integrity: sha512-v2kDEe57lecTulaDIuNTPy3Ry4gLGJ6Z1O3vE1krgXZNrsQ+LFTGHVxVjcXPs17LhbZVGedAJv8XZ1tvj5FvSg==}
@@ -2294,8 +2265,8 @@ packages:
     engines: {node: ^10 || ^12 || ^13.7 || ^14 || >=15.0.1}
     hasBin: true
 
-  nanoid@5.0.4:
-    resolution: {integrity: sha512-vAjmBf13gsmhXSgBrtIclinISzFFy22WwCYoyilZlsrRXNIHSwgFQ1bEdjRwMT3aoadeIF6HMuDRlOxzfXV8ig==}
+  nanoid@5.0.9:
+    resolution: {integrity: sha512-Aooyr6MXU6HpvvWXKoVoXwKMs/KyVakWwg7xQfv5/S/RIgJMy0Ifa45H9qqYy7pTCszrHzP21Uk4PZq2HpEM8Q==}
     engines: {node: ^18 || >=20}
     hasBin: true
 
@@ -2382,6 +2353,14 @@ packages:
       typescript:
         optional: true
 
+  ox@0.6.9:
+    resolution: {integrity: sha512-wi5ShvzE4eOcTwQVsIPdFr+8ycyX+5le/96iAJutaZAvCes1J0+RvpEPg5QDPDiaR0XQQAvZVl7AwqQcINuUug==}
+    peerDependencies:
+      typescript: '>=5.4.0'
+    peerDependenciesMeta:
+      typescript:
+        optional: true
+
   p-limit@2.3.0:
     resolution: {integrity: sha512-//88mFWSJx8lxCzwdAABTJL2MyWB12+eIY7MDL2SqLmAkeKU9qxRvWuSyTjm3FUmpBEMuFfckAIqEaVGUDxb6w==}
     engines: {node: '>=6'}
@@ -2414,11 +2393,6 @@ packages:
 
   pathe@1.1.2:
     resolution: {integrity: sha512-whLdWMYL2TwI08hn8/ZqAbrVemu0LNaNNJZX73O6qaIdCTfXutsLhMkjdENX0qhsQ9uIimo4/aQOmXkoon2nDQ==}
-
-  permissionless@0.1.36:
-    resolution: {integrity: sha512-v+VMpkHX9wr13ZPV6nilwQ0yiFU1K4498j6ohmNzD2eLlP1R/FB77xQrbMkZo98ATYca2CYh2gcBYsxmOC3VmA==}
-    peerDependencies:
-      viem: ^2.14.1
 
   picocolors@1.1.1:
     resolution: {integrity: sha512-xceH2snhtb5M9liqDsmEw56le376mTZkEX/jEb/RxNFyegNul7eNslCXP9FDj/Lcu0X8KEyMceP2ntpaHrDEVA==}
@@ -3221,11 +3195,11 @@ snapshots:
       preact: 10.25.4
       sha.js: 2.4.11
 
-  '@crossmint/client-sdk-auth@1.1.13(@types/react@19.0.7)(bufferutil@4.0.9)(react-dom@19.0.0(react@19.0.0))(react@19.0.0)(utf-8-validate@5.0.10)(viem@2.17.5(bufferutil@4.0.9)(typescript@5.7.3)(utf-8-validate@5.0.10)(zod@3.22.4))':
+  '@crossmint/client-sdk-auth@1.1.20(@types/react@19.0.7)(bufferutil@4.0.9)(react-dom@19.0.0(react@19.0.0))(react@19.0.0)(utf-8-validate@5.0.10)(viem@2.17.5(bufferutil@4.0.9)(typescript@5.7.3)(utf-8-validate@5.0.10)(zod@3.22.4))':
     dependencies:
-      '@crossmint/client-sdk-base': 1.4.5
-      '@crossmint/common-sdk-auth': 1.0.11
-      '@crossmint/common-sdk-base': 0.3.1
+      '@crossmint/client-sdk-base': 1.4.11
+      '@crossmint/common-sdk-auth': 1.0.18
+      '@crossmint/common-sdk-base': 0.3.2
       '@farcaster/auth-kit': 0.6.0(@types/react@19.0.7)(bufferutil@4.0.9)(react-dom@19.0.0(react@19.0.0))(react@19.0.0)(utf-8-validate@5.0.10)(viem@2.17.5(bufferutil@4.0.9)(typescript@5.7.3)(utf-8-validate@5.0.10)(zod@3.22.4))
       jwt-decode: 4.0.0
     transitivePeerDependencies:
@@ -3238,10 +3212,10 @@ snapshots:
       - utf-8-validate
       - viem
 
-  '@crossmint/client-sdk-base@1.4.5':
+  '@crossmint/client-sdk-base@1.4.11':
     dependencies:
-      '@crossmint/client-sdk-window': 0.2.2
-      '@crossmint/common-sdk-base': 0.3.1
+      '@crossmint/client-sdk-window': 0.2.3
+      '@crossmint/common-sdk-base': 0.3.2
       '@datadog/browser-logs': 4.42.2
       exponential-backoff: 3.1.1
       uuid: 9.0.1
@@ -3249,14 +3223,14 @@ snapshots:
     transitivePeerDependencies:
       - '@datadog/browser-rum'
 
-  '@crossmint/client-sdk-react-ui@1.13.7(@dynamic-labs/logger@2.6.3(eventemitter3@5.0.1))(@dynamic-labs/rpc-providers@2.6.3(viem@2.17.5(bufferutil@4.0.9)(typescript@5.7.3)(utf-8-validate@5.0.10)(zod@3.22.4)))(@types/react-dom@19.0.3(@types/react@19.0.7))(@types/react@19.0.7)(bufferutil@4.0.9)(react-dom@19.0.0(react@19.0.0))(react@19.0.0)(typescript@5.7.3)(utf-8-validate@5.0.10)':
+  '@crossmint/client-sdk-react-ui@1.15.0(@dynamic-labs/logger@2.6.3(eventemitter3@5.0.1))(@dynamic-labs/rpc-providers@2.6.3(viem@2.17.5(bufferutil@4.0.9)(typescript@5.7.3)(utf-8-validate@5.0.10)(zod@3.22.4)))(@types/react-dom@19.0.3(@types/react@19.0.7))(@types/react@19.0.7)(bufferutil@4.0.9)(react-dom@19.0.0(react@19.0.0))(react@19.0.0)(typescript@5.7.3)(utf-8-validate@5.0.10)':
     dependencies:
-      '@crossmint/client-sdk-auth': 1.1.13(@types/react@19.0.7)(bufferutil@4.0.9)(react-dom@19.0.0(react@19.0.0))(react@19.0.0)(utf-8-validate@5.0.10)(viem@2.17.5(bufferutil@4.0.9)(typescript@5.7.3)(utf-8-validate@5.0.10)(zod@3.22.4))
-      '@crossmint/client-sdk-base': 1.4.5
-      '@crossmint/client-sdk-smart-wallet': 0.1.30(bufferutil@4.0.9)(typescript@5.7.3)(utf-8-validate@5.0.10)
-      '@crossmint/client-sdk-window': 0.2.2
-      '@crossmint/common-sdk-auth': 1.0.11
-      '@crossmint/common-sdk-base': 0.3.1
+      '@crossmint/client-sdk-auth': 1.1.20(@types/react@19.0.7)(bufferutil@4.0.9)(react-dom@19.0.0(react@19.0.0))(react@19.0.0)(utf-8-validate@5.0.10)(viem@2.17.5(bufferutil@4.0.9)(typescript@5.7.3)(utf-8-validate@5.0.10)(zod@3.22.4))
+      '@crossmint/client-sdk-base': 1.4.11
+      '@crossmint/client-sdk-smart-wallet': 0.2.0(bufferutil@4.0.9)(typescript@5.7.3)(utf-8-validate@5.0.10)(zod@3.22.4)
+      '@crossmint/client-sdk-window': 0.2.3
+      '@crossmint/common-sdk-auth': 1.0.18
+      '@crossmint/common-sdk-base': 0.3.2
       '@dynamic-labs/ethereum': 2.6.3(@dynamic-labs/logger@2.6.3(eventemitter3@5.0.1))(@dynamic-labs/rpc-providers@2.6.3(viem@2.17.5(bufferutil@4.0.9)(typescript@5.7.3)(utf-8-validate@5.0.10)(zod@3.22.4)))(@types/react@19.0.7)(bufferutil@4.0.9)(react-dom@19.0.0(react@19.0.0))(react@19.0.0)(utf-8-validate@5.0.10)(viem@2.17.5(bufferutil@4.0.9)(typescript@5.7.3)(utf-8-validate@5.0.10)(zod@3.22.4))
       '@dynamic-labs/sdk-react-core': 2.6.3(@types/react@19.0.7)(bufferutil@4.0.9)(react-dom@19.0.0(react@19.0.0))(react@19.0.0)(utf-8-validate@5.0.10)(viem@2.17.5(bufferutil@4.0.9)(typescript@5.7.3)(utf-8-validate@5.0.10)(zod@3.22.4))
       '@dynamic-labs/solana': 2.6.3(@dynamic-labs/logger@2.6.3(eventemitter3@5.0.1))(bufferutil@4.0.9)(react-dom@19.0.0(react@19.0.0))(react@19.0.0)(utf-8-validate@5.0.10)(viem@2.17.5(bufferutil@4.0.9)(typescript@5.7.3)(utf-8-validate@5.0.10)(zod@3.22.4))
@@ -3312,36 +3286,37 @@ snapshots:
       - uploadthing
       - utf-8-validate
 
-  '@crossmint/client-sdk-smart-wallet@0.1.30(bufferutil@4.0.9)(typescript@5.7.3)(utf-8-validate@5.0.10)':
+  '@crossmint/client-sdk-smart-wallet@0.2.0(bufferutil@4.0.9)(typescript@5.7.3)(utf-8-validate@5.0.10)(zod@3.22.4)':
     dependencies:
-      '@crossmint/client-sdk-base': 1.4.5
-      '@crossmint/common-sdk-base': 0.3.1
-      '@zerodev/ecdsa-validator': 5.3.1(@zerodev/sdk@5.3.3(permissionless@0.1.36(viem@2.17.5(bufferutil@4.0.9)(typescript@5.7.3)(utf-8-validate@5.0.10)(zod@3.22.4)))(viem@2.17.5(bufferutil@4.0.9)(typescript@5.7.3)(utf-8-validate@5.0.10)(zod@3.22.4)))(permissionless@0.1.36(viem@2.17.5(bufferutil@4.0.9)(typescript@5.7.3)(utf-8-validate@5.0.10)(zod@3.22.4)))(viem@2.17.5(bufferutil@4.0.9)(typescript@5.7.3)(utf-8-validate@5.0.10)(zod@3.22.4))
-      '@zerodev/passkey-validator': 5.4.0(@zerodev/sdk@5.3.3(permissionless@0.1.36(viem@2.17.5(bufferutil@4.0.9)(typescript@5.7.3)(utf-8-validate@5.0.10)(zod@3.22.4)))(viem@2.17.5(bufferutil@4.0.9)(typescript@5.7.3)(utf-8-validate@5.0.10)(zod@3.22.4)))(@zerodev/webauthn-key@5.3.1(viem@2.17.5(bufferutil@4.0.9)(typescript@5.7.3)(utf-8-validate@5.0.10)(zod@3.22.4)))(permissionless@0.1.36(viem@2.17.5(bufferutil@4.0.9)(typescript@5.7.3)(utf-8-validate@5.0.10)(zod@3.22.4)))(viem@2.17.5(bufferutil@4.0.9)(typescript@5.7.3)(utf-8-validate@5.0.10)(zod@3.22.4))
-      '@zerodev/sdk': 5.3.3(permissionless@0.1.36(viem@2.17.5(bufferutil@4.0.9)(typescript@5.7.3)(utf-8-validate@5.0.10)(zod@3.22.4)))(viem@2.22.11(bufferutil@4.0.9)(typescript@5.7.3)(utf-8-validate@5.0.10)(zod@3.22.4))
-      '@zerodev/webauthn-key': 5.3.1(viem@2.22.11(bufferutil@4.0.9)(typescript@5.7.3)(utf-8-validate@5.0.10)(zod@3.22.4))
-      permissionless: 0.1.36(viem@2.22.11(bufferutil@4.0.9)(typescript@5.7.3)(utf-8-validate@5.0.10)(zod@3.22.4))
+      '@crossmint/client-sdk-base': 1.4.11
+      '@crossmint/common-sdk-base': 0.3.2
+      ox: 0.6.9(typescript@5.7.3)(zod@3.22.4)
       viem: 2.17.5(bufferutil@4.0.9)(typescript@5.7.3)(utf-8-validate@5.0.10)(zod@3.22.4)
-      zod: 3.22.4
     transitivePeerDependencies:
       - '@datadog/browser-rum'
       - bufferutil
       - typescript
       - utf-8-validate
+      - zod
 
-  '@crossmint/client-sdk-window@0.2.2':
+  '@crossmint/client-sdk-window@0.2.3':
     dependencies:
-      nanoid: 5.0.4
+      nanoid: 5.0.9
       zod: 3.22.4
 
-  '@crossmint/common-sdk-auth@1.0.11':
+  '@crossmint/common-sdk-auth@1.0.18':
     dependencies:
-      '@crossmint/client-sdk-base': 1.4.5
-      '@crossmint/common-sdk-base': 0.3.1
+      '@crossmint/client-sdk-base': 1.4.11
+      '@crossmint/common-sdk-base': 0.3.2
     transitivePeerDependencies:
       - '@datadog/browser-rum'
 
   '@crossmint/common-sdk-base@0.3.1':
+    dependencies:
+      bs58: 5.0.0
+      tweetnacl: 1.0.3
+
+  '@crossmint/common-sdk-base@0.3.2':
     dependencies:
       bs58: 5.0.0
       tweetnacl: 1.0.3
@@ -3358,10 +3333,10 @@ snapshots:
       '@dynamic-labs/rpc-provider-ethereum': 2.6.3(eventemitter3@5.0.1)(viem@2.17.5(bufferutil@4.0.9)(typescript@5.7.3)(utf-8-validate@5.0.10)(zod@3.22.4))
       '@dynamic-labs/sdk-api-core': 0.0.510
       '@dynamic-labs/turnkey': 2.6.3(@dynamic-labs/logger@2.6.3(eventemitter3@5.0.1))(bufferutil@4.0.9)(eventemitter3@5.0.1)(react-dom@19.0.0(react@19.0.0))(react@19.0.0)(utf-8-validate@5.0.10)(viem@2.17.5(bufferutil@4.0.9)(typescript@5.7.3)(utf-8-validate@5.0.10)(zod@3.22.4))
-      '@dynamic-labs/types': 2.6.3(viem@2.22.11(bufferutil@4.0.9)(typescript@5.7.3)(utf-8-validate@5.0.10)(zod@3.22.4))
-      '@dynamic-labs/utils': 2.6.3(eventemitter3@5.0.1)(viem@2.22.11(bufferutil@4.0.9)(typescript@5.7.3)(utf-8-validate@5.0.10)(zod@3.22.4))
-      '@dynamic-labs/viem-utils': 2.6.3(fvniyonr4gbn4bitxdwfar2jye)
-      '@dynamic-labs/wallet-book': 2.6.3(eventemitter3@5.0.1)(react-dom@19.0.0(react@19.0.0))(react@19.0.0)(viem@2.22.11(bufferutil@4.0.9)(typescript@5.7.3)(utf-8-validate@5.0.10)(zod@3.22.4))
+      '@dynamic-labs/types': 2.6.3(viem@2.17.5(bufferutil@4.0.9)(typescript@5.7.3)(utf-8-validate@5.0.10)(zod@3.22.4))
+      '@dynamic-labs/utils': 2.6.3(eventemitter3@5.0.1)(viem@2.17.5(bufferutil@4.0.9)(typescript@5.7.3)(utf-8-validate@5.0.10)(zod@3.22.4))
+      '@dynamic-labs/viem-utils': 2.6.3(85a8c5b5fd3b91673e89007e7fc576f8)
+      '@dynamic-labs/wallet-book': 2.6.3(eventemitter3@5.0.1)(react-dom@19.0.0(react@19.0.0))(react@19.0.0)(viem@2.17.5(bufferutil@4.0.9)(typescript@5.7.3)(utf-8-validate@5.0.10)(zod@3.22.4))
       '@dynamic-labs/wallet-connector-core': 2.6.3(@dynamic-labs/logger@2.6.3(eventemitter3@5.0.1))(@dynamic-labs/rpc-providers@2.6.3(viem@2.17.5(bufferutil@4.0.9)(typescript@5.7.3)(utf-8-validate@5.0.10)(zod@3.22.4)))(@dynamic-labs/types@2.6.3(viem@2.17.5(bufferutil@4.0.9)(typescript@5.7.3)(utf-8-validate@5.0.10)(zod@3.22.4)))(@dynamic-labs/utils@2.6.3(eventemitter3@5.0.1)(viem@2.17.5(bufferutil@4.0.9)(typescript@5.7.3)(utf-8-validate@5.0.10)(zod@3.22.4)))(@dynamic-labs/wallet-book@2.6.3(eventemitter3@5.0.1)(react-dom@19.0.0(react@19.0.0))(react@19.0.0)(viem@2.17.5(bufferutil@4.0.9)(typescript@5.7.3)(utf-8-validate@5.0.10)(zod@3.22.4)))(eventemitter3@5.0.1)
       '@walletconnect/ethereum-provider': 2.11.2(@types/react@19.0.7)(bufferutil@4.0.9)(react@19.0.0)(utf-8-validate@5.0.10)
       buffer: 6.0.3
@@ -3469,10 +3444,10 @@ snapshots:
       '@dynamic-labs/rpc-providers': 2.6.3(viem@2.22.11(bufferutil@4.0.9)(typescript@5.7.3)(utf-8-validate@5.0.10)(zod@3.22.4))
       '@dynamic-labs/sdk-api-core': 0.0.510
       '@dynamic-labs/store': 2.6.3(eventemitter3@5.0.1)
-      '@dynamic-labs/types': 2.6.3(viem@2.17.5(bufferutil@4.0.9)(typescript@5.7.3)(utf-8-validate@5.0.10)(zod@3.22.4))
-      '@dynamic-labs/utils': 2.6.3(eventemitter3@5.0.1)(viem@2.17.5(bufferutil@4.0.9)(typescript@5.7.3)(utf-8-validate@5.0.10)(zod@3.22.4))
-      '@dynamic-labs/viem-utils': 2.6.3(fvniyonr4gbn4bitxdwfar2jye)
-      '@dynamic-labs/wallet-book': 2.6.3(eventemitter3@5.0.1)(react-dom@19.0.0(react@19.0.0))(react@19.0.0)(viem@2.17.5(bufferutil@4.0.9)(typescript@5.7.3)(utf-8-validate@5.0.10)(zod@3.22.4))
+      '@dynamic-labs/types': 2.6.3(viem@2.22.11(bufferutil@4.0.9)(typescript@5.7.3)(utf-8-validate@5.0.10)(zod@3.22.4))
+      '@dynamic-labs/utils': 2.6.3(eventemitter3@5.0.1)(viem@2.22.11(bufferutil@4.0.9)(typescript@5.7.3)(utf-8-validate@5.0.10)(zod@3.22.4))
+      '@dynamic-labs/viem-utils': 2.6.3(85a8c5b5fd3b91673e89007e7fc576f8)
+      '@dynamic-labs/wallet-book': 2.6.3(eventemitter3@5.0.1)(react-dom@19.0.0(react@19.0.0))(react@19.0.0)(viem@2.22.11(bufferutil@4.0.9)(typescript@5.7.3)(utf-8-validate@5.0.10)(zod@3.22.4))
       '@dynamic-labs/wallet-connector-core': 2.6.3(@dynamic-labs/logger@2.6.3(eventemitter3@5.0.1))(@dynamic-labs/rpc-providers@2.6.3(viem@2.17.5(bufferutil@4.0.9)(typescript@5.7.3)(utf-8-validate@5.0.10)(zod@3.22.4)))(@dynamic-labs/types@2.6.3(viem@2.17.5(bufferutil@4.0.9)(typescript@5.7.3)(utf-8-validate@5.0.10)(zod@3.22.4)))(@dynamic-labs/utils@2.6.3(eventemitter3@5.0.1)(viem@2.17.5(bufferutil@4.0.9)(typescript@5.7.3)(utf-8-validate@5.0.10)(zod@3.22.4)))(@dynamic-labs/wallet-book@2.6.3(eventemitter3@5.0.1)(react-dom@19.0.0(react@19.0.0))(react@19.0.0)(viem@2.17.5(bufferutil@4.0.9)(typescript@5.7.3)(utf-8-validate@5.0.10)(zod@3.22.4)))(eventemitter3@5.0.1)
       '@hcaptcha/react-hcaptcha': 1.4.4(react-dom@19.0.0(react@19.0.0))(react@19.0.0)
       country-list: 2.3.0
@@ -3496,8 +3471,8 @@ snapshots:
 
   '@dynamic-labs/solana-utils@2.6.3(@dynamic-labs/types@2.6.3(viem@2.17.5(bufferutil@4.0.9)(typescript@5.7.3)(utf-8-validate@5.0.10)(zod@3.22.4)))(@dynamic-labs/utils@2.6.3(eventemitter3@5.0.1)(viem@2.17.5(bufferutil@4.0.9)(typescript@5.7.3)(utf-8-validate@5.0.10)(zod@3.22.4)))(bufferutil@4.0.9)(utf-8-validate@5.0.10)':
     dependencies:
-      '@dynamic-labs/types': 2.6.3(viem@2.17.5(bufferutil@4.0.9)(typescript@5.7.3)(utf-8-validate@5.0.10)(zod@3.22.4))
-      '@dynamic-labs/utils': 2.6.3(eventemitter3@5.0.1)(viem@2.17.5(bufferutil@4.0.9)(typescript@5.7.3)(utf-8-validate@5.0.10)(zod@3.22.4))
+      '@dynamic-labs/types': 2.6.3(viem@2.22.11(bufferutil@4.0.9)(typescript@5.7.3)(utf-8-validate@5.0.10)(zod@3.22.4))
+      '@dynamic-labs/utils': 2.6.3(eventemitter3@5.0.1)(viem@2.22.11(bufferutil@4.0.9)(typescript@5.7.3)(utf-8-validate@5.0.10)(zod@3.22.4))
       '@solana/web3.js': 1.92.1(bufferutil@4.0.9)(utf-8-validate@5.0.10)
     transitivePeerDependencies:
       - bufferutil
@@ -3546,7 +3521,7 @@ snapshots:
       '@dynamic-labs/solana-utils': 2.6.3(@dynamic-labs/types@2.6.3(viem@2.17.5(bufferutil@4.0.9)(typescript@5.7.3)(utf-8-validate@5.0.10)(zod@3.22.4)))(@dynamic-labs/utils@2.6.3(eventemitter3@5.0.1)(viem@2.17.5(bufferutil@4.0.9)(typescript@5.7.3)(utf-8-validate@5.0.10)(zod@3.22.4)))(bufferutil@4.0.9)(utf-8-validate@5.0.10)
       '@dynamic-labs/types': 2.6.3(viem@2.17.5(bufferutil@4.0.9)(typescript@5.7.3)(utf-8-validate@5.0.10)(zod@3.22.4))
       '@dynamic-labs/utils': 2.6.3(eventemitter3@5.0.1)(viem@2.17.5(bufferutil@4.0.9)(typescript@5.7.3)(utf-8-validate@5.0.10)(zod@3.22.4))
-      '@dynamic-labs/viem-utils': 2.6.3(fvniyonr4gbn4bitxdwfar2jye)
+      '@dynamic-labs/viem-utils': 2.6.3(85a8c5b5fd3b91673e89007e7fc576f8)
       '@dynamic-labs/wallet-book': 2.6.3(eventemitter3@5.0.1)(react-dom@19.0.0(react@19.0.0))(react@19.0.0)(viem@2.17.5(bufferutil@4.0.9)(typescript@5.7.3)(utf-8-validate@5.0.10)(zod@3.22.4))
       '@dynamic-labs/wallet-connector-core': 2.6.3(@dynamic-labs/logger@2.6.3(eventemitter3@5.0.1))(@dynamic-labs/rpc-providers@2.6.3(viem@2.17.5(bufferutil@4.0.9)(typescript@5.7.3)(utf-8-validate@5.0.10)(zod@3.22.4)))(@dynamic-labs/types@2.6.3(viem@2.17.5(bufferutil@4.0.9)(typescript@5.7.3)(utf-8-validate@5.0.10)(zod@3.22.4)))(@dynamic-labs/utils@2.6.3(eventemitter3@5.0.1)(viem@2.17.5(bufferutil@4.0.9)(typescript@5.7.3)(utf-8-validate@5.0.10)(zod@3.22.4)))(@dynamic-labs/wallet-book@2.6.3(eventemitter3@5.0.1)(react-dom@19.0.0(react@19.0.0))(react@19.0.0)(viem@2.17.5(bufferutil@4.0.9)(typescript@5.7.3)(utf-8-validate@5.0.10)(zod@3.22.4)))(eventemitter3@5.0.1)
       '@solana/web3.js': 1.92.1(bufferutil@4.0.9)(utf-8-validate@5.0.10)
@@ -3599,12 +3574,12 @@ snapshots:
     transitivePeerDependencies:
       - eventemitter3
 
-  '@dynamic-labs/viem-utils@2.6.3(fvniyonr4gbn4bitxdwfar2jye)':
+  '@dynamic-labs/viem-utils@2.6.3(85a8c5b5fd3b91673e89007e7fc576f8)':
     dependencies:
       '@dynamic-labs/logger': 2.6.3(eventemitter3@5.0.1)
-      '@dynamic-labs/types': 2.6.3(viem@2.17.5(bufferutil@4.0.9)(typescript@5.7.3)(utf-8-validate@5.0.10)(zod@3.22.4))
-      '@dynamic-labs/utils': 2.6.3(eventemitter3@5.0.1)(viem@2.17.5(bufferutil@4.0.9)(typescript@5.7.3)(utf-8-validate@5.0.10)(zod@3.22.4))
-      '@dynamic-labs/wallet-book': 2.6.3(eventemitter3@5.0.1)(react-dom@19.0.0(react@19.0.0))(react@19.0.0)(viem@2.17.5(bufferutil@4.0.9)(typescript@5.7.3)(utf-8-validate@5.0.10)(zod@3.22.4))
+      '@dynamic-labs/types': 2.6.3(viem@2.22.11(bufferutil@4.0.9)(typescript@5.7.3)(utf-8-validate@5.0.10)(zod@3.22.4))
+      '@dynamic-labs/utils': 2.6.3(eventemitter3@5.0.1)(viem@2.22.11(bufferutil@4.0.9)(typescript@5.7.3)(utf-8-validate@5.0.10)(zod@3.22.4))
+      '@dynamic-labs/wallet-book': 2.6.3(eventemitter3@5.0.1)(react-dom@19.0.0(react@19.0.0))(react@19.0.0)(viem@2.22.11(bufferutil@4.0.9)(typescript@5.7.3)(utf-8-validate@5.0.10)(zod@3.22.4))
       '@dynamic-labs/wallet-connector-core': 2.6.3(@dynamic-labs/logger@2.6.3(eventemitter3@5.0.1))(@dynamic-labs/rpc-providers@2.6.3(viem@2.17.5(bufferutil@4.0.9)(typescript@5.7.3)(utf-8-validate@5.0.10)(zod@3.22.4)))(@dynamic-labs/types@2.6.3(viem@2.17.5(bufferutil@4.0.9)(typescript@5.7.3)(utf-8-validate@5.0.10)(zod@3.22.4)))(@dynamic-labs/utils@2.6.3(eventemitter3@5.0.1)(viem@2.17.5(bufferutil@4.0.9)(typescript@5.7.3)(utf-8-validate@5.0.10)(zod@3.22.4)))(@dynamic-labs/wallet-book@2.6.3(eventemitter3@5.0.1)(react-dom@19.0.0(react@19.0.0))(react@19.0.0)(viem@2.17.5(bufferutil@4.0.9)(typescript@5.7.3)(utf-8-validate@5.0.10)(zod@3.22.4)))(eventemitter3@5.0.1)
       viem: 2.17.5(bufferutil@4.0.9)(typescript@5.7.3)(utf-8-validate@5.0.10)(zod@3.22.4)
 
@@ -3637,11 +3612,11 @@ snapshots:
   '@dynamic-labs/wallet-connector-core@2.6.3(@dynamic-labs/logger@2.6.3(eventemitter3@5.0.1))(@dynamic-labs/rpc-providers@2.6.3(viem@2.17.5(bufferutil@4.0.9)(typescript@5.7.3)(utf-8-validate@5.0.10)(zod@3.22.4)))(@dynamic-labs/types@2.6.3(viem@2.17.5(bufferutil@4.0.9)(typescript@5.7.3)(utf-8-validate@5.0.10)(zod@3.22.4)))(@dynamic-labs/utils@2.6.3(eventemitter3@5.0.1)(viem@2.17.5(bufferutil@4.0.9)(typescript@5.7.3)(utf-8-validate@5.0.10)(zod@3.22.4)))(@dynamic-labs/wallet-book@2.6.3(eventemitter3@5.0.1)(react-dom@19.0.0(react@19.0.0))(react@19.0.0)(viem@2.17.5(bufferutil@4.0.9)(typescript@5.7.3)(utf-8-validate@5.0.10)(zod@3.22.4)))(eventemitter3@5.0.1)':
     dependencies:
       '@dynamic-labs/logger': 2.6.3(eventemitter3@5.0.1)
-      '@dynamic-labs/rpc-providers': 2.6.3(viem@2.17.5(bufferutil@4.0.9)(typescript@5.7.3)(utf-8-validate@5.0.10)(zod@3.22.4))
+      '@dynamic-labs/rpc-providers': 2.6.3(viem@2.22.11(bufferutil@4.0.9)(typescript@5.7.3)(utf-8-validate@5.0.10)(zod@3.22.4))
       '@dynamic-labs/sdk-api-core': 0.0.510
-      '@dynamic-labs/types': 2.6.3(viem@2.17.5(bufferutil@4.0.9)(typescript@5.7.3)(utf-8-validate@5.0.10)(zod@3.22.4))
-      '@dynamic-labs/utils': 2.6.3(eventemitter3@5.0.1)(viem@2.17.5(bufferutil@4.0.9)(typescript@5.7.3)(utf-8-validate@5.0.10)(zod@3.22.4))
-      '@dynamic-labs/wallet-book': 2.6.3(eventemitter3@5.0.1)(react-dom@19.0.0(react@19.0.0))(react@19.0.0)(viem@2.17.5(bufferutil@4.0.9)(typescript@5.7.3)(utf-8-validate@5.0.10)(zod@3.22.4))
+      '@dynamic-labs/types': 2.6.3(viem@2.22.11(bufferutil@4.0.9)(typescript@5.7.3)(utf-8-validate@5.0.10)(zod@3.22.4))
+      '@dynamic-labs/utils': 2.6.3(eventemitter3@5.0.1)(viem@2.22.11(bufferutil@4.0.9)(typescript@5.7.3)(utf-8-validate@5.0.10)(zod@3.22.4))
+      '@dynamic-labs/wallet-book': 2.6.3(eventemitter3@5.0.1)(react-dom@19.0.0(react@19.0.0))(react@19.0.0)(viem@2.22.11(bufferutil@4.0.9)(typescript@5.7.3)(utf-8-validate@5.0.10)(zod@3.22.4))
       eventemitter3: 5.0.1
 
   '@emnapi/runtime@0.45.0':
@@ -4518,12 +4493,6 @@ snapshots:
       '@noble/hashes': 1.6.1
       '@scure/base': 1.2.4
 
-  '@simplewebauthn/browser@8.3.7':
-    dependencies:
-      '@simplewebauthn/typescript-types': 8.3.4
-
-  '@simplewebauthn/typescript-types@8.3.4': {}
-
   '@solana/buffer-layout@4.0.1':
     dependencies:
       buffer: 6.0.3
@@ -5163,33 +5132,6 @@ snapshots:
     dependencies:
       '@walletconnect/window-getters': 1.0.1
       tslib: 1.14.1
-
-  '@zerodev/ecdsa-validator@5.3.1(@zerodev/sdk@5.3.3(permissionless@0.1.36(viem@2.17.5(bufferutil@4.0.9)(typescript@5.7.3)(utf-8-validate@5.0.10)(zod@3.22.4)))(viem@2.17.5(bufferutil@4.0.9)(typescript@5.7.3)(utf-8-validate@5.0.10)(zod@3.22.4)))(permissionless@0.1.36(viem@2.17.5(bufferutil@4.0.9)(typescript@5.7.3)(utf-8-validate@5.0.10)(zod@3.22.4)))(viem@2.17.5(bufferutil@4.0.9)(typescript@5.7.3)(utf-8-validate@5.0.10)(zod@3.22.4))':
-    dependencies:
-      '@zerodev/sdk': 5.3.3(permissionless@0.1.36(viem@2.17.5(bufferutil@4.0.9)(typescript@5.7.3)(utf-8-validate@5.0.10)(zod@3.22.4)))(viem@2.22.11(bufferutil@4.0.9)(typescript@5.7.3)(utf-8-validate@5.0.10)(zod@3.22.4))
-      permissionless: 0.1.36(viem@2.22.11(bufferutil@4.0.9)(typescript@5.7.3)(utf-8-validate@5.0.10)(zod@3.22.4))
-      viem: 2.17.5(bufferutil@4.0.9)(typescript@5.7.3)(utf-8-validate@5.0.10)(zod@3.22.4)
-
-  '@zerodev/passkey-validator@5.4.0(@zerodev/sdk@5.3.3(permissionless@0.1.36(viem@2.17.5(bufferutil@4.0.9)(typescript@5.7.3)(utf-8-validate@5.0.10)(zod@3.22.4)))(viem@2.17.5(bufferutil@4.0.9)(typescript@5.7.3)(utf-8-validate@5.0.10)(zod@3.22.4)))(@zerodev/webauthn-key@5.3.1(viem@2.17.5(bufferutil@4.0.9)(typescript@5.7.3)(utf-8-validate@5.0.10)(zod@3.22.4)))(permissionless@0.1.36(viem@2.17.5(bufferutil@4.0.9)(typescript@5.7.3)(utf-8-validate@5.0.10)(zod@3.22.4)))(viem@2.17.5(bufferutil@4.0.9)(typescript@5.7.3)(utf-8-validate@5.0.10)(zod@3.22.4))':
-    dependencies:
-      '@noble/curves': 1.8.1
-      '@simplewebauthn/browser': 8.3.7
-      '@zerodev/sdk': 5.3.3(permissionless@0.1.36(viem@2.17.5(bufferutil@4.0.9)(typescript@5.7.3)(utf-8-validate@5.0.10)(zod@3.22.4)))(viem@2.22.11(bufferutil@4.0.9)(typescript@5.7.3)(utf-8-validate@5.0.10)(zod@3.22.4))
-      '@zerodev/webauthn-key': 5.3.1(viem@2.22.11(bufferutil@4.0.9)(typescript@5.7.3)(utf-8-validate@5.0.10)(zod@3.22.4))
-      permissionless: 0.1.36(viem@2.22.11(bufferutil@4.0.9)(typescript@5.7.3)(utf-8-validate@5.0.10)(zod@3.22.4))
-      viem: 2.17.5(bufferutil@4.0.9)(typescript@5.7.3)(utf-8-validate@5.0.10)(zod@3.22.4)
-
-  '@zerodev/sdk@5.3.3(permissionless@0.1.36(viem@2.17.5(bufferutil@4.0.9)(typescript@5.7.3)(utf-8-validate@5.0.10)(zod@3.22.4)))(viem@2.22.11(bufferutil@4.0.9)(typescript@5.7.3)(utf-8-validate@5.0.10)(zod@3.22.4))':
-    dependencies:
-      permissionless: 0.1.36(viem@2.22.11(bufferutil@4.0.9)(typescript@5.7.3)(utf-8-validate@5.0.10)(zod@3.22.4))
-      semver: 7.6.3
-      viem: 2.22.11(bufferutil@4.0.9)(typescript@5.7.3)(utf-8-validate@5.0.10)(zod@3.22.4)
-
-  '@zerodev/webauthn-key@5.3.1(viem@2.22.11(bufferutil@4.0.9)(typescript@5.7.3)(utf-8-validate@5.0.10)(zod@3.22.4))':
-    dependencies:
-      '@noble/curves': 1.8.1
-      '@simplewebauthn/browser': 8.3.7
-      viem: 2.22.11(bufferutil@4.0.9)(typescript@5.7.3)(utf-8-validate@5.0.10)(zod@3.22.4)
 
   JSONStream@1.3.5:
     dependencies:
@@ -6001,7 +5943,7 @@ snapshots:
 
   nanoid@3.3.8: {}
 
-  nanoid@5.0.4: {}
+  nanoid@5.0.9: {}
 
   neverthrow@6.2.2: {}
 
@@ -6088,6 +6030,20 @@ snapshots:
     transitivePeerDependencies:
       - zod
 
+  ox@0.6.9(typescript@5.7.3)(zod@3.22.4):
+    dependencies:
+      '@adraffy/ens-normalize': 1.11.0
+      '@noble/curves': 1.8.1
+      '@noble/hashes': 1.7.1
+      '@scure/bip32': 1.6.0
+      '@scure/bip39': 1.5.0
+      abitype: 1.0.7(typescript@5.7.3)(zod@3.22.4)
+      eventemitter3: 5.0.1
+    optionalDependencies:
+      typescript: 5.7.3
+    transitivePeerDependencies:
+      - zod
+
   p-limit@2.3.0:
     dependencies:
       p-try: 2.2.0
@@ -6112,10 +6068,6 @@ snapshots:
       minipass: 7.1.2
 
   pathe@1.1.2: {}
-
-  permissionless@0.1.36(viem@2.22.11(bufferutil@4.0.9)(typescript@5.7.3)(utf-8-validate@5.0.10)(zod@3.22.4)):
-    dependencies:
-      viem: 2.22.11(bufferutil@4.0.9)(typescript@5.7.3)(utf-8-validate@5.0.10)(zod@3.22.4)
 
   picocolors@1.1.1: {}
 

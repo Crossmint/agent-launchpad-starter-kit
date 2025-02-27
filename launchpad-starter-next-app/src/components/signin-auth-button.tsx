@@ -42,7 +42,7 @@ export const SignInAuthButton = () => {
     }
 
     return (
-        <Button className="bg-card gap-[10px] shadow-light rounded-xl py-3" onClick={login}>
+        <Button className="w-full bg-card gap-[10px] shadow-light rounded-xl py-3" onClick={login}>
             <Typography className="text-[#00150D] font-semibold text-[17px]">Sign in</Typography>
         </Button>
     );

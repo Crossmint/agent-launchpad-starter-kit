@@ -6,11 +6,11 @@ const API_KEY = process.env.CROSSMINT_SERVER_API_KEY as string;
 const CROSSMINT_BASE_URL = getBaseUrlFromApiKey(API_KEY);
 
 export async function submitSignatureApproval(
-    metadata: any,
     signature: any,
     signer: string,
     walletAddress: string,
-    signatureId: string
+    signatureId: string,
+    metadata?: any
 ) {
     try {
         const response = await fetch(

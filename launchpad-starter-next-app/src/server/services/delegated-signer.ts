@@ -1,7 +1,6 @@
 import { getBaseUrlFromApiKey } from "@/lib/utils";
 
 const API_KEY = process.env.CROSSMINT_SERVER_API_KEY as string;
-const CHAIN = "base-sepolia";
 
 const CROSSMINT_BASE_URL = getBaseUrlFromApiKey(API_KEY);
 
@@ -12,28 +11,31 @@ const headers = {
 
 export async function getOrCreateDelegatedSigner(
     smartWalletAddress: string,
-    agentKeyAddress: string
+    agentKeyAddress: string,
+    chain: string,
+    walletSignerType: string
 ): Promise<{ message: string; id: string; delegatedSignerAlreadyActive?: boolean }> {
     try {
+        const signer = `${walletSignerType}:${agentKeyAddress}`;
+
+        console.log("API request to get delegated signer");
+        console.log(`${CROSSMINT_BASE_URL}/wallets/${smartWalletAddress}/signers/${signer}`);
         // 1. Check if the delegated signer already exists
-        const getResponse = await fetch(
-            `${CROSSMINT_BASE_URL}/wallets/${smartWalletAddress}/signers/${`evm-keypair:${agentKeyAddress}`}`,
-            {
-                method: "GET",
-                headers,
-            }
-        );
+        const getResponse = await fetch(`${CROSSMINT_BASE_URL}/wallets/${smartWalletAddress}/signers/${signer}`, {
+            method: "GET",
+            headers,
+        });
 
         // Only try to parse the response if it was successful
         if (getResponse.ok) {
             const existingDelegatedSigner = await getResponse.json();
-            try {
-                const {
-                    message: existingMessage,
-                    id: existingId,
-                    status: existingStatus,
-                } = parseDelegatedSignerMessageAndId(existingDelegatedSigner);
+            const {
+                message: existingMessage,
+                id: existingId,
+                status: existingStatus,
+            } = parseDelegatedSignerMessageAndId(existingDelegatedSigner);
 
+            if (existingStatus != null) {
                 // If the delegated signer exists and is awaiting approval, return it
                 if (existingStatus === "awaiting-approval") {
                     return { message: existingMessage, id: existingId };
@@ -43,20 +45,24 @@ export async function getOrCreateDelegatedSigner(
                 if (existingStatus === "active") {
                     return { message: "", id: "", delegatedSignerAlreadyActive: true };
                 }
-            } catch (_error) {
-                // If parsing fails, continue to step 2
+            } else {
                 console.log("No existing delegated signer found, creating new one");
             }
         }
 
         // 2. Create a new delegated signer
+        const requestBody: { signer: string; chain?: string } = {
+            signer,
+            chain,
+        };
+        if (walletSignerType.includes("solana")) {
+            // Solana doesn't need chain specified
+            delete requestBody.chain;
+        }
         const response = await fetch(`${CROSSMINT_BASE_URL}/wallets/${smartWalletAddress}/signers`, {
             method: "POST",
             headers,
-            body: JSON.stringify({
-                signer: `evm-keypair:${agentKeyAddress}`,
-                chain: CHAIN,
-            }),
+            body: JSON.stringify(requestBody),
         });
 
         const { message, id } = parseDelegatedSignerMessageAndId(await response.json());
@@ -70,8 +76,13 @@ export async function getOrCreateDelegatedSigner(
 function parseDelegatedSignerMessageAndId(delegatedSignerResponse: any) {
     const existingChain = Object.values(delegatedSignerResponse?.chains || {})[0] as any;
     if (!existingChain) {
-        throw new Error("Delegated signer not found");
+        return {
+            message: null,
+            id: null,
+            status: null,
+        };
     }
+
     return {
         message: existingChain?.approvals?.pending[0]?.message,
         id: existingChain?.id,

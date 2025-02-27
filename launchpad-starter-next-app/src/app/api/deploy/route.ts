@@ -2,15 +2,17 @@ import { NextResponse } from "next/server";
 import { ContainerManager } from "@/server/services/container";
 import { getOrCreateDelegatedSigner } from "@/server/services/delegated-signer";
 
+const CHAIN = process.env.NEXT_PUBLIC_PREFERRED_CHAIN ?? "base-sepolia";
+
 const containerManager = new ContainerManager();
 
 export async function POST(request: Request) {
     try {
-        const { smartWalletAddress } = await request.json();
+        const { smartWalletAddress, walletSignerType } = await request.json();
 
-        if (smartWalletAddress == null) {
+        if (smartWalletAddress == null || walletSignerType == null) {
             return NextResponse.json(
-                { success: false, error: "body must contain smartWalletAddress" },
+                { success: false, error: "body must contain smartWalletAddress and walletSignerType" },
                 { status: 400 }
             );
         }
@@ -33,7 +35,12 @@ export async function POST(request: Request) {
         console.log(`Agent public key: ${publicKey}`);
 
         // 3. Get existing or create a new delegated signer request
-        const delegatedSigner = await getOrCreateDelegatedSigner(smartWalletAddress, publicKey);
+        const delegatedSigner = await getOrCreateDelegatedSigner(
+            smartWalletAddress,
+            publicKey,
+            CHAIN,
+            walletSignerType
+        );
 
         return NextResponse.json({
             success: true,
@@ -45,7 +52,7 @@ export async function POST(request: Request) {
     } catch (error) {
         console.error("Deployment error:", error);
         // Ensure container is stopped on error
-        await containerManager.stopContainer();
+        // await containerManager.stopContainer();
 
         return NextResponse.json(
             {

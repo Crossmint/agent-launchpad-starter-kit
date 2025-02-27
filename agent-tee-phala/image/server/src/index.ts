@@ -35,6 +35,7 @@ app.post("/api/initialize", async (req: Request, res: Response) => {
     }
 
     try {
+        // TODO Add support for generating keys for Solana
         const client = new TappdClient(process.env.DSTACK_SIMULATOR_ENDPOINT || undefined);
         const randomDeriveKey = await client.deriveKey(smartWalletAddressHeader, "");
         const keccakPrivateKey = keccak256(randomDeriveKey.asUint8Array());
@@ -47,7 +48,7 @@ app.post("/api/initialize", async (req: Request, res: Response) => {
         publicKey = account.address;
         smartWalletAddress = smartWalletAddressHeader;
 
-        await initializeAgent(privateKey, crossmintServerApiKey, alchemyApiKey);
+        // await initializeAgent(privateKey, crossmintServerApiKey, alchemyApiKey);
 
         res.json({ status: "success", publicKey: account.address });
     } catch (error) {

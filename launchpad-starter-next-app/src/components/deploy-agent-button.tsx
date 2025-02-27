@@ -20,7 +20,7 @@ export const DeployAgentButton = ({
 
     if (isLoadingDeploy) {
         return (
-            <div className="flex gap-2 items-center self-center min-h-[52px]" role="status">
+            <div className="w-full flex gap-2 items-center self-center min-h-[52px]" role="status">
                 <Spinner />
                 <Typography className="text-primary-foreground" variant={"h4"}>
                     Deploying Rufus...
@@ -38,13 +38,15 @@ export const DeployAgentButton = ({
                 return;
             }
 
+            const walletSignerType = wallet.type.includes("solana") ? "solana-keypair" : "evm-keypair";
+
             // 1. Deploy the agent
             const response = await fetch(`/api/deploy`, {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",
                 },
-                body: JSON.stringify({ smartWalletAddress: wallet.address }),
+                body: JSON.stringify({ smartWalletAddress: wallet.address, walletSignerType }),
             });
 
             const data = (await response.json()) as {
@@ -55,6 +57,8 @@ export const DeployAgentButton = ({
                 delegatedSignerAlreadyActive?: boolean;
             };
 
+            console.log({ data });
+
             // If the delegated signer is already active, we can skip the signature approval step
             if (data?.delegatedSignerAlreadyActive) {
                 setAgentSuccessfullyDeployed(true);
@@ -62,18 +66,27 @@ export const DeployAgentButton = ({
             }
 
             // 2. Sign the delegated signer message that was returned from the server
-            const { metadata, signature } = await WebAuthnP256.sign({
-                credentialId: wallet.credentialId,
-                challenge: data.delegatedSignerMessage as `0x${string}`,
-            });
+            let signature;
+            let metadata;
 
+            if (!walletSignerType.includes("solana")) {
+                // EVM passkey wallet uses WebAuthn (passkeys)
+                const { metadata: webAuthnMetadata, signature: webAuthnSignature } = await WebAuthnP256.sign({
+                    credentialId: wallet.credentialId,
+                    challenge: data.delegatedSignerMessage as `0x${string}`,
+                });
+                signature = { r: webAuthnSignature.r.toString(), s: webAuthnSignature.s.toString() };
+                metadata = webAuthnMetadata;
+            } else {
+                // TODO: Implement Solana signature approval
+            }
             // 3. call the server-side action to submit the signature approval
             await submitSignatureApproval(
-                metadata,
-                { r: signature.r.toString(), s: signature.s.toString() },
-                `evm-passkey:${wallet.credentialId}`,
+                signature,
+                `${walletSignerType}:${wallet.credentialId}`,
                 wallet.address,
-                data.delegatedSignerId
+                data.delegatedSignerId,
+                metadata
             );
 
             setAgentSuccessfullyDeployed(true);
@@ -87,7 +100,7 @@ export const DeployAgentButton = ({
 
     return (
         <Button
-            className="bg-background rounded-full text-secondary-foreground font-semibold text-[17px] gap-2 shadow-primary border border-color-secondary-foreground"
+            className="w-full bg-background rounded-full text-secondary-foreground font-semibold text-[17px] gap-2 shadow-primary border border-color-secondary-foreground"
             onClick={handleDeployAgent}
             disabled={isLoadingDeploy}
         >

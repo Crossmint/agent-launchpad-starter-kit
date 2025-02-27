@@ -42,9 +42,9 @@
     <li>
       <a href="#get-started">Get Started</a>
       <ul>
+        <li><a href="#pre-requisites">Pre-requisites</a></li>
         <li><a href="#local-setup">Local Setup</a></li>
         <li><a href="#solana-smart-wallets">Solana Smart Wallets</a></li>
-        <li><a href="#docker-setup-requires-orbstack">Docker Setup (Requires OrbStack)</a></li>
       </ul>
     </li>
     <li>
@@ -102,8 +102,7 @@ In jurisdictions like the United States, platforms that have the ability to cont
 
 ## Get started
 
-todo update this image to new screenshot
-![Agent Launchpad Starter Kit](https://github.com/user-attachments/assets/364ad94a-cea1-42e5-928c-a75bc7b9709a)
+![Agent Launchpad Starter Kit](https://github.com/user-attachments/assets/9f55da35-b66b-4afc-a271-0fd7379d9237)
 
 ### Pre-requisites
 

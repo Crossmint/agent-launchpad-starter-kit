@@ -1,6 +1,8 @@
 import { openai } from "@ai-sdk/openai";
 import { generateText } from "ai";
 import { getOnChainTools } from "@goat-sdk/adapter-vercel-ai";
+// This is just an example plugin (coingecko) - see all available GOAT plugins at:
+// https://github.com/goat-sdk/goat/tree/main/typescript/packages/plugins
 import { coingecko } from "@goat-sdk/plugin-coingecko";
 import { getWalletClient } from "./wallet";
 

@@ -31,6 +31,9 @@ importers:
       '@goat-sdk/crossmint':
         specifier: ^0.3.16
         version: 0.3.16(@goat-sdk/core@0.4.6(zod@3.23.8))(bufferutil@4.0.9)(typescript@5.7.3)(utf-8-validate@5.0.10)
+      '@goat-sdk/plugin-coingecko':
+        specifier: ^0.2.8
+        version: 0.2.8(@goat-sdk/core@0.4.6(zod@3.23.8))
       '@goat-sdk/plugin-erc20':
         specifier: ^0.2.10
         version: 0.2.10(@goat-sdk/core@0.4.6(zod@3.23.8))(bufferutil@4.0.9)(typescript@5.7.3)(utf-8-validate@5.0.10)(viem@2.22.11(bufferutil@4.0.9)(typescript@5.7.3)(utf-8-validate@5.0.10)(zod@3.23.8))
@@ -405,6 +408,11 @@ packages:
 
   '@goat-sdk/crossmint@0.3.16':
     resolution: {integrity: sha512-OCwy16eWf0vKUXVzmmTcUXujn7zXlNgulJin7PKQ+QiW15WDgVbZ0siR6jnP7dUbFTVXwfspqISD3Sc1P3QxWg==}
+    peerDependencies:
+      '@goat-sdk/core': 0.4.7
+
+  '@goat-sdk/plugin-coingecko@0.2.8':
+    resolution: {integrity: sha512-MK66r1nuIpg/OssL4KOB9qMsU4jkluqzE/vTR31Zhd1u3iKamU0m380eAPNkQYSbTE8/qGskYbHypyZEroAVWw==}
     peerDependencies:
       '@goat-sdk/core': 0.4.7
 
@@ -3025,6 +3033,11 @@ snapshots:
       - encoding
       - typescript
       - utf-8-validate
+
+  '@goat-sdk/plugin-coingecko@0.2.8(@goat-sdk/core@0.4.6(zod@3.23.8))':
+    dependencies:
+      '@goat-sdk/core': 0.4.6(zod@3.23.8)
+      zod: 3.23.8
 
   '@goat-sdk/plugin-erc20@0.2.10(@goat-sdk/core@0.4.6(zod@3.23.8))(bufferutil@4.0.9)(typescript@5.7.3)(utf-8-validate@5.0.10)(viem@2.22.11(bufferutil@4.0.9)(typescript@5.7.3)(utf-8-validate@5.0.10)(zod@3.23.8))':
     dependencies:

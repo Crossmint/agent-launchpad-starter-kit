@@ -70,7 +70,7 @@
 ## About The Project
 
 ![Crossmint Agent Wallets](https://github.com/user-attachments/assets/10bdd357-38bb-4661-8d01-0568d0440263)
-✅
+
 The goal of this project is to help launchpads and other agent hosting patforms to easily
 deploy AI agents with wallets, following an architecture that is non-custodial for the launchpad,
 yet allows the agent owner and user to control the wallet.

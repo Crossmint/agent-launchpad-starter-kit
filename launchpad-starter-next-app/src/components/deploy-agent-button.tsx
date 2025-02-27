@@ -60,8 +60,6 @@ export const DeployAgentButton = ({
                 targetSignerLocator: string;
             };
 
-            console.log({ data });
-
             // If the delegated signer is already active, we can skip the signature approval step
             if (data?.delegatedSignerAlreadyActive) {
                 setAgentSuccessfullyDeployed(true);

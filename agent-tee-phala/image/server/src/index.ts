@@ -58,8 +58,6 @@ app.post("/api/initialize", async (req: Request, res: Response) => {
 
             console.log("Generated agent keys from TEE");
             console.log("Solana Account address:", publicKey);
-
-            console.log({ keypair });
         }
 
         smartWalletAddress = smartWalletAddressHeader;

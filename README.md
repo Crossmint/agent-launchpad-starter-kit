@@ -61,11 +61,11 @@
 
 ## Roadmap
 
-[x] Solana Smart Wallets (~Feb 10)  
-[ ] Passkey support for Solana Smart Wallets (~Mar 10)  
-[ ] Add support for more TEE networks: Marlin, Lit, etc (~Mar 10)  
-[ ] Sample code for user-initiated wallet actions  
-[ ] Non-custodial agent software updates
+- [x] Solana Smart Wallets (~Feb 10)  
+- [ ] Passkey support for Solana Smart Wallets (~Mar 10)  
+- [ ] Add support for more TEE networks: Marlin, Lit, etc (~Mar 10)  
+- [ ] Sample code for user-initiated wallet actions  
+- [ ] Non-custodial agent software updates
 
 ## About The Project
 

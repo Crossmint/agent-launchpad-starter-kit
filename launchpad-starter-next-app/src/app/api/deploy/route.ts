@@ -32,6 +32,7 @@ export async function POST(request: Request) {
                 "x-alchemy-api-key": process.env.ALCHEMY_API_KEY as string,
                 "x-coingecko-api-key": process.env.COINGECKO_API_KEY as string,
                 "x-openai-api-key": process.env.OPENAI_API_KEY as string,
+                "x-chain": CHAIN,
             },
         }).then((res) => res.json());
         console.log(`Agent public key: ${publicKey}`);

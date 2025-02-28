@@ -159,9 +159,17 @@ The Next.js app will be available at `http://localhost:3001`
 #### Solana Smart Wallets
 
 > **Note on Solana Smart Wallets**: 
-> The default implementation uses Crossmint's Smart Wallets for Solana, which requires generating a keypair and setting the `NEXT_PUBLIC_SOLANA_SIGNER_PUBLIC_KEY` environment variable. This is a public key that signs transactions on behalf of the Solana Smart Wallet.
+> The default implementation uses Crossmint's Smart Wallets for Solana, which requires generating a keypair and setting the `NEXT_PUBLIC_SOLANA_SIGNER_PUBLIC_KEY` and `SOLANA_SIGNER_PRIVATE_KEY` environment variables. This keypair will be used to sign transactions on behalf of the Solana Smart Wallet.
+> To generate a keypair for signing Solana Smart Wallet transactions:
 >
-> If you prefer to use external wallets like Phantom instead, you can modify the wallet connection logic in the frontend code. See the [Solana Wallet Adapter](https://github.com/solana-labs/wallet-adapter) documentation for integrating external Solana wallets.
+> 1. Generate a new keypair using the [Solana Cookbook guide](https://solana.com/developers/cookbook/wallets/create-keypair)
+> 2. Set both environment variables in your `.env` file:
+>    ```
+>    NEXT_PUBLIC_SOLANA_SIGNER_PUBLIC_KEY=your_public_key
+>    SOLANA_SIGNER_PRIVATE_KEY=your_private_key
+>    ```
+>
+> If you prefer to use external wallets like Phantom instead, you can modify the wallet connection logic in the frontend code at `src/app/providers/wallet-provider.tsx`. See the [Solana Wallet Adapter](https://github.com/solana-labs/wallet-adapter) documentation for integrating external Solana wallets. The wallet provider currently uses a Solana keypair signer configuration, which you can replace with your preferred wallet connection method.
 
 ## Deploying to Production
 

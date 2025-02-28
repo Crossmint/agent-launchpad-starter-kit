@@ -5,7 +5,7 @@ export interface Wallet {
 }
 
 export enum WalletType {
-    Ethereum = "evm-smart-wallet",
+    EVM = "evm-smart-wallet",
     Solana = "solana-smart-wallet",
 }
 

@@ -3,7 +3,7 @@ import { TappdClient } from "@phala/dstack-sdk";
 import { toKeypair } from "@phala/dstack-sdk/solana";
 // @ts-expect-error issue with the types from source code
 import { toViemAccount } from "@phala/dstack-sdk/viem";
-import { keccak256 } from "viem";
+import { isHex, keccak256 } from "viem";
 import express from "express";
 import type { Request, Response } from "express";
 
@@ -48,7 +48,7 @@ app.post("/api/initialize", async (req: Request, res: Response) => {
     }
 
     try {
-        const isEVMWallet = smartWalletAddressHeader.startsWith("0x");
+        const isEVMWallet = isHex(smartWalletAddressHeader);
         const client = new TappdClient(process.env.DSTACK_SIMULATOR_ENDPOINT || undefined);
         const randomDeriveKey = await client.deriveKey(smartWalletAddressHeader, "");
 
@@ -99,7 +99,7 @@ async function initializeAgent(
 ) {
     try {
         console.log("Initializing agent...");
-        const environmentVariables = `SIGNER_WALLET_SECRET_KEY=${privateKey} CROSSMINT_SERVER_API_KEY=${crossmintServerApiKey} SMART_WALLET_ADDRESS=${smartWalletAddress} ALCHEMY_API_KEY_BASE_SEPOLIA=${alchemyApiKey} COINGECKO_API_KEY=${coingeckoApiKey} OPENAI_API_KEY=${openaiApiKey} CHAIN=${chain}`;
+        const environmentVariables = `SIGNER_WALLET_SECRET_KEY='${privateKey}' CROSSMINT_SERVER_API_KEY='${crossmintServerApiKey}' SMART_WALLET_ADDRESS='${smartWalletAddress}' ALCHEMY_API_KEY_BASE_SEPOLIA='${alchemyApiKey}' COINGECKO_API_KEY='${coingeckoApiKey}' OPENAI_API_KEY='${openaiApiKey}' CHAIN='${chain}'`;
         const { stdout } = await execAsync(`${environmentVariables} pnpm run start:agent`);
         console.log("stdout:", stdout);
     } catch (error) {

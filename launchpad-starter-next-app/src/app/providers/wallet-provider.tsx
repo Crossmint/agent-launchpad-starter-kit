@@ -70,7 +70,7 @@ export function WalletProvider({
                 if (!SOLANA_PUBLIC_KEY_SIGNER) {
                     throw new Error("NEXT_PUBLIC_SOLANA_SIGNER_PUBLIC_KEY is not set");
                 }
-
+                // Optional: Can replace the adminSigner with EOA wallet from say Phantom.
                 config = {
                     adminSigner: {
                         type: "solana-keypair",

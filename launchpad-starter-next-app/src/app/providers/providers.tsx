@@ -8,7 +8,7 @@ import { WalletType } from "../types/wallet";
 
 const DEFAULT_WALLET_TYPE = process.env.NEXT_PUBLIC_PREFERRED_CHAIN?.includes("solana")
     ? WalletType.Solana
-    : WalletType.Ethereum;
+    : WalletType.EVM;
 
 export function Providers({ children }: { children: ReactNode }) {
     const queryClient = new QueryClient();

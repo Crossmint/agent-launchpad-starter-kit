@@ -26,10 +26,10 @@ export default function WalletTypeSelector({ value, onChange }: WalletSelectorPr
                 <button
                     className={cn(
                         `bg-card rounded-xl p-4 flex items-center gap-3 transition-all duration-200 border border-border`,
-                        value === WalletType.Ethereum ? "border-foreground shadow-sm" : "",
+                        value === WalletType.EVM ? "border-foreground shadow-sm" : "",
                         wallet != null ? "opacity-50 cursor-not-allowed" : ""
                     )}
-                    onClick={() => onChange(WalletType.Ethereum)}
+                    onClick={() => onChange(WalletType.EVM)}
                     disabled={disabled}
                 >
                     <div className="w-6 h-6 flex items-center justify-center">

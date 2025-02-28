@@ -1,13 +1,19 @@
 "use client";
 
+import { useState, type ReactNode } from "react";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { CrossmintProvider, CrossmintAuthProvider } from "@crossmint/client-sdk-react-ui";
-import type { ReactNode } from "react";
-
 import { WalletProvider } from "./wallet-provider";
+import { WalletType } from "../types/wallet";
+
+const DEFAULT_WALLET_TYPE = process.env.NEXT_PUBLIC_PREFERRED_CHAIN?.includes("solana")
+    ? WalletType.Solana
+    : WalletType.EVM;
 
 export function Providers({ children }: { children: ReactNode }) {
     const queryClient = new QueryClient();
+    /* State needed lifting to the top level due to a re-render issue happening from CrossmintAuthProvider */
+    const [walletType, setWalletType] = useState(DEFAULT_WALLET_TYPE);
 
     return (
         <QueryClientProvider client={queryClient}>
@@ -28,7 +34,9 @@ export function Providers({ children }: { children: ReactNode }) {
                     }}
                     loginMethods={["email", "google", "twitter"]}
                 >
-                    <WalletProvider>{children}</WalletProvider>
+                    <WalletProvider walletType={walletType} setWalletType={setWalletType}>
+                        {children}
+                    </WalletProvider>
                 </CrossmintAuthProvider>
             </CrossmintProvider>
         </QueryClientProvider>

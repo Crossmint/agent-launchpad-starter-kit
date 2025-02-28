@@ -1,18 +1,19 @@
 "use client";
 
+import { useState } from "react";
+import Link from "next/link";
 import { Fireworks } from "@/components/fireworks";
 import { DeployAgentButton } from "@/components/deploy-agent-button";
 import { PoweredByCrossmint } from "@/components/powered-by-crossmint";
 import { Typography } from "@/components/typography";
-import Link from "next/link";
-import { useState } from "react";
 import { useWallet } from "./providers/wallet-provider";
 import { SignInAuthButton } from "@/components/signin-auth-button";
+import type { Wallet } from "./types/wallet";
+import WalletTypeSelector from "@/components/wallet-type-selector";
+import Image from "next/image";
 
-function HomePrimaryAction() {
+function HomePrimaryAction({ wallet }: { wallet: Wallet | null }) {
     const [agentSuccessfullyDeployed, setAgentSuccessfullyDeployed] = useState(false);
-
-    const { wallet } = useWallet();
 
     if (wallet == null) {
         return <SignInAuthButton />;
@@ -22,7 +23,7 @@ function HomePrimaryAction() {
         return (
             <>
                 <Fireworks />
-                <div className="flex gap-2 items-center self-center min-h-[52px]">
+                <div className="flex gap-2 items-center justify-center min-h-[52px]">
                     <Link
                         href="/agents"
                         className="underline text-secondary-foreground text-lg font-semibold underline-offset-4"
@@ -38,10 +39,12 @@ function HomePrimaryAction() {
 }
 
 export default function Home() {
+    const { wallet, walletType, setWalletType } = useWallet();
+
     return (
         <div className="flex h-full w-full items-center md:p-4 justify-center">
-            <div className="flex flex-col pb-12 items-center max-w-[538px] p-4">
-                <div className="flex flex-col gap-2 text-center pb-8">
+            <div className="flex flex-col pb-12 items-center p-4 gap-4">
+                <div className="flex flex-col gap-2 text-center max-w-[538px] pb-8">
                     <Typography
                         style={{
                             background: "linear-gradient(to right, #1B2C60, #7d98eb)",
@@ -58,26 +61,25 @@ export default function Home() {
                     </Typography>
                 </div>
 
-                <div className="flex flex-col w-full md:max-w-[340px] gap-10">
-                    <div className="bg-card flex flex-col p-5 rounded-3xl shadow-dropdown">
-                        <img
-                            className="rounded-xl rounded-bl-none rounded-br-none"
-                            src={"/ai-agent.png"}
-                            alt="ai agent"
-                        />
-                        <div className="py-4">
-                            <Typography className="text-secondary-foreground" variant="h3">
-                                Agent Rufus
-                            </Typography>
-                            <Typography className="text-muted-foreground" variant="h5">
-                                by Crossmint
-                            </Typography>
+                <div className="flex w-full gap-4 bg-card rounded-3xl p-6 shadow-md">
+                    <div className="w-16 flex items-center justify-center">
+                        <Image src="/ai-agent.png" alt="ai agent" width={64} height={64} className="rounded-md" />
+                    </div>
+                    <div className="flex items-center gap-2">
+                        <div className="flex flex-col">
+                            <h2 className="text-gray-700 font-medium">Agent Rufus</h2>
+                            <h5 className="text-muted">by Crossmint</h5>
                         </div>
                     </div>
-                    <HomePrimaryAction />
-
-                    <PoweredByCrossmint />
                 </div>
+
+                <WalletTypeSelector value={walletType} onChange={setWalletType} />
+
+                <div className="w-full max-w-64 mt-4">
+                    <HomePrimaryAction wallet={wallet} />
+                </div>
+
+                <PoweredByCrossmint />
             </div>
         </div>
     );

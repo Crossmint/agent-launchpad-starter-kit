@@ -44,6 +44,7 @@
       <ul>
         <li><a href="#pre-requisites">Pre-requisites</a></li>
         <li><a href="#local-setup">Local Setup</a></li>
+        <li><a href="#environment-variables">Environment Variables</a></li>
         <li><a href="#solana-smart-wallets">Solana Smart Wallets</a></li>
       </ul>
     </li>
@@ -155,6 +156,10 @@ The Next.js app will be available at `http://localhost:3001`
 
   > **Note**:  When running the nextjs app, the docker image will build and deploy in a simulated TEE environment. This simulated environment allows you to test your docker image code locally before deploying to production TEEs & Docker hub.
 
+
+### Environment Variables
+
+Please refer to the [`.env.example`](launchpad-starter-next-app/.env.example) file for more information.
 
 #### Solana Smart Wallets
 

@@ -44,6 +44,9 @@
       <ul>
         <li><a href="#pre-requisites">Pre-requisites</a></li>
         <li><a href="#local-setup">Local Setup</a></li>
+        <li><a href="#environment-variables">Environment Variables</a></li>
+        <li><a href="#supported-chains">Supported Chains</a></li>
+        <li><a href="#evm-smart-wallets">EVM Smart Wallets</a></li>
         <li><a href="#solana-smart-wallets">Solana Smart Wallets</a></li>
       </ul>
     </li>
@@ -156,6 +159,25 @@ The Next.js app will be available at `http://localhost:3001`
   > **Note**:  When running the nextjs app, the docker image will build and deploy in a simulated TEE environment. This simulated environment allows you to test your docker image code locally before deploying to production TEEs & Docker hub.
 
 
+### Environment Variables
+
+Please refer to the [`.env.example`](launchpad-starter-next-app/.env.example) file for more information.
+
+#### Supported Chains
+
+For an exhaustive list of supported chains on Crossmint, please refer to the [Supported Chains](https://docs.crossmint.com/introduction/supported-chains) doc.
+
+#### EVM Smart Wallets
+
+> **Note on EVM Smart Wallets**: 
+> The default implementation uses Crossmint's Smart Wallets for EVM chains, which requires setting the `ALCHEMY_API_KEY` environment variable. This API key is used to connect to the EVM chain and sign transactions on behalf of the EVM Smart Wallet.
+> To generate an API key for signing EVM Smart Wallet transactions:
+> 1. Create an account on [Alchemy](https://www.alchemy.com/)
+> 2. Create a new project and copy the API key
+> 3. Set the `ALCHEMY_API_KEY` environment variable in your `.env` file:
+>    ```
+>    ALCHEMY_API_KEY=your_api_key
+
 #### Solana Smart Wallets
 
 > **Note on Solana Smart Wallets**: 
@@ -167,6 +189,10 @@ The Next.js app will be available at `http://localhost:3001`
 >    ```
 >    NEXT_PUBLIC_SOLANA_SIGNER_PUBLIC_KEY=your_public_key
 >    SOLANA_SIGNER_PRIVATE_KEY=your_private_key
+>    ```
+> 3. Set the `NEXT_PUBLIC_PREFERRED_CHAIN` environment variable to `solana` in your `.env` file:
+>    ```
+>    NEXT_PUBLIC_PREFERRED_CHAIN=solana
 >    ```
 >
 > If you prefer to use external wallets like Phantom instead, you can modify the wallet connection logic in the frontend code at `src/app/providers/wallet-provider.tsx`. See the [Solana Wallet Adapter](https://github.com/solana-labs/wallet-adapter) documentation for integrating external Solana wallets. The wallet provider currently uses a Solana keypair signer configuration, which you can replace with your preferred wallet connection method.

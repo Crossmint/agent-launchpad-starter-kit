@@ -8,7 +8,7 @@ const alchemyApiKey = process.env.ALCHEMY_API_KEY_BASE_SEPOLIA;
 const smartWalletAddress = process.env.SMART_WALLET_ADDRESS;
 const solanaRpcUrl = process.env.SOLANA_RPC_URL;
 
-if (!apiKey || !walletSignerSecretKey || !alchemyApiKey || !smartWalletAddress || !solanaRpcUrl) {
+if (!apiKey || !walletSignerSecretKey || !smartWalletAddress) {
     throw new Error("Missing environment variables");
 }
 
@@ -16,6 +16,9 @@ const { evmSmartWallet, solanaSmartWallet } = crossmint(apiKey);
 
 export async function getWalletClient(chain: SupportedSmartWalletChains | "solana") {
     if (chain === "solana") {
+        if (!solanaRpcUrl) {
+            throw new Error("Missing SOLANA_RPC_URL environment variable");
+        }
         return {
             walletClient: await solanaSmartWallet({
                 config: {
@@ -30,6 +33,9 @@ export async function getWalletClient(chain: SupportedSmartWalletChains | "solan
         };
     }
 
+    if (!alchemyApiKey) {
+        throw new Error("Missing ALCHEMY_API_KEY_BASE_SEPOLIA environment variable");
+    }
     return {
         walletClient: await evmSmartWallet({
             address: smartWalletAddress,

@@ -16,10 +16,6 @@ if (!coingeckoApiKey || !openaiApiKey || !chain) {
 }
 
 export default async function startVercelAiAgent() {
-    if (chain.includes("solana")) {
-        console.log("skipping solana agent... for now...");
-        return;
-    }
     const { walletClient } = await getWalletClient(chain);
     const tools = await getOnChainTools({
         wallet: walletClient,
@@ -28,9 +24,9 @@ export default async function startVercelAiAgent() {
 
     const result = await generateText({
         model: openai("gpt-4o-mini"),
-        tools: tools,
+        tools,
         maxSteps: 5,
-        prompt: "What are the trending cryptocurrencies right now and what's the price of Bonk?",
+        prompt: "What are the trending cryptocurrencies right now and what's the price of Bonk? Also print the address of the wallet and if it's solana or evm.",
     });
 
     console.log(result.text);

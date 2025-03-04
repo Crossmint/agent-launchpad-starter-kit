@@ -29,8 +29,8 @@ importers:
         specifier: 0.4.6
         version: 0.4.6(zod@3.23.8)
       '@goat-sdk/crossmint':
-        specifier: ^0.3.18
-        version: 0.3.18(@goat-sdk/core@0.4.6(zod@3.23.8))(bufferutil@4.0.9)(typescript@5.7.3)(utf-8-validate@5.0.10)
+        specifier: ^0.4.1
+        version: 0.4.1(@goat-sdk/core@0.4.6(zod@3.23.8))(bufferutil@4.0.9)(typescript@5.7.3)(utf-8-validate@5.0.10)
       '@goat-sdk/plugin-coingecko':
         specifier: ^0.2.8
         version: 0.2.8(@goat-sdk/core@0.4.6(zod@3.23.8))
@@ -49,6 +49,9 @@ importers:
       '@phala/dstack-sdk':
         specifier: ^0.1.10
         version: 0.1.10(bufferutil@4.0.9)(typescript@5.7.3)(utf-8-validate@5.0.10)(zod@3.23.8)
+      '@solana/web3.js':
+        specifier: ^1.98.0
+        version: 1.98.0(bufferutil@4.0.9)(utf-8-validate@5.0.10)
       '@types/express':
         specifier: ^5.0.0
         version: 5.0.0
@@ -406,10 +409,10 @@ packages:
     peerDependencies:
       zod: ^3.0.0
 
-  '@goat-sdk/crossmint@0.3.18':
-    resolution: {integrity: sha512-8f8mgbVbftClQIUo5x3dNIG4MfQnVPSpJuAHvY3zR5pgWdPgvn4dsi111PhNWNd6BS9CoLbSP7IlnMkqLzECXw==}
+  '@goat-sdk/crossmint@0.4.1':
+    resolution: {integrity: sha512-WPJ1HOpFi7kcmqdu3ShHT09a/Ua7KgUaJJcTIBDr0M4Mh/u+nBXyAlHySFDkFpY6JNyG/30zG7OWNr3GsxSRew==}
     peerDependencies:
-      '@goat-sdk/core': 0.4.7
+      '@goat-sdk/core': 0.4.8
 
   '@goat-sdk/plugin-coingecko@0.2.8':
     resolution: {integrity: sha512-MK66r1nuIpg/OssL4KOB9qMsU4jkluqzE/vTR31Zhd1u3iKamU0m380eAPNkQYSbTE8/qGskYbHypyZEroAVWw==}
@@ -428,16 +431,21 @@ packages:
       '@goat-sdk/core': 0.4.7
       viem: 2.21.49
 
+  '@goat-sdk/wallet-evm@0.2.10':
+    resolution: {integrity: sha512-LOXlXBgHAFqTmGH1rKV4e7GggS1qaAGIMOTLQQzFvDSit2e/TjXXCcpd0mf8ebGafznD9+1CEiPJZLyD9KcUzQ==}
+    peerDependencies:
+      '@goat-sdk/core': 0.4.8
+
   '@goat-sdk/wallet-evm@0.2.8':
     resolution: {integrity: sha512-KRacH6xWqWkXaJhrqScQC4g9H2K1FmAg+qt4lrHB3S7OLyxIj8yFmRoUbpi+BhSLH9bFHUUVOCZ8zXmHJMjGdw==}
     peerDependencies:
       '@goat-sdk/core': 0.4.7
 
-  '@goat-sdk/wallet-solana@0.2.13':
-    resolution: {integrity: sha512-JtYNuCQXIcurnkUdRs7y0I1qUifp+T4eHn5Y9SJN0KtoNcj4+67z8rh3OKpA3RcWfj612Rf4dRRBoGyaJVO+og==}
+  '@goat-sdk/wallet-solana@0.2.14':
+    resolution: {integrity: sha512-3WzQ3oBt9eGC8uPi7slmNPJIluGHbIH8Rts35aMEO101zZKuQtWxqp+AUlWEZsyyIaJWDb3lWHw7pNFJrhpFzA==}
     peerDependencies:
-      '@goat-sdk/core': 0.4.7
-      '@solana/web3.js': 1.95.8
+      '@goat-sdk/core': 0.4.8
+      '@solana/web3.js': 1.98.0
 
   '@goat-sdk/wallet-viem@0.2.0':
     resolution: {integrity: sha512-x9FTUg9/ZhJyx8tQMAuIGmoFfRkmyDge78yvd9CTK6SQTiYQ/Hio7rAmHjLE95lElXb6EumZu7R0IlX3m/SGSw==}
@@ -3047,14 +3055,14 @@ snapshots:
       reflect-metadata: 0.2.2
       zod: 3.23.8
 
-  '@goat-sdk/crossmint@0.3.18(@goat-sdk/core@0.4.6(zod@3.23.8))(bufferutil@4.0.9)(typescript@5.7.3)(utf-8-validate@5.0.10)':
+  '@goat-sdk/crossmint@0.4.1(@goat-sdk/core@0.4.6(zod@3.23.8))(bufferutil@4.0.9)(typescript@5.7.3)(utf-8-validate@5.0.10)':
     dependencies:
       '@crossmint/common-sdk-base': 0.3.1
       '@goat-sdk/core': 0.4.6(zod@3.23.8)
-      '@goat-sdk/wallet-evm': 0.2.8(@goat-sdk/core@0.4.6(zod@3.23.8))(bufferutil@4.0.9)(typescript@5.7.3)(utf-8-validate@5.0.10)
-      '@goat-sdk/wallet-solana': 0.2.13(@goat-sdk/core@0.4.6(zod@3.23.8))(@solana/web3.js@1.98.0(bufferutil@4.0.9)(utf-8-validate@5.0.10))(bufferutil@4.0.9)(typescript@5.7.3)(utf-8-validate@5.0.10)
+      '@goat-sdk/wallet-evm': 0.2.10(@goat-sdk/core@0.4.6(zod@3.23.8))(bufferutil@4.0.9)(typescript@5.7.3)(utf-8-validate@5.0.10)
+      '@goat-sdk/wallet-solana': 0.2.14(@goat-sdk/core@0.4.6(zod@3.23.8))(@solana/web3.js@1.98.0(bufferutil@4.0.9)(utf-8-validate@5.0.10))(bufferutil@4.0.9)(typescript@5.7.3)(utf-8-validate@5.0.10)
       '@solana/web3.js': 1.98.0(bufferutil@4.0.9)(utf-8-validate@5.0.10)
-      abitype: 1.0.7(typescript@5.7.3)(zod@3.23.8)
+      abitype: 1.0.8(typescript@5.7.3)(zod@3.23.8)
       bs58: 6.0.0
       tweetnacl: 1.0.3
       viem: 2.23.4(bufferutil@4.0.9)(typescript@5.7.3)(utf-8-validate@5.0.10)(zod@3.23.8)
@@ -3092,6 +3100,17 @@ snapshots:
       - typescript
       - utf-8-validate
 
+  '@goat-sdk/wallet-evm@0.2.10(@goat-sdk/core@0.4.6(zod@3.23.8))(bufferutil@4.0.9)(typescript@5.7.3)(utf-8-validate@5.0.10)':
+    dependencies:
+      '@goat-sdk/core': 0.4.6(zod@3.23.8)
+      abitype: 1.0.8(typescript@5.7.3)(zod@3.23.8)
+      viem: 2.23.4(bufferutil@4.0.9)(typescript@5.7.3)(utf-8-validate@5.0.10)(zod@3.23.8)
+      zod: 3.23.8
+    transitivePeerDependencies:
+      - bufferutil
+      - typescript
+      - utf-8-validate
+
   '@goat-sdk/wallet-evm@0.2.8(@goat-sdk/core@0.4.6(zod@3.23.8))(bufferutil@4.0.9)(typescript@5.7.3)(utf-8-validate@5.0.10)':
     dependencies:
       '@goat-sdk/core': 0.4.6(zod@3.23.8)
@@ -3103,12 +3122,12 @@ snapshots:
       - typescript
       - utf-8-validate
 
-  '@goat-sdk/wallet-solana@0.2.13(@goat-sdk/core@0.4.6(zod@3.23.8))(@solana/web3.js@1.98.0(bufferutil@4.0.9)(utf-8-validate@5.0.10))(bufferutil@4.0.9)(typescript@5.7.3)(utf-8-validate@5.0.10)':
+  '@goat-sdk/wallet-solana@0.2.14(@goat-sdk/core@0.4.6(zod@3.23.8))(@solana/web3.js@1.98.0(bufferutil@4.0.9)(utf-8-validate@5.0.10))(bufferutil@4.0.9)(typescript@5.7.3)(utf-8-validate@5.0.10)':
     dependencies:
       '@goat-sdk/core': 0.4.6(zod@3.23.8)
       '@solana/web3.js': 1.98.0(bufferutil@4.0.9)(utf-8-validate@5.0.10)
       tweetnacl: 1.0.3
-      viem: 2.21.49(bufferutil@4.0.9)(typescript@5.7.3)(utf-8-validate@5.0.10)(zod@3.23.8)
+      viem: 2.23.4(bufferutil@4.0.9)(typescript@5.7.3)(utf-8-validate@5.0.10)(zod@3.23.8)
       zod: 3.23.8
     transitivePeerDependencies:
       - bufferutil
@@ -4641,8 +4660,8 @@ snapshots:
   ox@0.1.2(typescript@5.7.3)(zod@3.23.8):
     dependencies:
       '@adraffy/ens-normalize': 1.11.0
-      '@noble/curves': 1.7.0
-      '@noble/hashes': 1.6.1
+      '@noble/curves': 1.8.1
+      '@noble/hashes': 1.7.1
       '@scure/bip32': 1.6.0
       '@scure/bip39': 1.5.0
       abitype: 1.0.7(typescript@5.7.3)(zod@3.23.8)
@@ -4655,8 +4674,8 @@ snapshots:
   ox@0.6.5(typescript@5.7.3)(zod@3.23.8):
     dependencies:
       '@adraffy/ens-normalize': 1.11.0
-      '@noble/curves': 1.7.0
-      '@noble/hashes': 1.6.1
+      '@noble/curves': 1.8.1
+      '@noble/hashes': 1.7.1
       '@scure/bip32': 1.6.0
       '@scure/bip39': 1.5.0
       abitype: 1.0.7(typescript@5.7.3)(zod@3.23.8)
@@ -5176,8 +5195,8 @@ snapshots:
 
   webauthn-p256@0.0.10:
     dependencies:
-      '@noble/curves': 1.7.0
-      '@noble/hashes': 1.6.1
+      '@noble/curves': 1.8.1
+      '@noble/hashes': 1.7.1
 
   webidl-conversions@3.0.1: {}
 

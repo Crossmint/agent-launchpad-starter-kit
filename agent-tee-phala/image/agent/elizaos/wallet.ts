@@ -14,10 +14,10 @@ if (!apiKey || !walletSignerSecretKey || !alchemyApiKey || !smartWalletAddress) 
     throw new Error("Missing environment variables");
 }
 
-const { smartwallet, faucet } = crossmint(apiKey);
+const { evmSmartWallet, faucet } = crossmint(apiKey);
 
 export async function getWalletClient() {
-    const walletClient = await smartwallet({
+    const walletClient = await evmSmartWallet({
         address: smartWalletAddress,
         signer: {
             secretKey: walletSignerSecretKey as `0x${string}`,

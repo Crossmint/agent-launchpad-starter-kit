@@ -45,6 +45,7 @@
         <li><a href="#pre-requisites">Pre-requisites</a></li>
         <li><a href="#local-setup">Local Setup</a></li>
         <li><a href="#environment-variables">Environment Variables</a></li>
+        <li><a href="#supported-chains">Supported Chains</a></li>
         <li><a href="#evm-smart-wallets">EVM Smart Wallets</a></li>
         <li><a href="#solana-smart-wallets">Solana Smart Wallets</a></li>
       </ul>
@@ -161,6 +162,10 @@ The Next.js app will be available at `http://localhost:3001`
 ### Environment Variables
 
 Please refer to the [`.env.example`](launchpad-starter-next-app/.env.example) file for more information.
+
+#### Supported Chains
+
+For an exhaustive list of supported chains on Crossmint, please refer to the [Supported Chains](https://docs.crossmint.com/introduction/supported-chains) doc.
 
 #### EVM Smart Wallets
 

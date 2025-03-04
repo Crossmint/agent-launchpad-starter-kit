@@ -42,8 +42,12 @@
     <li>
       <a href="#get-started">Get Started</a>
       <ul>
+        <li><a href="#pre-requisites">Pre-requisites</a></li>
         <li><a href="#local-setup">Local Setup</a></li>
-        <li><a href="#docker-setup-requires-orbstack">Docker Setup (Requires OrbStack)</a></li>
+        <li><a href="#environment-variables">Environment Variables</a></li>
+        <li><a href="#supported-chains">Supported Chains</a></li>
+        <li><a href="#evm-smart-wallets">EVM Smart Wallets</a></li>
+        <li><a href="#solana-smart-wallets">Solana Smart Wallets</a></li>
       </ul>
     </li>
     <li>
@@ -60,10 +64,11 @@
 
 ## Roadmap
 
-[ ] Solana Smart Wallets (~Feb 10)  
-[ ] Add support for more TEE networks: Marlin, Lit (~Feb 10)  
-[ ] Sample code for user-initiated wallet actions  
-[ ] Non-custodial agent software updates
+- [x] Solana Smart Wallets (~Feb 10)  
+- [ ] Passkey support for Solana Smart Wallets (~Mar 10)  
+- [ ] Add support for more TEE networks: Marlin, Lit, etc (~Mar 10)  
+- [ ] Sample code for user-initiated wallet actions  
+- [ ] Non-custodial agent software updates
 
 ## About The Project
 
@@ -100,7 +105,7 @@ In jurisdictions like the United States, platforms that have the ability to cont
 
 ## Get started
 
-![Agent Launchpad Starter Kit](https://github.com/user-attachments/assets/364ad94a-cea1-42e5-928c-a75bc7b9709a)
+![Agent Launchpad Starter Kit](https://github.com/user-attachments/assets/9f55da35-b66b-4afc-a271-0fd7379d9237)
 
 ### Pre-requisites
 
@@ -151,7 +156,46 @@ The Next.js app will be available at `http://localhost:3001`
    pnpm build
    ```
 
-  Note: When running the nextjs app, the docker image will build and deploy in a simulated TEE environment. This simulated environment allows you to test your docker image code locally before deploying to production TEEs & Docker hub.
+  > **Note**:  When running the nextjs app, the docker image will build and deploy in a simulated TEE environment. This simulated environment allows you to test your docker image code locally before deploying to production TEEs & Docker hub.
+
+
+### Environment Variables
+
+Please refer to the [`.env.example`](launchpad-starter-next-app/.env.example) file for more information.
+
+#### Supported Chains
+
+For an exhaustive list of supported chains on Crossmint, please refer to the [Supported Chains](https://docs.crossmint.com/introduction/supported-chains) doc.
+
+#### EVM Smart Wallets
+
+> **Note on EVM Smart Wallets**: 
+> The default implementation uses Crossmint's Smart Wallets for EVM chains, which requires setting the `ALCHEMY_API_KEY` environment variable. This API key is used to connect to the EVM chain and sign transactions on behalf of the EVM Smart Wallet.
+> To generate an API key for signing EVM Smart Wallet transactions:
+> 1. Create an account on [Alchemy](https://www.alchemy.com/)
+> 2. Create a new project and copy the API key
+> 3. Set the `ALCHEMY_API_KEY` environment variable in your `.env` file:
+>    ```
+>    ALCHEMY_API_KEY=your_api_key
+
+#### Solana Smart Wallets
+
+> **Note on Solana Smart Wallets**: 
+> The default implementation uses Crossmint's Smart Wallets for Solana, which requires generating a keypair and setting the `NEXT_PUBLIC_SOLANA_SIGNER_PUBLIC_KEY` and `SOLANA_SIGNER_PRIVATE_KEY` environment variables. This keypair will be used to sign transactions on behalf of the Solana Smart Wallet.
+> To generate a keypair for signing Solana Smart Wallet transactions:
+>
+> 1. Generate a new keypair using the [Solana Cookbook guide](https://solana.com/developers/cookbook/wallets/create-keypair)
+> 2. Set both environment variables in your `.env` file:
+>    ```
+>    NEXT_PUBLIC_SOLANA_SIGNER_PUBLIC_KEY=your_public_key
+>    SOLANA_SIGNER_PRIVATE_KEY=your_private_key
+>    ```
+> 3. Set the `NEXT_PUBLIC_PREFERRED_CHAIN` environment variable to `solana` in your `.env` file:
+>    ```
+>    NEXT_PUBLIC_PREFERRED_CHAIN=solana
+>    ```
+>
+> If you prefer to use external wallets like Phantom instead, you can modify the wallet connection logic in the frontend code at `src/app/providers/wallet-provider.tsx`. See the [Solana Wallet Adapter](https://github.com/solana-labs/wallet-adapter) documentation for integrating external Solana wallets. The wallet provider currently uses a Solana keypair signer configuration, which you can replace with your preferred wallet connection method.
 
 ## Deploying to Production
 

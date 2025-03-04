@@ -5,16 +5,15 @@ import { getBaseUrlFromApiKey } from "@/lib/utils";
 const API_KEY = process.env.CROSSMINT_SERVER_API_KEY as string;
 const CROSSMINT_BASE_URL = getBaseUrlFromApiKey(API_KEY);
 
-export async function submitSignatureApproval(
+export async function submitTransactionApproval(
     signature: any,
     signerLocator: string,
     walletAddress: string,
-    signatureId: string,
-    metadata?: any
+    transactionId: string
 ) {
     try {
         const response = await fetch(
-            `${CROSSMINT_BASE_URL}/wallets/${walletAddress}/signatures/${signatureId}/approvals`,
+            `${CROSSMINT_BASE_URL}/wallets/${walletAddress}/transactions/${transactionId}/approvals`,
             {
                 method: "POST",
                 headers: {
@@ -25,7 +24,6 @@ export async function submitSignatureApproval(
                     approvals: [
                         {
                             signer: signerLocator,
-                            metadata,
                             signature,
                         },
                     ],
@@ -34,12 +32,12 @@ export async function submitSignatureApproval(
         );
 
         if (!response.ok) {
-            throw new Error("Failed to submit signature approval");
+            throw new Error("Failed to submit transaction approval");
         }
 
         return { success: true };
     } catch (error) {
-        console.error("Error in submit-signature-approval:", error);
-        throw new Error("Failed to submit signature approval");
+        console.error("Error in submit-transaction-approval:", error);
+        throw new Error("Failed to submit transaction approval");
     }
 }

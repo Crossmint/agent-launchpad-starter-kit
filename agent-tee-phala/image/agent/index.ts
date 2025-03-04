@@ -1,15 +1,11 @@
-import startVercelAiAgent from "./vercel-ai";
+import startElizaGoatPlugin from "./elizaos";
 
-const openAiApiKey = process.env.OPENAI_API_KEY as string;
-
-if (!openAiApiKey) {
-    throw new Error("Missing OPENAI_API_KEY environment variable");
-}
-
-export default async function startAgent() {
-    console.log("Starting agent...");
-    await startVercelAiAgent();
-    console.log("Agent started");
-}
-
-startAgent();
+(async function () {
+    try {
+        console.log("Starting agent...");
+        await startElizaGoatPlugin();
+        console.log("Agent started");
+    } catch (error) {
+        console.error("Error starting agent:", error);
+    }
+})();

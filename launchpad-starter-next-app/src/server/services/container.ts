@@ -34,13 +34,13 @@ export class ContainerManager {
 
                 // Build and start TEE container that will start the express server on port 4000
                 console.log("Building TEE container...");
-                await execAsync(`docker-compose -f ${LOCAL_COMPOSE_FILE_PATH} build`);
+                await execAsync(`docker-compose -f "${LOCAL_COMPOSE_FILE_PATH}" build`);
                 console.log("Build complete!");
 
                 // Start TEE container that will start the express server on port 4000
                 const DSTACK_SIMULATOR_ENDPOINT = "http://host.docker.internal:8090";
                 const { stdout: teeCompose } = await execAsync(
-                    `DSTACK_SIMULATOR_ENDPOINT=${DSTACK_SIMULATOR_ENDPOINT} docker-compose -f ${LOCAL_COMPOSE_FILE_PATH} up -d`
+                    `DSTACK_SIMULATOR_ENDPOINT=${DSTACK_SIMULATOR_ENDPOINT} docker-compose -f "${LOCAL_COMPOSE_FILE_PATH}" up -d`
                 );
                 console.log("TEE container started!");
                 this.containerId = teeCompose.trim();
@@ -78,7 +78,7 @@ export class ContainerManager {
 
             if (IS_DEV) {
                 // Show container logs
-                const { stdout: logs } = await execAsync(`docker-compose -f ${LOCAL_COMPOSE_FILE_PATH} logs app`);
+                const { stdout: logs } = await execAsync(`docker-compose -f "${LOCAL_COMPOSE_FILE_PATH}" logs app`);
                 console.log("Container logs:", logs);
             }
         } catch (error) {
@@ -90,7 +90,7 @@ export class ContainerManager {
     async stopContainer(): Promise<void> {
         if (this.isRunning()) {
             try {
-                await execAsync(`docker-compose -f ${LOCAL_COMPOSE_FILE_PATH} down`);
+                await execAsync(`docker-compose -f "${LOCAL_COMPOSE_FILE_PATH}" down`);
                 if (this.simulatorId) {
                     await execAsync(`docker stop ${this.simulatorId}`);
                     console.log("Simulator stopped!");

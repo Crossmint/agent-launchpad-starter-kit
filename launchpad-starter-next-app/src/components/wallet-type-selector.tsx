@@ -14,7 +14,7 @@ export default function WalletTypeSelector({ value, onChange }: WalletSelectorPr
     const disabled = wallet != null || isLoading;
 
     return (
-        <div className="w-full bg-card rounded-3xl p-6 shadow-md">
+        <div className="w-full bg-card rounded-3xl p-6 shadow-light">
             <div className="flex items-center gap-2 mb-4">
                 <div className="flex items-center justify-center w-6 h-6 border border-gray-200 rounded-full bg-card text-gray-700 font-medium text-sm">
                     1

@@ -83,7 +83,7 @@ export function WalletProvider({
                 const credential = await WebAuthnP256.createCredential({ name });
                 config = {
                     adminSigner: {
-                        type: "evm-keypair",
+                        type: "evm-passkey",
                         id: credential.id,
                         publicKey: {
                             x: credential.publicKey.x.toString(),

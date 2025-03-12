@@ -40,7 +40,7 @@ export const DeployAgentButton = ({
                 return;
             }
             const isEVMWallet = wallet.type.includes("evm");
-            const walletSignerType = !isEVMWallet ? "solana-keypair" : "evm-keypair";
+            const walletSignerType = !isEVMWallet ? "solana-keypair" : "evm-passkey";
 
             // 1. Deploy the agent
             const response = await fetch(`/api/deploy`, {

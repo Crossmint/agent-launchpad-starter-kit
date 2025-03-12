@@ -5,12 +5,11 @@ import nacl from "tweetnacl";
 
 const secretKey = process.env.SOLANA_SIGNER_PRIVATE_KEY as string;
 
-if (!secretKey) {
-    throw new Error("SOLANA_SIGNER_PRIVATE_KEY is not set");
-}
-
 // biome-ignore lint/suspicious/useAwait: server action must be marked as async
 export async function signSolanaMessage(message: string): Promise<string> {
+    if (!secretKey) {
+        throw new Error("SOLANA_SIGNER_PRIVATE_KEY is not set");
+    }
     const messageBytes = bs58.decode(message);
     const secretKeyBytes = bs58.decode(secretKey);
 

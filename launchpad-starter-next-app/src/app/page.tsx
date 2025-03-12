@@ -61,7 +61,7 @@ export default function Home() {
                     </Typography>
                 </div>
 
-                <div className="flex w-full gap-4 bg-card rounded-3xl p-6 shadow-md">
+                <div className="flex w-full gap-4 bg-card rounded-3xl p-6 shadow-heavy">
                     <div className="w-16 flex items-center justify-center">
                         <Image src="/ai-agent.png" alt="ai agent" width={64} height={64} className="rounded-md" />
                     </div>

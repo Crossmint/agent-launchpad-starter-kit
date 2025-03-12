@@ -6,6 +6,9 @@ const CHAIN = process.env.NEXT_PUBLIC_PREFERRED_CHAIN || "base-sepolia";
 
 const containerManager = new ContainerManager();
 
+// set to true to debug the container
+const DEBUG_CONTAINER = true;
+
 export async function POST(request: Request) {
     try {
         const { smartWalletAddress, walletSignerType } = await request.json();
@@ -57,7 +60,9 @@ export async function POST(request: Request) {
     } catch (error) {
         console.error("Deployment error:", error);
         // Ensure container is stopped on error
-        await containerManager.stopContainer();
+        if (!DEBUG_CONTAINER) {
+            await containerManager.stopContainer();
+        }
 
         return NextResponse.json(
             {

@@ -110,6 +110,9 @@ async function initializeAgent(
 ) {
     try {
         console.log("Initializing agent...");
+        console.log(
+            "NOTE: Running the agent locally in the simulated container is not yet supported.\n You will recieve an error about the TEE container not being able to initialize itself from within the tee"
+        );
         const environmentVariables = `SIGNER_WALLET_SECRET_KEY='${privateKey}' CROSSMINT_SERVER_API_KEY='${crossmintServerApiKey}' SMART_WALLET_ADDRESS='${smartWalletAddress}' ALCHEMY_API_KEY_BASE_SEPOLIA='${alchemyApiKey}' COINGECKO_API_KEY='${coingeckoApiKey}' OPENAI_API_KEY='${openaiApiKey}' SOLANA_RPC_URL='${solanaRpcUrl}' CHAIN='${chain}'`;
         const { stdout } = await execAsync(`${environmentVariables} pnpm run start:agent`);
         console.log("stdout:", stdout);

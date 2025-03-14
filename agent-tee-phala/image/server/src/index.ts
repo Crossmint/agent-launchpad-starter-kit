@@ -34,17 +34,9 @@ app.post("/api/initialize", async (req: Request, res: Response) => {
     const solanaRpcUrl = req.header("x-solana-rpc-url");
     const chain = req.header("x-chain");
 
-    if (
-        !smartWalletAddressHeader ||
-        !crossmintServerApiKey ||
-        !alchemyApiKey ||
-        !coingeckoApiKey ||
-        !openaiApiKey ||
-        !solanaRpcUrl ||
-        !chain
-    ) {
+    if (!smartWalletAddressHeader || !crossmintServerApiKey) {
         res.status(400).json({
-            error: "missing 'x-wallet-address' or 'x-api-key' or 'x-alchemy-api-key' or 'x-coingecko-api-key' or 'x-openai-api-key' or 'x-solana-rpc-url' or 'x-chain'header in request for initialization",
+            error: "missing 'x-wallet-address' or 'x-api-key' header in request for initialization",
         });
         return;
     }
@@ -102,11 +94,11 @@ app.listen(port, () => {
 async function initializeAgent(
     privateKey: string,
     crossmintServerApiKey: string,
-    alchemyApiKey: string,
-    coingeckoApiKey: string,
-    openaiApiKey: string,
-    solanaRpcUrl: string,
-    chain: string
+    alchemyApiKey?: string,
+    coingeckoApiKey?: string,
+    openaiApiKey?: string,
+    solanaRpcUrl?: string,
+    chain?: string
 ) {
     try {
         console.log("Initializing agent...");

@@ -1,9 +1,11 @@
-import startVercelAiAgent from "./vercel-ai";
+import startElizaGoatPlugin from "./elizaos";
 
-export default async function startAgent() {
-    console.log("Starting agent...");
-    await startVercelAiAgent();
-    console.log("Agent started");
-}
-
-startAgent();
+(async function () {
+    try {
+        console.log("Starting agent...");
+        await startElizaGoatPlugin();
+        console.log("Agent started");
+    } catch (error) {
+        console.error("Error starting agent:", error);
+    }
+})();
